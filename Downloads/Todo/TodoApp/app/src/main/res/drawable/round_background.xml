@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Rectangle avec coins arrondis (votre dropdown) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Couleur de fond grise -->
+            <corners android:topLeftRadius="15dp" android:topRightRadius="15dp" android:bottomRightRadius="15dp" android:bottomLeftRadius="15dp"/>
+            <stroke android:width="6px" android:color="#000000"  />
+        </shape>
+    </item>
+    <!-- Petit rond gris au centre -->
+  
+</layer-list>

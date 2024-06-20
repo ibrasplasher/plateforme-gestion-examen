@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="41dp"
+    android:layout_marginLeft="144dp"
+    android:layout_marginRight="20dp"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/frame_14">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtrer par"
+        android:textAppearance="@style/filter_par"
+        android:textSize="18sp"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_todo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/todo"
+        android:text="Todo" />
+
+    <CheckBox
+        android:id="@+id/checkbox_inprogress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/todo"
+        android:text="In progress" />
+
+    <CheckBox
+        android:id="@+id/checkbox_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/todo"
+        android:text="Done" />
+
+    <CheckBox
+        android:id="@+id/checkbox_bug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/todo"
+        android:text="Bug" />
+
+    <RelativeLayout
+        android:id="@+id/frame_13"
+        android:layout_width="157dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/frame_13">
+
+        <TextView
+            android:id="@+id/apply_button"
+            android:layout_width="97dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="22dp"
+            android:text="@string/button"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textAppearance="@style/button"/>
+    </RelativeLayout>
+</LinearLayout>

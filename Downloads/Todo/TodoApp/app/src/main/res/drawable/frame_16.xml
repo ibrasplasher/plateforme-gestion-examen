@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- custom_shape.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#ffffff" /> <!-- Couleur de fond -->
+    <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" android:bottomRightRadius="20dp" android:bottomLeftRadius="20dp"/>
+    <stroke
+        android:color="#000000"
+        android:width="6px"
+     /> <!-- Couleur de la bordure -->
+</shape>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    >
+
+    <RelativeLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="#333333"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/todo_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="17dp"
+            android:text="Todo App"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ajouter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:text="Modifier"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/status_spinner"
+        android:layout_width="142.6dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/app_bar"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_background" />
+
+    <EditText
+        android:id="@+id/taskName"
+        android:inputType="text"
+        android:layout_below="@+id/status_spinner"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:padding="10dp"
+        android:background="@drawable/frame_16"
+        app:layout_constraintStart_toStartOf="parent"
+        android:hint="Nouvelle Tâche"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/status_spinner"/>
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_below="@+id/taskName"
+        android:layout_width="359dp"
+        android:layout_height="226dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:alpha="1"
+        android:inputType="text"
+        android:layout_centerHorizontal="true"
+        android:hint="Description"
+        android:background="@drawable/frame_11"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/taskName"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="510dp"
+        android:background="@drawable/frame_13"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:layout_centerHorizontal="true"
+        android:text="Modifier"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:id="@+id/flottingact"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/flottingact">
+
+        <View
+            android:id="@+id/cancelButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/baseline_close_24" />
+    </RelativeLayout>
+
+</RelativeLayout>

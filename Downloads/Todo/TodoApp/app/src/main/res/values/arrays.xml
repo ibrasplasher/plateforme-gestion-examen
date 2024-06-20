@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="status_array">
+        <item>All</item>
+        <item>Todo</item>
+        <item>In progress</item>
+        <item>Done</item>
+        <item>Bug</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+<!-- drawable/task_item.xml -->
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="359dp"
+    android:height="80dp"
+    android:viewportWidth="359"
+    android:viewportHeight="80"
+    >
+    <group>
+        <clip-path
+            android:pathData="M16 0H343C351.837 0 359 7.16344 359 16V64C359 72.8366 351.837 80 343 80H16C7.16344 80 0 72.8366 0 64V16C0 7.16344 7.16344 0 16 0Z"
+            />
+        <path
+            android:pathData="M0 0V80H359V0"
+            android:fillColor="#FFFFFF"
+            />
+        <path
+            android:pathData="M16 0H343C351.837 0 359 7.16344 359 16V64C359 72.8366 351.837 80 343 80H16C7.16344 80 0 72.8366 0 64V16C0 7.16344 7.16344 0 16 0Z"
+            android:strokeWidth="4"
+            android:strokeColor="#4F4F4F"
+            />
+    </group>
+</vector>

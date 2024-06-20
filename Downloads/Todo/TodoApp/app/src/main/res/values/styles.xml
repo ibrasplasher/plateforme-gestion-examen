@@ -1,0 +1,21 @@
+<!-- styles.xml -->
+<resources>
+    <style name="task_1">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#1E1E1E</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="filter_par">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4F4F4F</item>
+    </style>
+    <style name="todo">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#4F4F4F</item>
+    </style>
+
+</resources>

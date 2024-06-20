@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Todo App</string>
+    <string name="task_1">Task 1</string>
+    <string name="button">Appliquer</string>
+    <string name="filter_par">Filter par</string>
+    <string name="todo">Todo</string>
+    <string name="todo1">In progress</string>
+    <string name="todo2">Done</string>
+    <string name="todo3">Bug</string>
+    <string-array name="filter_array">
+        <item>All</item>
+        <item>Todo</item>
+        <item>In progress</item>
+        <item>Done</item>
+        <item>Bug</item>
+    </string-array>
+</resources>
