@@ -1,11 +1,16 @@
 
 services:
   frontend:
-    build: ./frontend
+    build: ../frontend
+    container_name: frontend_container
+    restart: always
     ports:
       - "3000:3000"
+    networks:
+      - docker_exam-network
+
   backend:
-    build: ./backend
+    build: ../backend
     container_name: backend_container
     restart: always
     depends_on:
@@ -19,9 +24,10 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - exam-network
+      - docker_exam-network
+
   db:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: mysql_container
     restart: always
     environment:
@@ -33,12 +39,12 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - exam-network
+      - docker_exam-network
 
 volumes:
   mysql_data:
 
 networks:
-  exam-network:
+  docker_exam-network:
