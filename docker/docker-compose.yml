@@ -27,7 +27,7 @@ services:
       - docker_exam-network
 
   db:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: mysql_container
     restart: always
     environment:
