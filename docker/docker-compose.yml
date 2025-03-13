@@ -1,15 +1,50 @@
-version: '3'
+version: "3.8"
+
 services:
   frontend:
-    build: ./frontend
+    build: ../frontend
+    container_name: frontend_container
+    restart: always
     ports:
       - "3000:3000"
+    networks:
+      - docker_exam-network
+
   backend:
-    build: ./backend
+    build: ../backend
+    container_name: backend_container
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
     ports:
       - "5000:5000"
+    networks:
+      - docker_exam-network
+
   db:
     image: mysql:5.7
+    container_name: mysql_container
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: exam_platform
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Mot de passe pour le compte root
+      MYSQL_DATABASE: ${DB_NAME} # Nom de la base de données
+      MYSQL_USER: ${DB_USER} # Utilisateur personnalisé (admin)
+      MYSQL_PASSWORD: ${DB_PASSWORD} # Mot de passe pour l'utilisateur admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - docker_exam-network
+
+volumes:
+  mysql_data:
+
+networks:
+  docker_exam-network:
