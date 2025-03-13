@@ -1,3 +1,4 @@
+version: "3.8"
 
 services:
   frontend:
@@ -31,11 +32,10 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_HOST: ${DB_HOST}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} # Mot de passe pour le compte root
+      MYSQL_DATABASE: ${DB_NAME} # Nom de la base de données
+      MYSQL_USER: ${DB_USER} # Utilisateur personnalisé (admin)
+      MYSQL_PASSWORD: ${DB_PASSWORD} # Mot de passe pour l'utilisateur admin
     ports:
       - "3306:3306"
     volumes:
