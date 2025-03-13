@@ -1,6 +1,12 @@
 const express = require("express");
 const mysql = require("mysql2");
 require("dotenv").config();
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_PORT:", process.env.DB_PORT);
+
 
 const app = express();
 const port = 5000;
@@ -15,21 +21,24 @@ const db = mysql.createConnection({
 });
 
 const connectWithRetry = () => {
-    db.connect((err) => {
-      if (err) {
-        console.error("❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s...");
-        setTimeout(connectWithRetry, 5000); // Réessaye toutes les 5 secondes
-      } else {
-        console.log("✅ Connecté à MySQL !");
-      }
-    });
-  };
+  console.log("Tentative de connexion à MySQL...");
+  const interval = setInterval(() => {
+      db.connect((err) => {
+          if (err) {
+              console.error("❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s...");
+          } else {
+              console.log("✅ Connecté à MySQL !");
+              clearInterval(interval); // Arrête la boucle dès que la connexion réussit
+          }
+      });
+  }, 5000);
+};
   
   connectWithRetry();
 
 // Route pour tester la base de données
 app.get("/api/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
+  db.query("SELECT * FROM teacher", (err, results) => {
     if (err) {
       res.status(500).json({ error: "Erreur SQL" });
     } else {
