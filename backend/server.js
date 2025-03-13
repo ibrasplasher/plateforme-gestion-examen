@@ -1,9 +1,24 @@
 const express = require("express");
 const mysql = require("mysql2");
 require("dotenv").config();
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+
+// Vérification des variables d'environnement essentielles
+if (
+  !process.env.DB_HOST ||
+  !process.env.DB_USER ||
+  !process.env.DB_PASSWORD ||
+  !process.env.DB_NAME ||
+  !process.env.JWT_SECRET
+) {
+  console.error(
+    "❌ Une ou plusieurs variables d'environnement sont manquantes !"
+  );
+  process.exit(1);
+}
 
 // Connexion à MySQL (Docker)
 const db = mysql.createConnection({
@@ -11,37 +26,39 @@ const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT
+  port: process.env.DB_PORT,
 });
 
 const connectWithRetry = () => {
-    db.connect((err) => {
-      if (err) {
-        console.error("❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s...");
-        setTimeout(connectWithRetry, 5000); // Réessaye toutes les 5 secondes
-      } else {
-        console.log("✅ Connecté à MySQL !");
-      }
-    });
-  };
-  
-  connectWithRetry();
-
-// Route pour tester la base de données
-app.get("/api/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
+  db.connect((err) => {
     if (err) {
-      res.status(500).json({ error: "Erreur SQL" });
+      console.error(
+        "❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s..."
+      );
+      setTimeout(connectWithRetry, 5000); // Réessaye toutes les 5 secondes
     } else {
-      res.json(results);
+      console.log("✅ Connecté à MySQL !");
     }
   });
+};
+
+// Gestion des erreurs MySQL
+db.on("error", (err) => {
+  console.error("❌ Erreur MySQL:", err);
 });
+
+connectWithRetry();
+
+// Middleware pour parser le JSON
+app.use(express.json());
+
+// Routes
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend en cours de développement...");
 });
 
-app.listen(5000, () => {
-  console.log("Serveur backend démarré sur le port 5000");
+app.listen(port, () => {
+  console.log(`🚀 Serveur backend démarré sur le port ${port}`);
 });
