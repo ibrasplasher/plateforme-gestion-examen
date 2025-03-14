@@ -7,8 +7,9 @@ CREATE TABLE student (
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     ddn DATE NOT NULL,
-    numCarte INT UNIQUE NOT NULL,
+    numCarte VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
+    profilPhoto VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL
 );
 
@@ -17,11 +18,37 @@ CREATE TABLE teacher (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    ddn DATE NOT NULL,
-    numCarte INT UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    speciality VARCHAR(255) NOT NULL
+    contact VARCHAR(255) NOT NULL,
+    profilPhoto VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+--Table des classes
+CREATE TABLE class(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    className VARCHAR(255) NOT NULL
+)
+
+--Table des classes des enseignents et eleves
+CREATE TABLE inClass (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    className VARCHAR(255) NOT NULL,
+    foreign key (teacher_id) references teacher(id) on delete cascade,
+    foreign key (student_id) references student(id) on delete cascade
+);
+
+--Table des matieres
+CREATE TABLE subject (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+--Table des matieres enseignees par chaque prof
+CREATE TABLE teachSubject (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    foreign key (teacher_id) references teacher(id) on delete cascade,
+    foreign key (subject_id) references subject(id) on delete cascade
 );
 
 -- Table des examens
@@ -85,23 +112,83 @@ CREATE INDEX idx_submission_exam ON submission(exam_id);
 --JOIN exam e ON s.exam_id = e.id
 --ORDER BY s.submitted_at DESC;
 
+--Insertion des classes
+INSERT INTO class (className) VALUES
+('DSTTR1A'),
+('DSTTR1B'),
+('DSTI1A'),
+('DSTI1B'),
+('DSTI1C'),
+('DSTI1D'),
+('DSTI2A'),
+('DSTI2B'),
+('DSTI2C'),
+('Licence 1A'),
+('Licence 1B'),
+('Licence 2A'),
+('Licence 2B'),
+('Licence 3A'),
+('Licence 3B'),
+('Master 1'),
+('Master 2'),
+('DIC1'),
+('DIC2'),
+('DIC3');
+
+--Insertion des matieres
+INSERT INTO subject (name) VALUES
+('Langace C'),
+('POO'),
+('Algo'),
+('Base de donnees'),
+('Reseaux'),
+('Systeme d''exploitation'),
+('Developpement Web'),
+('Maths discretes'),
+('Analyse'),
+('Probabilite'),
+('Algebre')
+('PPP'),
+('IPDL'),
+('Architecture'),
+('UML'),
+('Genie Logiciel'),
+('Signal'),
+('Anglais');
+
 -- Insertion de 50 étudiants
-INSERT INTO student (firstName, lastName, ddn, numCarte, email, password_hash) VALUES
-('Alice', 'Durand', '2002-05-10', 1001, 'alice.durand@example.com', 'hashed_password'),
-('Bob', 'Lemoine', '2001-08-20', 1002, 'bob.lemoine@example.com', 'hashed_password'),
-('Charlie', 'Morel', '2003-02-15', 1003, 'charlie.morel@example.com', 'hashed_password'),
-('David', 'Lambert', '2002-11-30', 1004, 'david.lambert@example.com', 'hashed_password'),
-('Emma', 'Bertrand', '2000-06-25', 1005, 'emma.bertrand@example.com', 'hashed_password'),
-('Zoe', 'Martin', '2003-07-12', 1050, 'zoe.martin@example.com', 'hashed_password');
+insert into student (firstName, lastName, ddn, numCarte, email, profilePhoto, password_hash) values
+('Jean', 'Dupont', '2000-01-01', '20180AFRD', 'dupont@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Coumba', 'FALL', '2000-02-17', '20220AXCF', 'coumbafall@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Fatou Kine', 'THIOUB', '2007-02-28', '20220BCZA', 'fkt@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Fatou', 'FALL', '2003-12-01', '2015IHBV', 'fatou@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Modou', 'DIOP', '2007-05-27', '20240BNFC', 'modou@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Mouhamed', 'FALL', '2000-08-23', '20170AXRZ', 'metha@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Mouhamed', 'DIOP', '2002-08-23', '20190AXRZ', 'mouhamed@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
+('Aissatou', 'DIOP', '2001-05-10', '20220CDXY', 'aissatoudiop@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Moussa', 'NDIAYE', '2002-08-25', '20220EFGH', 'moussa.ndiaye@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Ibrahima', 'BA', '2003-11-30', '20220JKLM', 'ibrahima.ba@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Awa', 'SENE', '1999-07-12', '20220NOPQ', 'awa.sene@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Cheikh', 'DIA', '2004-04-05', '20220QRST', 'cheikh.dia@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Mamadou', 'FAYE', '2005-06-18', '20220UVWX', 'mamadou.faye@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Seynabou', 'GUEYE', '2006-09-09', '20220YZAB', 'seynabou.gueye@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Oumar', 'SOW', '2000-12-22', '20220CDEF', 'oumar.sow@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'); 
+
+
 
 -- Insertion de 50 enseignants
-INSERT INTO teacher (firstName, lastName, ddn, numCarte, email, password_hash, speciality) VALUES
-('Jean', 'Dupont', '1980-03-22', 2001, 'jean.dupont@example.com', 'hashed_password', 'Mathématiques'),
-('Marie', 'Curie', '1975-09-14', 2002, 'marie.curie@example.com', 'hashed_password', 'Physique'),
-('Paul', 'Durand', '1982-07-05', 2003, 'paul.durand@example.com', 'hashed_password', 'Informatique'),
-('Sophie', 'Blanc', '1978-12-19', 2004, 'sophie.blanc@example.com', 'hashed_password', 'Chimie'),
-('Antoine', 'Moreau', '1985-02-10', 2005, 'antoine.moreau@example.com', 'hashed_password', 'Biologie'),
-('Lucie', 'Rousseau', '1981-06-30', 2050, 'lucie.rousseau@example.com', 'hashed_password', 'Philosophie');
+INSERT INTO teacher (firstName, lastName, email, contact, profilPhoto, password_hash) VALUES  
+('Ahmadou', 'MBACKE', 'ahmadoumbacke@gmail.com', '778945612', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Khadija', 'NDAO', 'khadija.ndao@gmail.com', '778123456', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Boubacar', 'SARR', 'boubacar.sarr@gmail.com', '776789012', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Mariam', 'FALL', 'mariam.fall@gmail.com', '775678901', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Serigne', 'MBAYE', 'serigne.mbaye@gmail.com', '774567890', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Fatou', 'DIOP', 'fatou.diop@gmail.com', '773456789', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Ousmane', 'BA', 'ousmane.ba@gmail.com', '772345678', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Ndeye', 'SOW', 'ndeye.sow@gmail.com', '771234567', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Abdou', 'NDIAYE', 'abdou.ndiaye@gmail.com', '779876543', '../profiles/defaultPicture.jpg', '$2y$10$3'),  
+('Aissatou', 'GUEYE', 'aissatou.gueye@gmail.com', '770987654', '../profiles/defaultPicture.jpg', '$2y$10$3');  
+
 
 
 
