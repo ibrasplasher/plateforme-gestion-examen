@@ -1,6 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const db = require("../config/db");
+const authMiddleware = require("../middleware/authMiddleware"); // Import du middleware
+
 const router = express.Router();
 
 // Inscription
@@ -48,12 +50,18 @@ router.post("/login", (req, res) => {
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
 
     res.json({ token });
+  });
+});
+
+// Route protégée
+router.get("/dashboard", authMiddleware, (req, res) => {
+  res.json({
+    message: `Bienvenue, utilisateur ${req.user.id}!`,
+    user: req.user,
   });
 });
 

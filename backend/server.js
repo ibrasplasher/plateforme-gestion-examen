@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -35,14 +36,13 @@ const connectWithRetry = () => {
       console.error(
         "❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s..."
       );
-      setTimeout(connectWithRetry, 5000); // Réessaye toutes les 5 secondes
+      setTimeout(connectWithRetry, 5000);
     } else {
       console.log("✅ Connecté à MySQL !");
     }
   });
 };
 
-// Gestion des erreurs MySQL
 db.on("error", (err) => {
   console.error("❌ Erreur MySQL:", err);
 });
@@ -54,7 +54,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api", dashboardRoutes);
 
+// Route par défaut
 app.get("/", (req, res) => {
   res.send("Backend en cours de développement...");
 });
