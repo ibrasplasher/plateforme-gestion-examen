@@ -3,11 +3,7 @@ const router = express.Router();
 const correctionController = require("../controllers/correctionController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// Endpoint de soumission de copie pour correction
-router.post(
-  "/corrections",
-  authMiddleware,
-  correctionController.submitCorrection
-);
+// Endpoint sécurisé pour la soumission de correction
+router.post("/", authMiddleware, correctionController.submitCorrection);
 
 module.exports = router;

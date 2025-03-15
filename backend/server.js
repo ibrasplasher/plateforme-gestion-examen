@@ -3,6 +3,7 @@ const mysql = require("mysql2");
 require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const correctionRoutes = require("./routes/correctionRoutes"); // Ajout des routes de correction
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,31 +31,22 @@ const db = mysql.createConnection({
   port: process.env.DB_PORT,
 });
 
-const connectWithRetry = () => {
-  db.connect((err) => {
-    if (err) {
-      console.error(
-        "❌ Erreur de connexion à MySQL, nouvelle tentative dans 5s..."
-      );
-      setTimeout(connectWithRetry, 5000);
-    } else {
-      console.log("✅ Connecté à MySQL !");
-    }
-  });
-};
-
-db.on("error", (err) => {
-  console.error("❌ Erreur MySQL:", err);
+db.connect((err) => {
+  if (err) {
+    console.error("❌ Erreur de connexion à MySQL:", err.message);
+    process.exit(1);
+  } else {
+    console.log("✅ Connecté à MySQL !");
+  }
 });
-
-connectWithRetry();
 
 // Middleware pour parser le JSON
 app.use(express.json());
 
-// Routes
+// Routes principales
 app.use("/api/auth", authRoutes);
 app.use("/api", dashboardRoutes);
+app.use("/api/corrections", correctionRoutes); // Activation des routes de correction
 
 // Route par défaut
 app.get("/", (req, res) => {
