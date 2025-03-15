@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="description" content="" >
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Meta Responsive tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!--paper bootstrap wizard-->
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/paper-bootstrap-wizard.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <!--Bootstrap Calendar-->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <!--Switchery CSS-->
+    <!--Custom style.css-->
+    <link rel="stylesheet" href="assets/css/quicksand.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+
+    <title>ExamXpress</title>
+  </head>
+  <body>
+    <!--Page loader-->
+    <div class="loader-wrapper">
+        <div class="loader-circle">
+            <div class="loader-wave">ExamXpress</div>
+        </div>
+    </div>
+    <!--Page loader-->
+    
+    <!--Page Wrapper-->
+
+    <div class="container-fluid">
+
+        <!--Header-->
+        <div class="row header shadow-sm">
+            
+            <!--Logo-->
+            <div class="col-sm-3 pl-0 text-center header-logo">
+               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
+               </div>
+
+            </div>
+            <!--Logo-->
+            <!--Header Menu-->
+            <div class="col-sm-9 header-menu pt-2 pb-0">
+                <div class="row">
+                    
+                    <!--Menu Icons-->
+                    <div class="col-sm-4 col-8 pl-0">
+                        <!--Toggle sidebar-->
+                        <span class="menu-icon" onclick="toggle_sidebar()">
+                            <span id="sidebar-toggle-btn"></span>
+                        </span>
+                    </div>
+
+                    <!--Search box and avatar-->
+                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
+                        
+                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> Visualiser les corrections</h6>
+                    </div>
+                
+                </div>
+            </div> 
+
+        </div>
+        <!--Header-->
+
+        <!--Main Content-->
+
+        <div class="row main-content">
+            <!--Sidebar left-->
+            <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                    <!--Image Avatar-->
+                    <br><br>
+                    <div class="avatar text-center">
+                        <img src="assets/img/client-img4.png" alt="" class="rounded-circle" />
+                        <p><strong> NOM UTILISATEUR </strong></p>
+                        <span class="text-primary small"><strong>PROFFESSION UTILISATEUR</strong></span>
+                    </div>
+                    <!--Image Avatar-->
+
+                    <!--Sidebar Navigation Menu-->
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+
+
+
+                            <!------BARRA DE NAVIGATION ATTENTE FIN DE PROJET -->
+
+                        </ul>
+                    </div>
+                    <!--Sidebar Naigation Menu-->
+                </div>
+            </div>
+            <!--Sidebar left-->
+
+            <!--Content right-->
+            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+                <h5 class="mb-0" ><strong>Inscription</strong></h5>
+                
+                        <!--Default bootstrap 4 validation-->
+                        <div class="row mt-3">
+                            <div class="col-sm-12"> 
+ 
+ 
+ 
+                                <!--Form wizard-->
+                                <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                                    <h6>Formulaire De Validation</h6>
+                                    <p>Wizard gives you a possibility to use separate form into steps</p>
+                                    <br><br>
+                                    
+                                    <div class="wizard-container">
+                                        <div class="card wizard-card" data-color="theme" id="wizardProfile">
+                                            <form action="" method="">
+                                            <!--        You can switch " data-color="orange" "  with one of the next bright colors: "blue", "green", "orange", "red", "azure"          -->
+
+                                                <div class="wizard-header text-center">
+                                                    <h3 class="wizard-title">Create your profile</h3>
+                                                    <p class="category">This information will let us know more about you.</p>
+                                                </div>
+
+                                                <div class="wizard-navigation">
+                                                    <div class="progress-with-circle">
+                                                            <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" style="width: 21%;"></div>
+                                                    </div>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#about" data-toggle="tab">
+                                                                <div class="icon-circle">
+                                                                    <i class="ti-user"></i>
+                                                                </div>
+                                                                Personnel
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#account" data-toggle="tab">
+                                                                <div class="icon-circle">
+                                                                    <i class="ti-settings"></i>
+                                                                </div>
+                                                                Module
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#address" data-toggle="tab">
+                                                                <div class="icon-circle">
+                                                                    <i class="ti-map"></i>
+                                                                </div>
+                                                                Classe
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane" id="about">
+                                                        <div class="row">
+                                                            <div class="col-sm-10 offset-sm-1">
+                                                                <h6 class="info-text text-center"> Please tell us more about yourself.</h6>
+                                                                <div class="row">
+                                                                    <div class="col-sm-4">
+                                                                        <div class="picture-container">
+                                                                            <div class="picture">
+                                                                                <img src="assets/img/default-avatar.jpg" class="picture-src" id="wizardPicturePreview" title="" />
+                                                                                <input type="file" id="wizard-picture">
+                                                                            </div>
+                                                                            <h6>Choose Picture</h6>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-8">
+                                                                        <div class="form-group">
+                                                                            <label>First Name <small>(required)</small></label>
+                                                                            <input name="firstname" type="text" class="form-control" placeholder="Andrew...">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Last Name <small>(required)</small></label>
+                                                                            <input name="lastname" type="text" class="form-control" placeholder="Smith...">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-sm-10 offset-sm-1">
+                                                                <div class="form-group">
+                                                                    <label>Email <small>(required)</small></label>
+                                                                    <input name="email" type="email" class="form-control" placeholder="andrew@creative-tim.com">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-10 offset-sm-1">
+                                                                <div class="form-group">
+                                                                    <label>Numero Telephone </label>
+                                                                    <input name="NumTel" type="number" class="form-control" placeholder="77393*****">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-10 offset-sm-1">
+                                                                <div class="form-group">
+                                                                    <label>Mot de Passe <small>(required)</small></label>
+                                                                    <input name="Motdepasse" type="password" class="form-control" id="numCarteInput" >
+                                                                    <small id="numCarteError" class="text-danger" style="display: none;">Ce champ est requis.</small>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Confirmer Mot de Passe <small>(required)</small></label>
+                                                                    <input name="ConfirmMotdepasse" type="password" class="form-control" id="numCarteInput" >
+                                                                    <small id="numCarteError" class="text-danger" style="display: none;">Ce champ est requis.</small>
+                                                                </div>
+                                                            </div>
+                                                            
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="account">
+                                                        <h5 class="info-text"> What are you doing? (checkboxes) </h5>
+                                                            <div class="row">
+
+                                                                <div class="col-sm-4">
+                                                                    <div class="choice" data-toggle="wizard-checkbox">
+                                                                        <input type="checkbox" name="jobb" value="Develop">
+                                                                        <div class="card card-checkboxes card-hover-effect">
+                                                                            <i class="ti-star"></i>
+                                                                            <p> VARIABLE MATIERE </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                           
+                                                            </div>    
+                                                        </div>
+                                                        
+                                                        <div class="tab-pane" id="address">
+                                                            <h5 class="info-text"> Choose your class ? (checkboxes) </h5>
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-4">
+                                                                        <div class="choice" data-toggle="wizard-checkbox">
+                                                                            <input type="checkbox" name="jobb">
+                                                                            <div class="card card-checkboxes card-hover-effect">
+                                                                                <span><h2><strong> CLASSE </strong></h2></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>    
+                                                            </div>
+                                                    </div>
+                                                    <div class="wizard-footer">
+                                                        <div class="pull-right">
+                                                            <input type='button' class='btn btn-next btn-fill btn-theme btn-wd' name='next' value='Next' />
+                                                            <input type='button' class='btn btn-finish btn-fill btn-theme btn-wd' name='finish' value='Finish' />
+                                                        </div>
+
+                                                        <div class="pull-left">
+                                                            <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Previous' />
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div> <!-- wizard container -->
+                                    
+                                </div>
+                                <!--/Form wizard-->
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--Main Content-->
+
+    </div>
+    <script>
+        $(document).ready(function(){$('form').validate({rules:{Motdepasse:{required:!0,minlength:6},ConfirmMotdepasse:{required:!0,equalTo:"#numCarteInput"}},messages:{Motdepasse:{required:"Ce champ est requis.",minlength:"Le mot de passe doit contenir au moins 6 caractères."},ConfirmMotdepasse:{required:"Ce champ est requis.",equalTo:"Les mots de passe ne correspondent pas."}}})});
+    </script>
+
+    <!-- Page JavaScript Files-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <!--Popper JS-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet alert JS-->
+    <script src="assets/js/sweetalert.js"></script>
+
+
+    <!--Bootstrap Calendar JS-->
+    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
+    <script src="assets/js/calendar/demo.js"></script>
+    <!--Bootstrap Calendar-->
+
+    <!--Paper bootstrap wizard-->
+    <script src="assets/js/jquery.bootstrap.wizard.js"></script>
+    <script src="assets/js/paper-bootstrap-wizard.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+
+    <!--Custom Js Script-->
+    <script src="assets/js/custom.js"></script>
+    <!--Custom Js Script-->
+  </body>
+  </body>
+</html>
