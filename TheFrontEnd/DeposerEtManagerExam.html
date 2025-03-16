@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="description" content="" >
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Meta Responsive tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!--Custom style.css-->
+    <link rel="stylesheet" href="assets/css/quicksand.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <!--Chartist CSS-->
+    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <!--Bootstrap Calendar-->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <!--Form validator-->
+    <link rel="stylesheet" href="assets/js/form-validator/theme-default.min.css">
+    
+
+
+    <title>ExamXpress</title>
+  </head>
+  <body>
+    <!--Page loader-->
+    <div class="loader-wrapper">
+        <div class="loader-circle">
+            <div class="loader-wave">ExamXpress</div>
+        </div>
+    </div>
+    <!--Page loader-->
+    
+    <!--Page Wrapper-->
+
+    <div class="container-fluid">
+
+        <!--Header-->
+        <div class="row header shadow-sm">
+            
+            <!--Logo-->
+            <div class="col-sm-3 pl-0 text-center header-logo">
+               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
+               </div>
+
+            </div>
+            <!--Logo-->
+            <!--Header Menu-->
+            <div class="col-sm-9 header-menu pt-2 pb-0">
+                <div class="row">
+                    
+                    <!--Menu Icons-->
+                    <div class="col-sm-4 col-8 pl-0">
+                        <!--Toggle sidebar-->
+                        <span class="menu-icon" onclick="toggle_sidebar()">
+                            <span id="sidebar-toggle-btn"></span>
+                        </span>
+                    </div>
+
+                    <!--Search box and avatar-->
+                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
+                        
+                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> NOMPAGECREER</h6>
+                    </div>
+                
+                </div>
+            </div> 
+
+        </div>
+        <!--Header-->
+
+        <!--Main Content-->
+
+        <div class="row main-content">
+            <!--Sidebar left-->
+            <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                    <!--Image Avatar-->
+                    <br><br>
+                    <div class="avatar text-center">
+                        <img src="assets/img/client-img4.png" alt="" class="rounded-circle" />
+                        <p><strong> NOM UTILISATEUR </strong></p>
+                        <span class="text-primary small"><strong>PROFFESSION UTILISATEUR</strong></span>
+                    </div>
+                    <!--Image Avatar-->
+
+                    <!--Sidebar Navigation Menu-->
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+
+
+
+                            <!------BARRA DE NAVIGATION ATTENTE FIN DE PROJET -->
+
+                        </ul>
+                    </div>
+                    <!--Sidebar Naigation Menu-->
+                </div>
+            </div>
+            <!--Sidebar left-->
+
+            <!--Content right-->
+            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+            <br>
+                <h5 class="mb-0" ><strong>NOM PAGE CREER</strong></h5>
+                
+                    <!--Default bootstrap 4 validation-->
+                    <div class="row mt-3">
+                        <div class="col-sm-12"> 
+                        
+                        <!--Default bootstrap 4 validation-->
+                        <div class="mt-1 mb-4 p-3 button-container bg-white border shadow-sm">
+                            <h6 class="mb-2">Examen / Devoir</h6>
+                            <p>Enables you to perform basic validation such as <code>required</code> fields</p>
+                        
+
+                            <form class="needs-validation">
+                                <div class="form-row">
+                                    <div class="col-sm-6 mb-2 mt-1">
+                                        <label for="sujetFile">Sujet <span class="text-danger">*</span></label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="sujetFile" required>
+                                            <label class="custom-file-label" for="sujetFile">Choose file...</label>
+                                            <div class="invalid-feedback">Fichier invalide.</div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-sm-6 mb-2 mt-1">
+                                        <label for="correctionFile">Correction</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="correctionFile">
+                                            <label class="custom-file-label" for="correctionFile">Choose file...</label>
+                                            <div class="invalid-feedback">Fichier invalide.</div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-sm-6 mb-2">
+                                        <div class="form-group">
+                                            <label for="evaluationType">Type Evaluation <span class="text-danger">*</span></label>
+                                            <select class="custom-select" id="evaluationType" required>
+                                                <option value="">Sélectionnez...</option>
+                                                <option value="1">Contrôle Continu</option>
+                                                <option value="2">Travaux Pratiques</option>
+                                                <option value="3">Travaux Dirigés</option>
+                                                <option value="4">Devoir Surveillé</option>
+                                            </select>
+                                            <div class="invalid-feedback">Veuillez choisir un type d'évaluation.</div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-sm-6 mb-2">
+                                        <div class="form-group">
+                                            <label for="classe">Classe <span class="text-danger">*</span></label>
+                                            <select class="custom-select" id="classe" required>
+                                                <option value="">Sélectionnez...</option>
+                                            </select>
+                                            <div class="invalid-feedback">Veuillez choisir une classe.</div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-sm-6 mb-2">
+                                        <div class="form-group">
+                                            <label for="matiere">Matière <span class="text-danger">*</span></label>
+                                            <select class="custom-select" id="matiere" required>
+                                                <option value="">Sélectionnez...</option>
+                                            </select>
+                                            <div class="invalid-feedback">Veuillez choisir une matière.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <label for="dateLimite">Date Limite (Deadline) <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="dateLimite" required>
+                                    </div>
+                            
+                                    <div class="col-md-4 mb-2">
+                                        <label for="startTime">Heure de Début <span class="text-danger"></span></label>
+                                        <input type="time" class="form-control" id="startTime">
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-2">
+                                        <label for="endTime">Heure Limite (Deadline) <span class="text-danger">*</span></label>
+                                        <input type="time" class="form-control" id="endTime" required>
+                                        <div class="invalid-feedback">L'heure limite doit être après l'heure de début.</div>
+                                    </div>
+                                    
+                            
+                                    <div class="col-md-10 mb-2">
+                                        <label for="description">Description</label>
+                                        <textarea rows="5" class="form-control" id="description" placeholder="Ajoutez une description..."></textarea>
+                                    </div>
+                                </div>
+                            
+                                <button class="btn btn-primary" type="submit">Save Exam</button>
+                            </form>
+                            
+                            
+                            
+                        </div>
+                        <!--/Default bootstrap validation-->
+
+
+                        
+                   
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--Main Content-->
+
+    </div>
+
+    <!--Page Wrapper-->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".custom-file-input").forEach(input => {
+                input.addEventListener("change", function (e) {
+                    let fileName = e.target.files[0] ? e.target.files[0].name : "Choose file...";
+                    e.target.nextElementSibling.innerText = fileName;
+                });
+            });
+        });
+    </script>
+    
+
+    <!-- Page JavaScript Files-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <!--Popper JS-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet alert JS-->
+    <script src="assets/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="assets/js/progressbar.min.js"></script>
+    <!--Charts-->
+    <!--Canvas JS-->
+    <script src="assets/js/charts/canvas.min.js"></script>
+    <!--Bootstrap Calendar JS-->
+    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
+    <script src="assets/js/calendar/demo.js"></script>
+    <!--Bootstrap Calendar-->
+    <!--Form validator-->
+    <script src="assets/js/form-validator/jquery.form-validator.min.js"></script>
+
+    <!--Custom Js Script-->
+    <script src="assets/js/custom.js"></script>
+    <!--Custom Js Script-->
+
+    <script>
+        $.validate({
+            form : '#validation_style',
+            modules : 'security'
+        });
+        $('#Rlength1').restrictLength( $('#max-length-element') );
+    </script>
+  </body>
+</html>
