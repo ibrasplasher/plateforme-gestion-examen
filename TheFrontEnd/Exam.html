@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="description" content="" >
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Meta Responsive tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!--Custom style.css-->
+    <link rel="stylesheet" href="assets/css/quicksand.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <!--Chartist CSS-->
+    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <!--Bootstrap Calendar-->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <!--JsGrid CSS-->
+    <link rel="stylesheet" href="assets/css/jsgrid.min.css">
+    <link rel="stylesheet" href="assets/css/jsgrid-theme.min.css">
+    
+
+    <title>ExamXpress</title>
+  </head>
+  <body>
+    <!--Page loader-->
+    <div class="loader-wrapper">
+        <div class="loader-circle">
+            <div class="loader-wave">ExamXpress</div>
+        </div>
+    </div>
+    <!--Page loader-->
+    
+    <!--Page Wrapper-->
+
+    <div class="container-fluid">
+
+        <!--Header-->
+        <div class="row header shadow-sm">
+            
+            <!--Logo-->
+            <div class="col-sm-3 pl-0 text-center header-logo">
+               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
+               </div>
+
+            </div>
+            <!--Logo-->
+            <!--Header Menu-->
+            <div class="col-sm-9 header-menu pt-2 pb-0">
+                <div class="row">
+                    
+                    <!--Menu Icons-->
+                    <div class="col-sm-4 col-8 pl-0">
+                        <!--Toggle sidebar-->
+                        <span class="menu-icon" onclick="toggle_sidebar()">
+                            <span id="sidebar-toggle-btn"></span>
+                        </span>
+                    </div>
+
+                    <!--Search box and avatar-->
+                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
+                        
+                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> NOMPAGECREER</h6>
+                    </div>
+                
+                </div>
+            </div> 
+
+        </div>
+        <!--Header-->
+
+        <!--Main Content-->
+
+        <div class="row main-content">
+            <!--Sidebar left-->
+            <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                    <!--Image Avatar-->
+                    <br><br>
+                    <div class="avatar text-center">
+                        <img src="assets/img/client-img4.png" alt="" class="rounded-circle" />
+                        <p><strong> NOM UTILISATEUR </strong></p>
+                        <span class="text-primary small"><strong>PROFFESSION UTILISATEUR</strong></span>
+                    </div>
+                    <!--Image Avatar-->
+
+                    <!--Sidebar Navigation Menu-->
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+
+
+
+                            <!------BARRA DE NAVIGATION ATTENTE FIN DE PROJET -->
+
+                        </ul>
+                    </div>
+                    <!--Sidebar Naigation Menu-->
+                </div>
+            </div>
+            <!--Sidebar left-->
+
+            <!--Content right-->
+            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+                <h5 class="mb-0" ><strong>NOM PAGE CREER</strong></h5>
+                
+                        <!--Default bootstrap 4 validation-->
+                        <div class="row mt-3">
+                            <div class="col-sm-12"> 
+
+                        <!--JsGrid Sorting-->
+                        <div class="container">
+                            <h3 align="center">Gestion des Examens avec jsGrid</h3>
+                            <div id="grid_table"></div>
+                        </div>
+                        
+                        <!--/JsGrid Sorting-->
+
+                        
+                   
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--Main Content-->
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#grid_table').jsGrid({
+                width: "100%",
+                height: "auto",
+                filtering: true,
+                inserting: true,
+                editing: true,
+                sorting: true,
+                paging: true,
+                autoload: true,
+                pageSize: 10,
+                pageButtonCount: 5,
+                deleteConfirm: "Voulez-vous vraiment supprimer cet examen ?",
+    
+                controller: {
+                    loadData: function (filter) {
+                        return $.ajax({
+                            type: "GET",
+                            url: "fetch_exams.php",
+                            data: filter
+                        });
+                    },
+                    insertItem: function (item) {
+                        return $.ajax({
+                            type: "POST",
+                            url: "fetch_exams.php",
+                            data: item
+                        });
+                    },
+                    updateItem: function (item) {
+                        return $.ajax({
+                            type: "POST",
+                            url: "fetch_exams.php",
+                            data: { ...item, action: "update" }
+                        });
+                    },
+                    deleteItem: function (item) {
+                        return $.ajax({
+                            type: "POST",
+                            url: "fetch_exams.php",
+                            data: { id: item.id, action: "delete" }
+                        });
+                    }
+                },
+    
+                fields: [
+                    { name: "id", type: "hidden", css: "hide" },
+                    { name: "sujet", title: "Sujet", type: "text", width: 150, validate: "required" },
+                    { name: "type_evaluation", title: "Type", type: "text", width: 100, validate: "required" },
+                    { name: "classe", title: "Classe", type: "text", width: 100, validate: "required" },
+                    { name: "matiere", title: "Matière", type: "text", width: 100, validate: "required" },
+                    { name: "date_limite", title: "Date Limite", type: "text", width: 100, validate: "required" },
+                    { name: "heure_debut", title: "Début", type: "text", width: 80, validate: "required" },
+                    { name: "heure_fin", title: "Fin", type: "text", width: 80, validate: "required" },
+                    { type: "control" }
+                ]
+            });
+        });
+    </script>
+    
+    <!-- Page JavaScript Files-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <!--Popper JS-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet alert JS-->
+    <script src="assets/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="assets/js/progressbar.min.js"></script>
+    <!--Charts-->
+    <!--Canvas JS-->
+    <script src="assets/js/charts/canvas.min.js"></script>
+    <!--Bootstrap Calendar JS-->
+    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
+    <script src="assets/js/calendar/demo.js"></script>
+    <!--Bootstrap Calendar-->
+    <!--JsGrid table-->
+    <script src="assets/js/jsgrid.min.js"></script>
+    <script src="assets/js/jsgrid-demo.js"></script>
+
+    <!--Custom Js Script-->
+    <script src="assets/js/custom.js"></script>
+    <!--Custom Js Script-->
+
+  </body>
+</html>
+
+
+<!--------------
+<?php
+
+$connect = new PDO("mysql:host=localhost;dbname=ExamXpressDB", "root", "");
+$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method == 'GET') {
+    $data = array(
+        ':sujet' => "%" . $_GET['sujet'] . "%",
+        ':type_evaluation' => "%" . $_GET['type_evaluation'] . "%",
+        ':classe' => "%" . $_GET['classe'] . "%",
+        ':matiere' => "%" . $_GET['matiere'] . "%",
+        ':date_limite' => "%" . $_GET['date_limite'] . "%",
+        ':heure_debut' => "%" . $_GET['heure_debut'] . "%",
+        ':heure_fin' => "%" . $_GET['heure_fin'] . "%"
+    );
+
+    $query = "SELECT * FROM exams 
+              WHERE sujet LIKE :sujet 
+              AND type_evaluation LIKE :type_evaluation 
+              AND classe LIKE :classe 
+              AND matiere LIKE :matiere 
+              AND date_limite LIKE :date_limite 
+              AND heure_debut LIKE :heure_debut 
+              AND heure_fin LIKE :heure_fin 
+              ORDER BY id DESC";
+
+    $statement = $connect->prepare($query);
+    $statement->execute($data);
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    header("Content-Type: application/json");
+    echo json_encode($result);
+}
+
+if ($method == 'POST') {
+    if (isset($_POST['action'])) {
+        if ($_POST['action'] == "update") {
+            $query = "UPDATE exams 
+                      SET sujet = :sujet, type_evaluation = :type_evaluation, classe = :classe, matiere = :matiere, 
+                          date_limite = :date_limite, heure_debut = :heure_debut, heure_fin = :heure_fin
+                      WHERE id = :id";
+
+            $statement = $connect->prepare($query);
+            $statement->execute([
+                ':id' => $_POST['id'],
+                ':sujet' => $_POST['sujet'],
+                ':type_evaluation' => $_POST['type_evaluation'],
+                ':classe' => $_POST['classe'],
+                ':matiere' => $_POST['matiere'],
+                ':date_limite' => $_POST['date_limite'],
+                ':heure_debut' => $_POST['heure_debut'],
+                ':heure_fin' => $_POST['heure_fin']
+            ]);
+        } elseif ($_POST['action'] == "delete") {
+            $query = "DELETE FROM exams WHERE id = :id";
+            $statement = $connect->prepare($query);
+            $statement->execute([':id' => $_POST['id']]);
+        }
+    } else {
+        $query = "INSERT INTO exams (sujet, type_evaluation, classe, matiere, date_limite, heure_debut, heure_fin) 
+                  VALUES (:sujet, :type_evaluation, :classe, :matiere, :date_limite, :heure_debut, :heure_fin)";
+
+        $statement = $connect->prepare($query);
+        $statement->execute([
+            ':sujet' => $_POST['sujet'],
+            ':type_evaluation' => $_POST['type_evaluation'],
+            ':classe' => $_POST['classe'],
+            ':matiere' => $_POST['matiere'],
+            ':date_limite' => $_POST['date_limite'],
+            ':heure_debut' => $_POST['heure_debut'],
+            ':heure_fin' => $_POST['heure_fin']
+        ]);
+    }
+}
+?>
+
+
+
+-->

@@ -1,15 +1,17 @@
+# Utiliser une image de base Node.js
 FROM node:16
 
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Installer bash
-RUN apt-get update && apt-get install -y bash
+# Installer http-server globalement
+RUN npm install -g http-server
 
-COPY package.json package-lock.json ./
-RUN npm install
-
-EXPOSE 3000
-
+# Copier les fichiers frontend dans le container
 COPY . .
 
-CMD ["npm", "start"]
+# Exposer le port que http-server va utiliser
+EXPOSE 8080
+
+# Commande par défaut pour démarrer http-server
+CMD ["http-server", ".", "-p", "8080"]

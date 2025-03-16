@@ -1,5 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
+const path = require("path");
+const cors = require("cors");
 require("dotenv").config({ path: "./docker/.env" });
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
@@ -9,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 // Middleware pour servir les fichiers statiques HTML, CSS, JS
 app.use(express.static(path.join(__dirname, "../frontend"))); // le chemin vers le dossier frontend
-
+app.use(cors({ origin: "http://localhost:8080" }));
 // Vérification des variables d'environnement essentielles
 if (
   !process.env.DB_HOST ||

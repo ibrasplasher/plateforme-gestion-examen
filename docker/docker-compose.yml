@@ -6,13 +6,11 @@ services:
     container_name: frontend_container
     restart: always
     ports:
-      - "3000:3000"
+      - "8080:8080"
     networks:
       - docker_exam-network
     depends_on:
       - backend
-    command: >
-      sh -c "npm install && npm start"
 
   backend:
     build: ../backend
