@@ -154,7 +154,7 @@ router.post("/login/teacher", (req, res) => {
 
 router.get("/dashboard", authMiddleware, TeacherOnlyMiddleware, (req, res) => {
   res.json({
-    message: `Bienvenue, utilisateur ${req.user.id} (${req.user.role}) !`,
+    message: `Bienvenue  ${req.user.firstName} (${req.user.role}) !`,
     user: req.user,
   });
 });

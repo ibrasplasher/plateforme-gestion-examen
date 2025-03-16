@@ -7,6 +7,9 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const app = express();
 const port = process.env.PORT || 5000;
 
+// Middleware pour servir les fichiers statiques HTML, CSS, JS
+app.use(express.static(path.join(__dirname, "../frontend"))); // le chemin vers le dossier frontend
+
 // Vérification des variables d'environnement essentielles
 if (
   !process.env.DB_HOST ||
