@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const db = require("../config/db");
 const {
   authMiddleware,
@@ -148,26 +148,28 @@ router.post(
 
         const user = results[0];
 
-        if (password !== user.password_hash) {
-          return res
-            .status(400)
-            .json({ error: "Email ou mot de passe incorrect." });
-        }
+        bcrypt.compare(password, user.password_hash, (err, isMatch) => {
+          if (err || !isMatch) {
+            return res
+              .status(400)
+              .json({ error: "Email ou mot de passe incorrect." });
+          }
 
-        const token = jwt.sign(
-          { id: user.id, role: "student" },
-          process.env.JWT_SECRET,
-          { expiresIn: "1h" }
-        );
+          const token = jwt.sign(
+            { id: user.id, role: "student" },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+          );
 
-        res.json({
-          token,
-          user: {
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            role: "student",
-          },
+          res.json({
+            token,
+            user: {
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              role: "student",
+            },
+          });
         });
       }
     );
