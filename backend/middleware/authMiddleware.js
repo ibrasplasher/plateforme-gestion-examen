@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     console.log(
-      "🔐 Vérification du token avec le secret :",
+      "Vérification du token avec le secret :",
       process.env.JWT_SECRET
     );
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -35,5 +35,13 @@ const authMiddleware = (req, res, next) => {
     res.status(401).json({ error: message });
   }
 };
-
-module.exports = authMiddleware;
+// Middleware spécifique pour restreindre aux enseignants
+const TeacherOnlyMiddleware = (req, res, next) => {
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Réservé aux enseignants." });
+  }
+  next();
+};
+module.exports = { authMiddleware, TeacherOnlyMiddleware };

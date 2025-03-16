@@ -1,9 +1,8 @@
 const express = require("express");
 const mysql = require("mysql2");
-require("dotenv").config();
+require("dotenv").config({ path: "./docker/.env" });
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
-const correctionRoutes = require("./routes/correctionRoutes"); // Ajout des routes de correction
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -46,7 +45,6 @@ app.use(express.json());
 // Routes principales
 app.use("/api/auth", authRoutes);
 app.use("/api", dashboardRoutes);
-app.use("/api/corrections", correctionRoutes); // Activation des routes de correction
 
 // Route par défaut
 app.get("/", (req, res) => {
