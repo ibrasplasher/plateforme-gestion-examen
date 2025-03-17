@@ -1,0 +1,20 @@
+[33m0b2a206[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mintegrationIA[m[33m)[m page de connexion faite
+[33m213eb69[m[33m ([m[1;31morigin/integrationIA[m[33m)[m page de connexion opérationnelle
+[33mf0f7153[m styles des pages  opérationnels
+[33m7dc756c[m tentative de creation de components react
+[33mf5ea164[m refonte de la methode de login faite
+[33m8f0b487[m integration avec IA quasi terminéé mais tests a faire
+[33m5167c3e[m mise en place du dashboard
+[33mbc06ac7[m[33m ([m[1;31morigin/authentification[m[33m, [m[1;32mauthentification[m[33m)[m ajoute de l'identification
+[33m5c0bd00[m[33m ([m[1;31morigin/database[m[33m, [m[1;32mdatabase[m[33m)[m problème de connexion docker avec base de données réglé
+[33m52591c7[m problème de connexion docker avec base de données réglé
+[33m89fd1f1[m Ajout du fichier .env
+[33me4583e6[m creation des nouvelles tables NB:le docker a tjrs un prblm
+[33m66cd575[m creation des differents 2 dockerfiles differents, modification de backend.json, creation de server.js
+[33me96e39f[m deplacement de .env dans docker et suppression de la ligne version dans mon yml
+[33m36ce44e[m installation de mysql client
+[33mdfe3137[m gestion des conteneurs dans docker-compose.yml
+[33m9cd9ef3[m creation de la bdd dans init.sql
+[33me00b947[m Ajout du fichier .env
+[33m0cddf3e[m[33m ([m[1;32mmain[m[33m)[m utilisateurs profs et eleves
+[33mb320bba[m ajout de la structure du projet et des fichiers de départ
