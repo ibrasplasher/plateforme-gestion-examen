@@ -21,14 +21,8 @@ router.post(
   [
     body("firstName").notEmpty().withMessage("Le prénom est requis."),
     body("lastName").notEmpty().withMessage("Le nom est requis."),
-    body("ddn").isDate().withMessage("Date de naissance invalide."),
-    body("numCarte")
-      .isNumeric()
-      .withMessage("Le numéro de carte doit être un nombre."),
+    body("numCarte").notEmpty().withMessage("Le numéro de carte est requis."),
     body("email").isEmail().withMessage("Email invalide."),
-    body("profilPhoto")
-      .notEmpty()
-      .withMessage("Une photo de profil est requise."),
     body("password")
       .isLength({ min: 6 })
       .withMessage("Le mot de passe doit contenir au moins 6 caractères."),
@@ -39,8 +33,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, ddn, numCarte, email, profilPhoto, password } =
-      req.body;
+    const { firstName, lastName, numCarte, email, password } = req.body;
 
     try {
       // Vérifier si l'email existe déjà
@@ -59,16 +52,8 @@ router.post(
 
           // Insérer l'étudiant
           db.query(
-            "INSERT INTO student (firstName, lastName, ddn, numCarte, email, profilPhoto, password_hash) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [
-              firstName,
-              lastName,
-              ddn,
-              numCarte,
-              email,
-              profilPhoto,
-              hashedPassword,
-            ],
+            "INSERT INTO student (firstName, lastName, numCarte, email, password_hash) VALUES (?, ?, ?, ?, ?)",
+            [firstName, lastName, numCarte, email, hashedPassword],
             (err) => {
               if (err) return res.status(500).json({ error: "Erreur SQL." });
 

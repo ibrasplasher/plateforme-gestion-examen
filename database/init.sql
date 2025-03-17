@@ -7,10 +7,8 @@ CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
-    ddn DATE NOT NULL,
     numCarte VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    profilPhoto VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL
 );
 
@@ -116,12 +114,9 @@ INSERT INTO subject (name) VALUES
 ('Architecture'), ('UML'), ('Genie Logiciel'), ('Signal'), ('Anglais');
 
 -- Insertion des étudiants
-INSERT INTO student (firstName, lastName, ddn, numCarte, email, profilPhoto, password_hash) VALUES
-('Jean', 'Dupont', '2000-01-01', '20180AFRD', 'dupont@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
-('Coumba', 'FALL', '2000-02-17', '20220AXCF', 'coumbafall@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
-('Fatou Kine', 'THIOUB', '2007-02-28', '20220BCZA', 'fkt@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
-('Fatou', 'FALL', '2003-12-01', '2015IHBV', 'fatou@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3'),
-('Modou', 'DIOP', '2007-05-27', '20240BNFC', 'modou@gmail.com', '../profiles/defaultPicture.jpg', '$2y$10$3');
+INSERT INTO student (firstName, lastName,numCarte, email, password_hash) VALUES
+('Jean', 'Dupont', '20180AFRD', 'dupont@gmail.com',  '$2y$10$3'),
+('Coumba', 'FALL', '20220AXCF', 'coumbafall@gmail.com', '$2y$10$3');
 
 -- Insertion des enseignants
 INSERT INTO teacher (firstName, lastName, email, contact, profilPhoto, password_hash) VALUES

@@ -48,14 +48,7 @@ services:
       - docker_exam-network
     healthcheck:
       test:
-        [
-          "CMD",
-          "mysqladmin",
-          "ping",
-          "-h",
-          "localhost",
-          "-p${MYSQL_ROOT_PASSWORD}",
-        ]
+        ["CMD", "mysqladmin", "ping", "-h", "db", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 5s
       timeout: 3s
       retries: 5
