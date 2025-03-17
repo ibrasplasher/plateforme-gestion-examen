@@ -11,13 +11,25 @@ const db = mysql.createConnection({
   port: process.env.DB_PORT,
 });
 
-// Connexion à la base de données
+// Vérifier la connexion
 db.connect((err) => {
   if (err) {
-    console.error(`❌ Erreur MySQL : ${err.message}`);
-    process.exit(1); // Arrête le backend si la connexion échoue
+    console.error("❌ Erreur de connexion à la base de données:", err);
   } else {
-    console.log("✅ Connecté à MySQL !");
+    console.log("✅ Connexion à la base de données réussie");
+
+    // Vérifier la structure de la table teacher
+    db.query("DESCRIBE teacher", (err, results) => {
+      if (err) {
+        console.error(
+          "❌ Erreur lors de la vérification de la table teacher:",
+          err
+        );
+      } else {
+        console.log("Structure de la table teacher:");
+        console.table(results);
+      }
+    });
   }
 });
 

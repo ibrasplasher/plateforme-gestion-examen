@@ -68,37 +68,96 @@ router.post(
   }
 );
 
-// Inscription des enseignants
+// Inscription des enseignants avec plus de logs
 router.post("/register/teacher", async (req, res) => {
+  console.log("========= INSCRIPTION ENSEIGNANT =========");
+  console.log("Données reçues:", req.body);
+
   const { firstName, lastName, email, contact, profilPhoto, password } =
     req.body;
 
+  // Vérification des champs obligatoires
+  if (!firstName || !lastName || !email || !password) {
+    console.log("Validation: champs obligatoires manquants");
+    return res
+      .status(400)
+      .json({ error: "Tous les champs obligatoires doivent être remplis." });
+  }
+
   try {
+    console.log("Vérification si l'email existe déjà:", email);
     db.query(
       "SELECT * FROM teacher WHERE email = ?",
       [email],
       async (err, results) => {
-        if (err) return res.status(500).json({ error: "Erreur serveur." });
+        if (err) {
+          console.error("Erreur de requête SQL (vérification email):", err);
+          return res.status(500).json({ error: "Erreur serveur." });
+        }
 
-        if (results.length > 0) {
+        if (results && results.length > 0) {
+          console.log("Email déjà utilisé:", email);
           return res.status(400).json({ error: "Email déjà utilisé." });
         }
 
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+        try {
+          console.log("Hashage du mot de passe...");
+          const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+          console.log("Mot de passe haché avec succès");
 
-        db.query(
-          "INSERT INTO teacher (firstName, lastName, email, contact, profilPhoto, password_hash) VALUES (?, ?, ?, ?, ?, ?)",
-          [firstName, lastName, email, contact, profilPhoto, hashedPassword],
-          (err) => {
-            if (err) return res.status(500).json({ error: "Erreur SQL." });
+          // Utilisation de valeurs par défaut si nécessaire
+          const contactValue = contact || "";
+          const profileValue = profilPhoto || "../profiles/defaultPicture.jpg";
 
-            res.status(201).json({ message: "Enseignant enregistré !" });
-          }
-        );
+          console.log("Préparation de l'insertion avec les valeurs:");
+          console.log({
+            firstName,
+            lastName,
+            email,
+            contact: contactValue,
+            profilPhoto: profileValue,
+            password_hash: "***",
+          });
+
+          const query =
+            "INSERT INTO teacher (firstName, lastName, email, contact, profilPhoto, password_hash) VALUES (?, ?, ?, ?, ?, ?)";
+
+          db.query(
+            query,
+            [
+              firstName,
+              lastName,
+              email,
+              contactValue,
+              profileValue,
+              hashedPassword,
+            ],
+            (err, result) => {
+              if (err) {
+                console.error("Erreur d'insertion SQL:", err);
+                return res.status(500).json({
+                  error: "Erreur lors de l'insertion dans la base de données.",
+                });
+              }
+
+              console.log("Insertion réussie! ID:", result.insertId);
+              return res.status(201).json({
+                message: "Enseignant enregistré avec succès!",
+                teacherId: result.insertId,
+              });
+            }
+          );
+        } catch (hashError) {
+          console.error("Erreur lors du hashage du mot de passe:", hashError);
+          return res
+            .status(500)
+            .json({ error: "Erreur lors du traitement du mot de passe." });
+        }
       }
     );
   } catch (error) {
-    res.status(500).json({ error: "Erreur lors de l'enregistrement." });
+    console.error("Erreur générale:", error);
+    return res.status(500).json({ error: "Erreur lors de l'enregistrement." });
   }
 });
 
