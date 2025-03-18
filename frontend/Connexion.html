@@ -22,40 +22,211 @@
     <!--Font Awesome-->
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <!-- Custom styles for login page -->
+    <style>
+      .role-selector {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      .role-btn {
+        padding: 8px 20px;
+        margin: 0 5px;
+        border-radius: 50px;
+        border: 2px solid #fff;
+        background: transparent;
+        color: #fff;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .role-btn.active {
+        background: #fff;
+        color: #007bff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .role-btn:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .role-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0) translate(-50%, -50%);
+        transform-origin: top left;
+        transition: transform 0.3s ease;
+      }
+      .role-btn:active::after {
+        transform: scale(3) translate(-50%, -50%);
+      }
+      .login-card {
+        border-radius: 10px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .login-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+      .login-box-info {
+        background: linear-gradient(45deg, #007bff, #00c6ff);
+        padding: 3rem;
+        color: white;
+        position: relative;
+        z-index: 1;
+      }
+      .login-box-info::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("assets/img/pattern.svg");
+        opacity: 0.1;
+        z-index: -1;
+      }
+      .login-box-form {
+        background: white;
+      }
+      .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+      .login-box {
+        width: 100%;
+        max-width: 900px;
+      }
+      .btn-theme {
+        background: linear-gradient(45deg, #007bff, #00c6ff);
+        border: none;
+        transition: all 0.3s ease;
+      }
+      .btn-theme:hover {
+        background: linear-gradient(45deg, #0062cc, #0097e6);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+      }
+      .input-group {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .input-group-text {
+        background: #f8f9fa;
+        border: none;
+        color: #007bff;
+      }
+      .form-control {
+        border: none;
+        padding: 1.2rem;
+      }
+      .form-control:focus {
+        box-shadow: none;
+      }
+      .inscription-btn {
+        padding: 10px 25px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .inscription-btn:hover {
+        background: white;
+        color: #007bff;
+        text-decoration: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      .brand-logo {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .brand-logo i {
+        background: white;
+        color: #007bff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-right: 10px;
+      }
+    </style>
 
-    <title>ExamXpert</title>
+    <title>ExamXpert - Connexion</title>
   </head>
 
-  <body class="login-body">
+  <body>
     <!--Login Wrapper-->
 
     <div class="container-fluid login-wrapper">
-      <div class="login-box">
-        <h1 class="text-center mb-5">
-          <i class="fa fa-rocket text-primary"></i> ExamXpert
+      <div class="login-box animate__animated animate__fadeIn">
+        <h1 class="text-center mb-5 brand-logo">
+          <i class="fa fa-rocket"></i> ExamXpert
         </h1>
-        <div class="row">
+        <div class="row login-card">
           <div class="col-md-6 col-sm-6 col-12 login-box-info">
-            <h3 class="mb-4">Plateforme Web de Gestion d'Examens</h3>
-            <p class="mb-4">
+            <h3 class="mb-4 animate__animated animate__fadeInUp">
+              Plateforme Web de Gestion d'Examens
+            </h3>
+            <p
+              class="mb-4 animate__animated animate__fadeInUp animate__delay-1s"
+            >
               L'objectif de ce projet est de développer une plateforme web
               complète permettant aux enseignants de déposer des sujets d'examen
               et aux étudiants de soumettre leurs réponses sous forme de
               fichiers PDF.
             </p>
-            <p class="text-center">
-              <a href="InscriptionEtudiant.html" class="btn btn-light"
-                >S'inscrire</a
+            <div
+              class="role-selector animate__animated animate__fadeInUp animate__delay-2s"
+            >
+              <button type="button" class="role-btn active" data-role="student">
+                Étudiant
+              </button>
+              <button type="button" class="role-btn" data-role="teacher">
+                Enseignant
+              </button>
+            </div>
+            <p
+              class="text-center animate__animated animate__fadeInUp animate__delay-3s"
+            >
+              <a
+                href="InscriptionEtudiant.html"
+                id="inscriptionLink"
+                class="inscription-btn"
               >
+                <i class="fa fa-user-plus mr-2"></i>S'inscrire
+              </a>
             </p>
           </div>
           <div class="col-md-6 col-sm-6 col-12 login-box-form p-4">
-            <h3 class="mb-2">Se connecter</h3>
+            <h3 class="mb-2" id="loginTitle">Connexion Étudiant</h3>
             <small class="text-muted bc-description"
               >Veuillez entrer vos informations</small
             >
-            <form id="loginForm" action="" class="mt-2">
-              <div class="input-group mb-3">
+            <form id="loginForm" action="" class="mt-4">
+              <input type="hidden" id="userRole" name="role" value="student" />
+              <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"
                     ><i class="fa fa-user"></i
@@ -63,37 +234,35 @@
                 </div>
                 <input
                   type="text"
-                  class="form-control mt-0"
-                  placeholder="email"
+                  class="form-control"
+                  placeholder="Email"
                   aria-label="email"
-                  aria-describedby="basic-addon1"
                   id="email"
                 />
               </div>
 
-              <div class="input-group mb-3">
+              <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="basic-addon1"
                     ><i class="fa fa-lock"></i
                   ></span>
                 </div>
                 <input
-                  type="text"
-                  class="form-control mt-0"
-                  placeholder="mot de passe"
+                  type="password"
+                  class="form-control"
+                  placeholder="Mot de passe"
                   aria-label="Password"
-                  aria-describedby="basic-addon1"
                   id="password"
                 />
               </div>
               <div id="responseMessage" class="text-danger mb-3"></div>
               <div class="form-group">
-                <button type="submit" class="btn btn-theme btn-block p-2 mb-1">
-                  se connecter
+                <button type="submit" class="btn btn-theme btn-block p-2 mb-3">
+                  <i class="fa fa-sign-in-alt mr-2"></i>Se connecter
                 </button>
-                <a href="#">
+                <a href="#" class="d-block text-center mt-2">
                   <small class="text-theme"
-                    ><strong>mot de passe oublié?</strong></small
+                    ><strong>Mot de passe oublié?</strong></small
                   >
                 </a>
               </div>
@@ -112,10 +281,14 @@
     <script src="assets/js/popper.min.js"></script>
     <!--Bootstrap-->
     <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet Alert-->
+    <script src="assets/js/sweetalert.js"></script>
+    <!-- GSAP pour animations avancées -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>
-    <!--Custom Js Script-->
-    <script src="assets/js/login.js"></script>
+    <!--Login Script-->
+    <script src="assets/js/login-enhanced.js"></script>
   </body>
 </html>
