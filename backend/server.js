@@ -6,12 +6,24 @@ require("dotenv").config({ path: "./docker/.env" });
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 
+// Initialisez l'application Express AVANT d'essayer d'utiliser 'app'
 const app = express();
 const port = process.env.PORT || 5000;
+
+// ENSUITE, importez et utilisez profileRoutes
+const profileRoutes = require("./routes/profileRoutes");
+app.use("/api/profile", profileRoutes);
 
 // Middleware pour servir les fichiers statiques HTML, CSS, JS
 app.use(express.static(path.join(__dirname, "../frontend"))); // le chemin vers le dossier frontend
 app.use(cors({ origin: "http://localhost:8080" }));
+
+// Ajoutez cette ligne pour servir les images de profil
+app.use(
+  "/profiles",
+  express.static(path.join(__dirname, "../frontend/profiles"))
+);
+
 // Vérification des variables d'environnement essentielles
 if (
   !process.env.DB_HOST ||

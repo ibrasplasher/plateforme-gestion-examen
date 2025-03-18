@@ -1,5 +1,5 @@
 # Utiliser une image de base Node.js
-FROM node:16
+FROM node:16-alpine
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -7,8 +7,17 @@ WORKDIR /app
 # Installer http-server globalement
 RUN npm install -g http-server
 
-# Copier les fichiers frontend dans le container
-COPY . .
+# Créer le dossier pour les photos de profil
+RUN mkdir -p profiles && chmod -R 777 profiles
+
+# Copier les fichiers en plusieurs étapes pour éviter les problèmes
+COPY assets ./assets/
+COPY *.html ./
+COPY *.js ./
+COPY *.css ./
+
+# Si vous avez d'autres dossiers, ajoutez-les ici
+# COPY other-folder ./other-folder/
 
 # Exposer le port que http-server va utiliser
 EXPOSE 8080

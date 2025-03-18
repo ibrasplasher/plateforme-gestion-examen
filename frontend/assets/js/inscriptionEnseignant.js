@@ -2,6 +2,24 @@ document.addEventListener("DOMContentLoaded", function () {
   // Récupérer le formulaire
   const wizardForm = document.querySelector("#wizardProfile form");
 
+  // Prévisualisation de l'image
+  const wizardPicture = document.querySelector("#wizard-picture");
+  const wizardPicturePreview = document.querySelector("#wizardPicturePreview");
+
+  if (wizardPicture) {
+    wizardPicture.addEventListener("change", function () {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          wizardPicturePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  }
+
   // Ajouter un événement sur le bouton "Finish"
   document.querySelector(".btn-finish").addEventListener("click", function (e) {
     e.preventDefault();
@@ -16,9 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPassword = wizardForm.querySelector(
       'input[name="ConfirmMotdepasse"]'
     ).value;
-
-    // Définir profilPhoto avec une valeur par défaut
-    const profilPhoto = "../profiles/defaultPicture.jpg";
 
     console.log("Données collectées:", {
       firstName,
@@ -42,6 +57,76 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // Vérifier s'il y a une photo sélectionnée
+    if (
+      wizardPicture &&
+      wizardPicture.files &&
+      wizardPicture.files.length > 0
+    ) {
+      // Si une photo est sélectionnée, d'abord l'uploader puis créer l'utilisateur
+      uploadProfilePhoto(firstName, lastName, email, contact, password);
+    } else {
+      // Sinon, créer l'utilisateur avec la photo par défaut
+      registerTeacher(
+        firstName,
+        lastName,
+        email,
+        contact,
+        "../profiles/defaultPicture.jpg",
+        password
+      );
+    }
+  });
+
+  function uploadProfilePhoto(firstName, lastName, email, contact, password) {
+    // Créer un FormData pour envoyer le fichier
+    const formData = new FormData();
+    formData.append("profilePhoto", wizardPicture.files[0]);
+
+    console.log("Téléchargement de la photo de profil...");
+
+    fetch("http://localhost:5000/api/profile/upload-photo-public", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        console.log("Réponse upload photo:", response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Photo téléchargée:", data);
+        // Une fois la photo téléchargée, utiliser le chemin retourné pour créer l'utilisateur
+        registerTeacher(
+          firstName,
+          lastName,
+          email,
+          contact,
+          data.filePath,
+          password
+        );
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'upload de la photo:", error);
+        // En cas d'erreur, utiliser la photo par défaut
+        registerTeacher(
+          firstName,
+          lastName,
+          email,
+          contact,
+          "../profiles/defaultPicture.jpg",
+          password
+        );
+      });
+  }
+
+  function registerTeacher(
+    firstName,
+    lastName,
+    email,
+    contact,
+    profilPhoto,
+    password
+  ) {
     // Préparer les données à envoyer
     const userData = {
       firstName,
@@ -82,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
           button: "OK",
         }).then(() => {
           // Rediriger vers la page de connexion
-          window.location.href = "login.html";
+          window.location.href = "Connexion.html";
         });
       })
       .catch((error) => {
@@ -95,5 +180,5 @@ document.addEventListener("DOMContentLoaded", function () {
           button: "OK",
         });
       });
-  });
+  }
 });
