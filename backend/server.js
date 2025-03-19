@@ -3,26 +3,33 @@ const mysql = require("mysql2");
 const path = require("path");
 const cors = require("cors");
 require("dotenv").config({ path: "./docker/.env" });
+
+// Import des routes
 const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const dataRoutes = require("./routes/dataRoutes");
 
-// Initialisez l'application Express AVANT d'essayer d'utiliser 'app'
+// Initialiser Express
 const app = express();
 const port = process.env.PORT || 5000;
 
-// ENSUITE, importez et utilisez profileRoutes
-const profileRoutes = require("./routes/profileRoutes");
-app.use("/api/profile", profileRoutes);
-
-// Middleware pour servir les fichiers statiques HTML, CSS, JS
-app.use(express.static(path.join(__dirname, "../frontend"))); // le chemin vers le dossier frontend
+// Middlewares
+app.use(express.json());
 app.use(cors({ origin: "http://localhost:8080" }));
 
-// Ajoutez cette ligne pour servir les images de profil
+// Servir les fichiers statiques
+app.use(express.static(path.join(__dirname, "../frontend")));
 app.use(
   "/profiles",
   express.static(path.join(__dirname, "../frontend/profiles"))
 );
+
+// Configuration des routes
+app.use("/api/auth", authRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/data", dataRoutes);
 
 // Vérification des variables d'environnement essentielles
 if (
@@ -56,18 +63,12 @@ db.connect((err) => {
   }
 });
 
-// Middleware pour parser le JSON
-app.use(express.json());
-
-// Routes principales
-app.use("/api/auth", authRoutes);
-app.use("/api", dashboardRoutes);
-
 // Route par défaut
 app.get("/", (req, res) => {
   res.send("Backend en cours de développement...");
 });
 
+// Démarrage du serveur
 app.listen(port, () => {
   console.log(`🚀 Serveur backend démarré sur le port ${port}`);
 });

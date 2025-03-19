@@ -7,9 +7,34 @@ const path = require("path");
 
 const router = express.Router();
 
-// Route pour uploader une photo de profil
+// Route pour uploader une photo de profil publique (sans authentification)
 router.post(
   "/upload-photo-public",
+  upload.single("profilePhoto"),
+  (req, res) => {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ error: "Aucun fichier n'a été téléchargé." });
+    }
+    // Obtenir le chemin relatif à partir de la racine du projet frontend
+    const relativePath = path
+      .relative(path.join(__dirname, "../../frontend"), req.file.path)
+      .replace(/\\/g, "/"); // Remplacer les backslashes par des slashes pour la compatibilité
+
+    // Pour la route publique, on retourne simplement le chemin du fichier
+    // sans essayer de mettre à jour la base de données
+    res.status(200).json({
+      message: "Photo téléchargée avec succès",
+      filePath: relativePath,
+    });
+  }
+);
+
+// Route pour uploader une photo de profil (avec authentification)
+router.post(
+  "/upload-photo",
+  authMiddleware,
   upload.single("profilePhoto"),
   (req, res) => {
     if (!req.file) {

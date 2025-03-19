@@ -119,7 +119,7 @@
                                 <!--Form wizard-->
                                 <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                                     <h6>Formulaire De Validation</h6>
-                                    <p>Wizard gives you a possibility to use separate form into steps</p>
+                                    <p>Inscription</p>
                                     <br><br>
                                     
                                     <div class="wizard-container">
@@ -210,52 +210,43 @@
                                                             <div class="col-sm-10 offset-sm-1">
                                                                 <div class="form-group">
                                                                     <label>Mot de Passe <small>(required)</small></label>
-                                                                    <input name="Motdepasse" type="password" class="form-control" id="numCarteInput" >
-                                                                    <small id="numCarteError" class="text-danger" style="display: none;">Ce champ est requis.</small>
+                                                                    <input name="Motdepasse" type="password" class="form-control" id="passwordInput" >
+                                                                    <small id="passwordError" class="text-danger" style="display: none;">Ce champ est requis.</small>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>Confirmer Mot de Passe <small>(required)</small></label>
-                                                                    <input name="ConfirmMotdepasse" type="password" class="form-control" id="numCarteInput" >
-                                                                    <small id="numCarteError" class="text-danger" style="display: none;">Ce champ est requis.</small>
-                                                                </div>
+                                                                    <input name="ConfirmMotdepasse" type="password" class="form-control" id="confirmPasswordInput" >
+                                                                    <small id="confirmPasswordError" class="text-danger" style="display: none;">Ce champ est requis.</small>
+                                                                </div>                                                       
                                                             </div>
                                                             
 
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane" id="account">
-                                                        <h5 class="info-text"> What are you doing? (checkboxes) </h5>
-                                                            <div class="row">
-
-                                                                <div class="col-sm-4">
-                                                                    <div class="choice" data-toggle="wizard-checkbox">
-                                                                        <input type="checkbox" name="jobb" value="Develop">
-                                                                        <div class="card card-checkboxes card-hover-effect">
-                                                                            <i class="ti-star"></i>
-                                                                            <p> VARIABLE MATIERE </p>
-                                                                        </div>
-                                                                    </div>
+                                                        <h5 class="info-text"> Sélectionnez les matières que vous enseignez </h5>
+                                                        <div class="row" id="subjects-container">
+                                                            <!-- Les matières seront chargées dynamiquement ici -->
+                                                            <div class="col-12 text-center">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Chargement...</span>
                                                                 </div>
-
-                           
-                                                            </div>    
-                                                        </div>
-                                                        
-                                                        <div class="tab-pane" id="address">
-                                                            <h5 class="info-text"> Choose your class ? (checkboxes) </h5>
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-4">
-                                                                        <div class="choice" data-toggle="wizard-checkbox">
-                                                                            <input type="checkbox" name="jobb">
-                                                                            <div class="card card-checkboxes card-hover-effect">
-                                                                                <span><h2><strong> CLASSE </strong></h2></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>    
+                                                                <p>Chargement des matières...</p>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                        
+                                                    <div class="tab-pane" id="address">
+                                                        <h5 class="info-text"> Sélectionnez les classes que vous enseignez </h5>
+                                                        <div class="row" id="classes-container">
+                                                            <!-- Les classes seront chargées dynamiquement ici -->
+                                                            <div class="col-12 text-center">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">Chargement...</span>
+                                                                </div>
+                                                                <p>Chargement des classes...</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="wizard-footer">
                                                         <div class="pull-right">
@@ -286,9 +277,7 @@
         <!--Main Content-->
 
     </div>
-    <script>
-        $(document).ready(function(){$('form').validate({rules:{Motdepasse:{required:!0,minlength:6},ConfirmMotdepasse:{required:!0,equalTo:"#numCarteInput"}},messages:{Motdepasse:{required:"Ce champ est requis.",minlength:"Le mot de passe doit contenir au moins 6 caractères."},ConfirmMotdepasse:{required:"Ce champ est requis.",equalTo:"Les mots de passe ne correspondent pas."}}})});
-    </script>
+    
 
     <!-- Page JavaScript Files-->
     <script src="assets/js/jquery.min.js"></script>
@@ -315,6 +304,32 @@
     <script src="assets/js/custom.js"></script>
     <!--Custom Js Script-->
     <script src="assets/js/inscriptionEnseignant.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('form').validate({
+                rules:{
+                    Motdepasse:{
+                        required: true,
+                        minlength: 6
+                    },
+                    ConfirmMotdepasse:{
+                        required: true,
+                        equalTo: "#passwordInput"
+                    }
+                },
+                messages:{
+                    Motdepasse:{
+                        required: "Ce champ est requis.",
+                        minlength: "Le mot de passe doit contenir au moins 6 caractères."
+                    },
+                    ConfirmMotdepasse:{
+                        required: "Ce champ est requis.",
+                        equalTo: "Les mots de passe ne correspondent pas."
+                    }
+                }
+            });
+        });
+    </script>
   </body>
   </body>
 </html>
