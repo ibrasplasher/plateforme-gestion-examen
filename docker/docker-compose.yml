@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   frontend:
     build: ../frontend
@@ -11,7 +10,6 @@ services:
       - docker_exam-network
     depends_on:
       - backend
-
   backend:
     build: ../backend
     container_name: backend_container
@@ -25,9 +23,10 @@ services:
       - "5000:5000"
     networks:
       - docker_exam-network
+    volumes:
+      - profile_images:/app/frontend/assets/img
     command: >
       sh -c "npm install && npm start"
-
   db:
     image: mysql:5.7
     container_name: mysql_container
@@ -52,10 +51,9 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
-
 volumes:
   mysql_data:
-
+  profile_images:
 networks:
   docker_exam-network:
     driver: bridge

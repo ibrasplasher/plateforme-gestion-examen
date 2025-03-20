@@ -135,10 +135,14 @@
 
             <!--Sidebar Navigation Menu-->
             <div class="sidebar-menu-container">
+              <!-- Ajouter cette ligne juste avant la fermeture de la balise body -->
+              <script src="assets/js/sidebar-navigation.js"></script>
+
+              <!-- Remplacer les liens de la sidebar pour qu'ils aient des identifiants uniques -->
               <ul class="sidebar-menu mt-4 mb-4">
                 <li class="parent">
-                  <a href="#"
-                    ><i class="fa fa-dashboard mr-3"> </i>
+                  <a href="#" id="sidebar-dashboard">
+                    <i class="fa fa-dashboard mr-3"> </i>
                     <span class="none">Dashboard </span>
                   </a>
                 </li>
@@ -155,13 +159,13 @@
                   </a>
                   <ul class="children" id="dashboard">
                     <li class="child">
-                      <a href="#" class="ml-4"
+                      <a href="#" id="sidebar-create-exam" class="ml-4"
                         ><i class="fa fa-angle-right mr-2"></i> Creer
                         Evaluation</a
                       >
                     </li>
                     <li class="child">
-                      <a href="#" class="ml-4"
+                      <a href="#" id="sidebar-deposit-exam" class="ml-4"
                         ><i class="fa fa-angle-right mr-2"></i> Deposer
                         Evaluation</a
                       >
@@ -169,13 +173,13 @@
                   </ul>
                 </li>
                 <li class="parent">
-                  <a href="#" class=""
+                  <a href="#" id="sidebar-grades" class=""
                     ><i class="fa fa-pencil mr-3"></i>
                     <span class="none">Gestion Notes </span>
                   </a>
                 </li>
                 <li class="parent">
-                  <a href="#" class=""
+                  <a href="#" id="sidebar-examxpert" class=""
                     ><i class="fa fa-rocket mr-3"></i>
                     <span class="none">ExamXpert</span>
                   </a>
@@ -183,7 +187,7 @@
                 <br /><br />
 
                 <li class="parent">
-                  <a href="#" class=""
+                  <a href="#" id="sidebar-logout" class=""
                     ><i class="fa fa-sign-out mr-3"></i>
                     <span class="none">Log Out </span>
                   </a>
@@ -386,5 +390,7 @@
     <script src="assets/js/custom.js"></script>
 
     <script src="assets/js/dashboard-profile.js"></script>
+
+    <script src="assets/js/sidebar-navigation.js"></script>
   </body>
 </html>
