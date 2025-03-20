@@ -7,7 +7,7 @@ const path = require("path");
 
 const router = express.Router();
 
-// Route pour uploader une photo de profil publique (sans authentification)
+// Route pour uploader une photo de profil sans authentification (pour l'inscription)
 router.post(
   "/upload-photo-public",
   upload.single("profilePhoto"),
@@ -17,13 +17,13 @@ router.post(
         .status(400)
         .json({ error: "Aucun fichier n'a été téléchargé." });
     }
-    // Obtenir le chemin relatif à partir de la racine du projet frontend
-    const relativePath = path
-      .relative(path.join(__dirname, "../../frontend"), req.file.path)
-      .replace(/\\/g, "/"); // Remplacer les backslashes par des slashes pour la compatibilité
 
-    // Pour la route publique, on retourne simplement le chemin du fichier
-    // sans essayer de mettre à jour la base de données
+    // Obtenir le chemin relatif pour le frontend
+    const relativePath = "assets/img/" + path.basename(req.file.path);
+
+    console.log("Photo téléchargée avec succès:", relativePath);
+
+    // Simplement renvoyer le chemin du fichier sans mise à jour de la DB
     res.status(200).json({
       message: "Photo téléchargée avec succès",
       filePath: relativePath,
@@ -31,7 +31,7 @@ router.post(
   }
 );
 
-// Route pour uploader une photo de profil (avec authentification)
+// Route pour uploader une photo de profil avec authentification
 router.post(
   "/upload-photo",
   authMiddleware,
@@ -42,10 +42,9 @@ router.post(
         .status(400)
         .json({ error: "Aucun fichier n'a été téléchargé." });
     }
-    // Obtenir le chemin relatif à partir de la racine du projet frontend
-    const relativePath = path
-      .relative(path.join(__dirname, "../../frontend"), req.file.path)
-      .replace(/\\/g, "/"); // Remplacer les backslashes par des slashes pour la compatibilité
+
+    // Obtenir le chemin relatif pour le frontend
+    const relativePath = "assets/img/" + path.basename(req.file.path);
 
     // Mettre à jour la base de données avec le chemin de la photo
     const query =
@@ -92,8 +91,9 @@ router.get("/get-photo", authMiddleware, (req, res) => {
       return res.status(404).json({ error: "Utilisateur non trouvé." });
     }
 
+    // Renvoyer le chemin de la photo, ou l'image par défaut si pas de photo
     res.status(200).json({
-      photoPath: results[0].profilPhoto || "../profiles/defaultPicture.jpg",
+      photoPath: results[0].profilPhoto || "assets/img/default-avatar.jpg",
     });
   });
 });

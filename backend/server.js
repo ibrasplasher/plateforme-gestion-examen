@@ -20,6 +20,7 @@ app.use(cors({ origin: "http://localhost:8080" }));
 
 // Servir les fichiers statiques
 app.use(express.static(path.join(__dirname, "../frontend")));
+
 app.use(
   "/profiles",
   express.static(path.join(__dirname, "../frontend/profiles"))

@@ -3,19 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     "Document chargé - Initialisation du script d'inscription enseignant"
   );
 
-  // Debug: Inspecter les éléments clés
-  console.log("Inspection du DOM au démarrage:");
-  console.log("- wizardProfile:", document.querySelector("#wizardProfile"));
-  console.log(
-    "- subjects-container:",
-    document.querySelector("#subjects-container")
-  );
-  console.log(
-    "- classes-container:",
-    document.querySelector("#classes-container")
-  );
-  console.log("- jQuery disponible:", typeof $ !== "undefined");
-
   // Récupérer le formulaire
   const wizardForm = document.querySelector("#wizardProfile form");
   console.log("Formulaire trouvé:", !!wizardForm);
@@ -29,6 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const wizardPicturePreview = document.querySelector("#wizardPicturePreview");
   console.log("Input d'image trouvé:", !!wizardPicture);
   console.log("Prévisualisation d'image trouvée:", !!wizardPicturePreview);
+
+  if (wizardPicture) {
+    wizardPicture.addEventListener("change", function () {
+      console.log("Changement d'image détecté");
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          console.log("Image chargée en prévisualisation");
+          wizardPicturePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  }
 
   // Charger les matières et les classes depuis l'API
   console.log("Début du chargement des matières et classes");
@@ -52,10 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Matières
     fetch("http://localhost:5000/api/data/subjects")
-      .then((response) => {
-        console.log("Réponse API matières - status:", response.status);
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((subjects) => {
         console.log("Matières reçues:", subjects);
         displaySubjects(subjects);
@@ -66,10 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Classes
     fetch("http://localhost:5000/api/data/classes")
-      .then((response) => {
-        console.log("Réponse API classes - status:", response.status);
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((classes) => {
         console.log("Classes reçues:", classes);
         displayClasses(classes);
@@ -85,14 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
       subjects.length,
       "matières"
     );
-
-    // DEBUG: Tester les deux possibilités de sélecteurs
-    console.log("Test de sélecteurs:");
-    console.log(
-      "- #subjects-container:",
-      document.querySelector("#subjects-container")
-    );
-    console.log("- #account .row:", document.querySelector("#account .row"));
 
     // Essayer les deux conteneurs possibles
     let subjectsContainer = document.querySelector("#subjects-container");
@@ -110,28 +99,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Conteneur pour les matières trouvé:", subjectsContainer);
 
-    // Vider le conteneur et insérer les matières
+    // Vider le conteneur et préparer pour afficher les matières
     subjectsContainer.innerHTML = "";
-    console.log(
-      "Conteneur matières vidé, ajout de",
-      subjects.length,
-      "matières"
-    );
 
+    // Ajouter les matières
     subjects.forEach((subject) => {
-      console.log(
-        "Ajout de la matière:",
-        subject.name,
-        "(ID:",
-        subject.id,
-        ")"
-      );
-
       const subjectCol = document.createElement("div");
       subjectCol.className = "col-sm-4 mb-3";
       subjectCol.innerHTML = `
-        <div class="choice" data-toggle="wizard-checkbox" data-subject-id="${subject.id}">
-          <input type="checkbox" name="subject[]" value="${subject.id}">
+        <div class="custom-choice" data-subject-id="${subject.id}">
           <div class="card card-checkboxes card-hover-effect">
             <i class="ti-book"></i>
             <p>${subject.name}</p>
@@ -139,13 +115,34 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `;
       subjectsContainer.appendChild(subjectCol);
-    });
 
-    // Configurer le suivi des sélections APRÈS que tous les éléments sont ajoutés
-    console.log(
-      "Configuration des gestionnaires d'événements pour les matières"
-    );
-    setupSubjectSelection();
+      // Ajouter un gestionnaire de clic DIRECTEMENT
+      const choiceElement = subjectCol.querySelector(".custom-choice");
+      choiceElement.addEventListener("click", function () {
+        const subjectId = parseInt(this.getAttribute("data-subject-id"));
+
+        // Basculer la classe active manuellement
+        if (this.classList.contains("active")) {
+          this.classList.remove("active");
+          this.querySelector(".card").style.backgroundColor = "";
+          this.querySelector(".card").style.color = "";
+
+          // Retirer de la sélection
+          selectedSubjects = selectedSubjects.filter((id) => id !== subjectId);
+        } else {
+          this.classList.add("active");
+          this.querySelector(".card").style.backgroundColor = "#007bff";
+          this.querySelector(".card").style.color = "white";
+
+          // Ajouter à la sélection
+          if (!selectedSubjects.includes(subjectId)) {
+            selectedSubjects.push(subjectId);
+          }
+        }
+
+        console.log("Matières sélectionnées:", selectedSubjects);
+      });
+    });
   }
 
   function displayClasses(classes) {
@@ -154,14 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
       classes.length,
       "classes"
     );
-
-    // DEBUG: Tester les deux possibilités de sélecteurs
-    console.log("Test de sélecteurs:");
-    console.log(
-      "- #classes-container:",
-      document.querySelector("#classes-container")
-    );
-    console.log("- #address .row:", document.querySelector("#address .row"));
 
     // Essayer les deux conteneurs possibles
     let classesContainer = document.querySelector("#classes-container");
@@ -179,24 +168,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Conteneur pour les classes trouvé:", classesContainer);
 
-    // Vider le conteneur et insérer les classes
+    // Vider le conteneur et préparer pour afficher les classes
     classesContainer.innerHTML = "";
-    console.log("Conteneur classes vidé, ajout de", classes.length, "classes");
 
+    // Ajouter les classes
     classes.forEach((classItem) => {
-      console.log(
-        "Ajout de la classe:",
-        classItem.className,
-        "(ID:",
-        classItem.id,
-        ")"
-      );
-
       const classCol = document.createElement("div");
       classCol.className = "col-sm-4 mb-3";
       classCol.innerHTML = `
-        <div class="choice" data-toggle="wizard-checkbox" data-class-id="${classItem.id}">
-          <input type="checkbox" name="class[]" value="${classItem.id}">
+        <div class="custom-choice" data-class-id="${classItem.id}">
           <div class="card card-checkboxes card-hover-effect">
             <i class="ti-user"></i>
             <p>${classItem.className}</p>
@@ -204,104 +184,61 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `;
       classesContainer.appendChild(classCol);
+
+      // Ajouter un gestionnaire de clic DIRECTEMENT
+      const choiceElement = classCol.querySelector(".custom-choice");
+      choiceElement.addEventListener("click", function () {
+        const classId = parseInt(this.getAttribute("data-class-id"));
+
+        // Basculer la classe active manuellement
+        if (this.classList.contains("active")) {
+          this.classList.remove("active");
+          this.querySelector(".card").style.backgroundColor = "";
+          this.querySelector(".card").style.color = "";
+
+          // Retirer de la sélection
+          selectedClasses = selectedClasses.filter((id) => id !== classId);
+        } else {
+          this.classList.add("active");
+          this.querySelector(".card").style.backgroundColor = "#007bff";
+          this.querySelector(".card").style.color = "white";
+
+          // Ajouter à la sélection
+          if (!selectedClasses.includes(classId)) {
+            selectedClasses.push(classId);
+          }
+        }
+
+        console.log("Classes sélectionnées:", selectedClasses);
+      });
     });
-
-    // Configurer le suivi des sélections APRÈS que tous les éléments sont ajoutés
-    console.log(
-      "Configuration des gestionnaires d'événements pour les classes"
-    );
-    setupClassSelection();
   }
 
-  // Fonction pour configurer les gestionnaires d'événements des matières
-  function setupSubjectSelection() {
-    console.log("Début de setupSubjectSelection");
-
-    // Attendre que jQuery et le wizard soient prêts
-    setTimeout(() => {
-      if (typeof $ === "undefined") {
-        console.error("jQuery non disponible!");
-        return;
-      }
-
-      console.log(
-        "Nombre d'éléments .choice pour les matières:",
-        $(".choice[data-subject-id]").length
-      );
-
-      // Observer les clics sur les éléments de matière
-      $(".choice[data-subject-id]").on("click", function () {
-        const subjectId = parseInt($(this).attr("data-subject-id"));
-        console.log("Clic sur matière ID:", subjectId);
-
-        // Vérifier après un bref délai pour laisser le wizard appliquer ses changements
-        setTimeout(() => {
-          const isActive = $(this).hasClass("active");
-          console.log(`Matière ${subjectId} - état actif: ${isActive}`);
-
-          if (isActive) {
-            if (!selectedSubjects.includes(subjectId)) {
-              selectedSubjects.push(subjectId);
-              console.log(`Matière ${subjectId} ajoutée à la sélection`);
-            }
-          } else {
-            selectedSubjects = selectedSubjects.filter(
-              (id) => id !== subjectId
-            );
-            console.log(`Matière ${subjectId} retirée de la sélection`);
-          }
-
-          console.log("Matières sélectionnées:", selectedSubjects);
-        }, 50);
-      });
-
-      console.log("Gestionnaires d'événements pour les matières configurés");
-    }, 1000);
-  }
-
-  // Fonction pour configurer les gestionnaires d'événements des classes
-  function setupClassSelection() {
-    console.log("Début de setupClassSelection");
-
-    // Attendre que jQuery et le wizard soient prêts
-    setTimeout(() => {
-      if (typeof $ === "undefined") {
-        console.error("jQuery non disponible!");
-        return;
-      }
-
-      console.log(
-        "Nombre d'éléments .choice pour les classes:",
-        $(".choice[data-class-id]").length
-      );
-
-      // Observer les clics sur les éléments de classe
-      $(".choice[data-class-id]").on("click", function () {
-        const classId = parseInt($(this).attr("data-class-id"));
-        console.log("Clic sur classe ID:", classId);
-
-        // Vérifier après un bref délai pour laisser le wizard appliquer ses changements
-        setTimeout(() => {
-          const isActive = $(this).hasClass("active");
-          console.log(`Classe ${classId} - état actif: ${isActive}`);
-
-          if (isActive) {
-            if (!selectedClasses.includes(classId)) {
-              selectedClasses.push(classId);
-              console.log(`Classe ${classId} ajoutée à la sélection`);
-            }
-          } else {
-            selectedClasses = selectedClasses.filter((id) => id !== classId);
-            console.log(`Classe ${classId} retirée de la sélection`);
-          }
-
-          console.log("Classes sélectionnées:", selectedClasses);
-        }, 50);
-      });
-
-      console.log("Gestionnaires d'événements pour les classes configurés");
-    }, 1000);
-  }
+  // Ajouter un CSS pour les éléments personnalisés
+  const style = document.createElement("style");
+  style.textContent = `
+    .custom-choice {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .custom-choice.active .card {
+      background-color: #007bff;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .card-checkboxes {
+      padding: 15px;
+      text-align: center;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    .card-hover-effect:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+  `;
+  document.head.appendChild(style);
 
   // Ajouter un événement sur le bouton "Finish"
   const finishButton = document.querySelector(".btn-finish");
@@ -311,36 +248,6 @@ document.addEventListener("DOMContentLoaded", function () {
     finishButton.addEventListener("click", function (e) {
       e.preventDefault();
       console.log("Bouton Finish cliqué");
-
-      // Faire un dernier scan de l'état des sélections
-      if (typeof $ !== "undefined") {
-        console.log(
-          "Scan final des éléments actifs au moment de la soumission"
-        );
-
-        // Vérifier et collecter les matières sélectionnées
-        let currentSubjects = [];
-        $(".choice[data-subject-id].active").each(function () {
-          const id = parseInt($(this).attr("data-subject-id"));
-          currentSubjects.push(id);
-          console.log(`Matière active trouvée: ${id}`);
-        });
-
-        // Vérifier et collecter les classes sélectionnées
-        let currentClasses = [];
-        $(".choice[data-class-id].active").each(function () {
-          const id = parseInt($(this).attr("data-class-id"));
-          currentClasses.push(id);
-          console.log(`Classe active trouvée: ${id}`);
-        });
-
-        // Mettre à jour nos listes de sélection
-        selectedSubjects = currentSubjects;
-        selectedClasses = currentClasses;
-
-        console.log("Matières sélectionnées (final):", selectedSubjects);
-        console.log("Classes sélectionnées (final):", selectedClasses);
-      }
 
       // Récupérer les valeurs du formulaire
       const firstName = wizardForm.querySelector(
@@ -357,6 +264,15 @@ document.addEventListener("DOMContentLoaded", function () {
       const confirmPassword = wizardForm.querySelector(
         'input[name="ConfirmMotdepasse"]'
       )?.value;
+
+      console.log("Données collectées:", {
+        firstName: firstName || "(vide)",
+        lastName: lastName || "(vide)",
+        email: email || "(vide)",
+        contact: contact || "(vide)",
+        password: password ? "***" : "(vide)",
+        confirmPassword: confirmPassword ? "***" : "(vide)",
+      });
 
       // Valider le formulaire
       if (!firstName || !lastName || !email || !password) {
@@ -401,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
           lastName,
           email,
           contact,
-          "../profiles/defaultPicture.jpg",
+          "profiles/defaultPicture.jpg", // CORRECTION: chemin sans le ../
           password
         );
       }
@@ -432,12 +348,19 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((data) => {
         console.log("Photo téléchargée avec succès:", data);
+
+        // CORRECTION: Assurer que le chemin est au bon format
+        let photoPath = data.filePath;
+        if (photoPath.startsWith("../")) {
+          photoPath = photoPath.replace("../", "");
+        }
+
         registerTeacher(
           firstName,
           lastName,
           email,
           contact,
-          data.filePath,
+          photoPath,
           password
         );
       })
@@ -449,7 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
           lastName,
           email,
           contact,
-          "../profiles/defaultPicture.jpg",
+          "profiles/defaultPicture.jpg", // CORRECTION: chemin sans le ../
           password
         );
       });
@@ -578,19 +501,4 @@ document.addEventListener("DOMContentLoaded", function () {
         throw error;
       });
   }
-
-  // Vérification périodique de l'état des sélections (utile pour le débogage)
-  setInterval(() => {
-    if (typeof $ !== "undefined") {
-      console.log("Vérification périodique des éléments actifs");
-      console.log(
-        "Matières actives:",
-        $(".choice[data-subject-id].active").length
-      );
-      console.log(
-        "Classes actives:",
-        $(".choice[data-class-id].active").length
-      );
-    }
-  }, 5000);
 });

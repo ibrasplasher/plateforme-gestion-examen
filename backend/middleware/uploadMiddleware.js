@@ -3,8 +3,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Créer le dossier profiles s'il n'existe pas
-const profilesDir = path.join(__dirname, "../../frontend/profiles");
+const profilesDir = path.join(__dirname, "../../frontend/assets/img");
+
 if (!fs.existsSync(profilesDir)) {
   fs.mkdirSync(profilesDir, { recursive: true });
 }
