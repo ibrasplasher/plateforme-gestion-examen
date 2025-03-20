@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Chargement du script dashboard-profile.js");
+  console.log("Chargement du script dashboard-profile.js avec débogage");
 
   // Récupérer les informations de l'utilisateur connecté depuis localStorage
   const token = localStorage.getItem("token");
@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Récupérer la photo de profil
+    console.log("Récupération de la photo de profil...");
     fetch("http://localhost:5000/api/profile/get-photo", {
       method: "GET",
       headers: {
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     })
       .then((response) => {
+        console.log("Réponse reçue:", response.status);
         if (!response.ok) {
           throw new Error(
             "Erreur lors de la récupération de la photo de profil"
@@ -47,39 +49,32 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((data) => {
         console.log("Photo de profil récupérée:", data);
+        const photoPath = data.photoPath;
+        console.log("Chemin de photo:", photoPath);
 
         // Mettre à jour l'image de profil
         const profileImages = document.querySelectorAll(".avatar img");
-        profileImages.forEach((img) => {
-          const photoPath = data.photoPath;
+        console.log(
+          "Nombre d'images de profil trouvées:",
+          profileImages.length
+        );
 
-          // Utiliser directement l'image par défaut pour simplifier
-          if (
-            photoPath.includes("defaultPicture.jpg") ||
-            photoPath.startsWith("../")
-          ) {
-            img.src = "assets/img/default-avatar.jpg";
-          }
-          // Si c'est une photo personnalisée et que le chemin ne commence pas par ../
-          else if (photoPath && !photoPath.startsWith("../")) {
-            // Si le chemin commence déjà par "profiles/"
-            if (photoPath.startsWith("profiles/")) {
-              img.src = photoPath;
-            } else {
-              // Sinon ajouter le préfixe
-              img.src = `profiles/${photoPath}`;
-            }
-          }
-          // Dans tous les autres cas, utiliser l'image par défaut
-          else {
+        profileImages.forEach((img, index) => {
+          console.log(`Traitement de l'image ${index + 1}...`);
+
+          // SOLUTION CORRIGÉE: utiliser l'URL complète du backend
+          if (photoPath && photoPath.startsWith("assets/img/")) {
+            const fullImageUrl = `http://localhost:5000/${photoPath}`;
+            console.log(`Définition de src à: ${fullImageUrl}`);
+            img.src = fullImageUrl;
+          } else {
+            console.log("Utilisation de l'image par défaut");
             img.src = "assets/img/default-avatar.jpg";
           }
 
           // Ajouter un gestionnaire d'erreur au cas où l'image ne peut pas être chargée
           img.onerror = function () {
-            console.log(
-              "Erreur de chargement de l'image, utilisation de l'image par défaut"
-            );
+            console.log("Image non trouvée, utilisation de l'image par défaut");
             this.src = "assets/img/default-avatar.jpg";
           };
         });
