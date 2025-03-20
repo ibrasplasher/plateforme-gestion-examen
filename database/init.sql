@@ -62,12 +62,15 @@ CREATE TABLE exam (
     description TEXT,
     file_path VARCHAR(255) NOT NULL,
     teacher_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    class_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deadline DATETIME NOT NULL,
     corrige VARCHAR(255) DEFAULT NULL,
-    FOREIGN KEY (teacher_id) REFERENCES teacher(id) ON DELETE CASCADE
+    FOREIGN KEY (teacher_id) REFERENCES teacher(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subject(id) ON DELETE CASCADE,
+    FOREIGN KEY (class_id) REFERENCES class(id) ON DELETE CASCADE
 );
-
 -- Table des copies soumises
 CREATE TABLE submission (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -114,9 +117,13 @@ INSERT INTO subject (name) VALUES
 ('Architecture'), ('UML'), ('Genie Logiciel'), ('Signal'), ('Anglais');
 
 -- Insertion des étudiants
-INSERT INTO student (firstName, lastName,numCarte, email, password_hash) VALUES
+-- Insertion des étudiants
+INSERT INTO student (firstName, lastName, numCarte, email, password_hash) VALUES
 ('Jean', 'Dupont', '20180AFRD', 'dupont@gmail.com',  '$2y$10$3'),
-('Coumba', 'FALL', '20220AXCF', 'coumbafall@gmail.com', '$2y$10$3');
+('Coumba', 'FALL', '20220AXCF', 'coumbafall@gmail.com', '$2y$10$3'),
+('Pierre', 'Martin', '20210BXYZ', 'pierre@gmail.com', '$2y$10$3'),
+('Marie', 'Leroy', '20200CDEF', 'marie@gmail.com', '$2y$10$3'),
+('Sophie', 'Dubois', '20190DGHT', 'sophie@gmail.com', '$2y$10$3');
 
 -- Insertion des enseignants
 INSERT INTO teacher (firstName, lastName, email, contact, profilPhoto, password_hash) VALUES

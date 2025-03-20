@@ -2,286 +2,533 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="" >
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!--Meta Responsive tag-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <!--Custom style.css-->
-    <link rel="stylesheet" href="assets/css/quicksand.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/quicksand.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <!--Font Awesome-->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
     <!--Chartist CSS-->
-    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
     <!--Bootstrap Calendar-->
-    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
     <!--Form validator-->
-    <link rel="stylesheet" href="assets/js/form-validator/theme-default.min.css">
-    
-
+    <link
+      rel="stylesheet"
+      href="assets/js/form-validator/theme-default.min.css"
+    />
 
     <title>ExamXpress</title>
   </head>
   <body>
     <!--Page loader-->
     <div class="loader-wrapper">
-        <div class="loader-circle">
-            <div class="loader-wave">ExamXpress</div>
-        </div>
+      <div class="loader-circle">
+        <div class="loader-wave">ExamXpress</div>
+      </div>
     </div>
     <!--Page loader-->
-    
+
     <!--Page Wrapper-->
-
     <div class="container-fluid">
-
-        <!--Header-->
-        <div class="row header shadow-sm">
-            
-            <!--Logo-->
-            <div class="col-sm-3 pl-0 text-center header-logo">
-               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
-               </div>
-
-            </div>
-            <!--Logo-->
-            <!--Header Menu-->
-            <div class="col-sm-9 header-menu pt-2 pb-0">
-                <div class="row">
-                    
-                    <!--Menu Icons-->
-                    <div class="col-sm-4 col-8 pl-0">
-                        <!--Toggle sidebar-->
-                        <span class="menu-icon" onclick="toggle_sidebar()">
-                            <span id="sidebar-toggle-btn"></span>
-                        </span>
-                    </div>
-
-                    <!--Search box and avatar-->
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                        
-                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> NOMPAGECREER</h6>
-                    </div>
-                
-                </div>
-            </div> 
-
+      <!--Header-->
+      <div class="row header shadow-sm">
+        <!--Logo-->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+          <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo">
+              <a href="#" class="text-secondary logo"
+                ><i class="fa fa-rocket"></i> ExamX<span class="small"
+                  >pert</span
+                ></a
+              >
+            </h3>
+          </div>
         </div>
-        <!--Header-->
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+          <div class="row">
+            <!--Menu Icons-->
+            <div class="col-sm-4 col-8 pl-0">
+              <!--Toggle sidebar-->
+              <span class="menu-icon" onclick="toggle_sidebar()">
+                <span id="sidebar-toggle-btn"></span>
+              </span>
+            </div>
 
-        <!--Main Content-->
+            <!--Search box and avatar-->
+            <div
+              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end"
+            >
+              <h6 class="mb-2">
+                Dashboard <i class="fa fa-angle-right"></i> Déposer Evaluation
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Header-->
 
-        <div class="row main-content">
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <br><br>
-                    <div class="avatar text-center">
-                        <img src="assets/img/client-img4.png" alt="" class="rounded-circle" />
-                        <p><strong> NOM UTILISATEUR </strong></p>
-                        <span class="text-primary small"><strong>PROFFESSION UTILISATEUR</strong></span>
-                    </div>
-                    <!--Image Avatar-->
+      <!--Main Content-->
+      <div class="row main-content">
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+          <div class="inner-sidebar mr-3">
+            <!--Image Avatar-->
+            <br /><br />
+            <div class="avatar text-center">
+              <img
+                src="assets/img/client-img4.png"
+                alt=""
+                class="rounded-circle"
+              />
+              <p><strong> NOM UTILISATEUR </strong></p>
+              <span class="text-primary small"
+                ><strong>PROFFESSION UTILISATEUR</strong></span
+              >
+            </div>
+            <!--Image Avatar-->
 
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container">
-                        <ul class="sidebar-menu mt-4 mb-4">
-                          <li class="parent">
-                            <a href="#"
-                              ><i class="fa fa-dashboard mr-3"> </i>
-                              <span class="none">Dashboard </span>
-                            </a>
-                          </li>
-                          <li class="parent">
-                            <a
-                              href="#"
-                              onclick="toggle_menu('dashboard'); return false"
-                              class=""
-                              ><i class="fa fa-book mr-3"> </i>
-                              <span class="none"
-                                >Evaluation
-                                <i class="fa fa-angle-down pull-right align-bottom"></i
-                              ></span>
-                            </a>
-                            <ul class="children" id="dashboard">
-                              <li class="child">
-                                <a href="#" class="ml-4"
-                                  ><i class="fa fa-angle-right mr-2"></i> Creer
-                                  Evaluation</a
-                                >
-                              </li>
-                              <li class="child">
-                                <a href="#" class="ml-4"
-                                  ><i class="fa fa-angle-right mr-2"></i> Deposer
-                                  Evaluation</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-pencil mr-3"></i>
-                              <span class="none">Gestion Notes </span>
-                            </a>
-                          </li>
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-rocket mr-3"></i>
-                              <span class="none">ExamXpert</span>
-                            </a>
-                          </li>
-                          <br /><br />
-          
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-sign-out mr-3"></i>
-                              <span class="none">Log Out </span>
-                            </a>
-                          </li>
-                        </ul>
+            <!--Sidebar Navigation Menu-->
+            <div class="sidebar-menu-container">
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="#"
+                    ><i class="fa fa-dashboard mr-3"> </i>
+                    <span class="none">Dashboard </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a
+                    href="#"
+                    onclick="toggle_menu('dashboard'); return false"
+                    class=""
+                  >
+                    <i class="fa fa-book mr-3"> </i>
+                    <span class="none"
+                      >Evaluation
+                      <i class="fa fa-angle-down pull-right align-bottom"></i>
+                    </span>
+                  </a>
+                  <ul class="children" id="dashboard">
+                    <li class="child">
+                      <a href="#" class="ml-4">
+                        <i class="fa fa-angle-right mr-2"></i> Creer Evaluation
+                      </a>
+                    </li>
+                    <li class="child">
+                      <a href="#" class="ml-4">
+                        <i class="fa fa-angle-right mr-2"></i> Deposer
+                        Evaluation
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <a href="#" class="">
+                    <i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Gestion Notes </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="#" class="">
+                    <i class="fa fa-rocket mr-3"></i>
+                    <span class="none">ExamXpert</span>
+                  </a>
+                </li>
+                <br /><br />
+                <li class="parent">
+                  <a href="#" class="">
+                    <i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Log Out </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!--Sidebar Navigation Menu-->
+          </div>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+          <br />
+          <h5 class="mb-0"><strong>Déposer Evaluation</strong></h5>
+
+          <!--Default bootstrap 4 validation-->
+          <div class="row mt-3">
+            <div class="col-sm-12">
+              <!--Default bootstrap 4 validation-->
+              <div
+                class="mt-1 mb-4 p-3 button-container bg-white border shadow-sm"
+              >
+                <h6 class="mb-2">Examen / Devoir</h6>
+                <p>
+                  Remplissez le formulaire pour déposer un examen ou un devoir
+                </p>
+
+                <form id="examForm" class="needs-validation">
+                  <div class="form-row">
+                    <div class="col-sm-6 mb-2 mt-1">
+                      <label for="sujetFile"
+                        >Sujet <span class="text-danger">*</span></label
+                      >
+                      <div class="custom-file">
+                        <input
+                          type="file"
+                          class="custom-file-input"
+                          id="sujetFile"
+                          name="examFile"
+                          required
+                        />
+                        <label class="custom-file-label" for="sujetFile"
+                          >Choose file...</label
+                        >
+                        <div class="invalid-feedback">Fichier invalide.</div>
                       </div>
-                        </ul>
                     </div>
-                    <!--Sidebar Naigation Menu-->
-                </div>
-            </div>
-            <!--Sidebar left-->
 
-            <!--Content right-->
-            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-            <br>
-                <h5 class="mb-0" ><strong>NOM PAGE CREER</strong></h5>
-                
-                    <!--Default bootstrap 4 validation-->
-                    <div class="row mt-3">
-                        <div class="col-sm-12"> 
-                        
-                        <!--Default bootstrap 4 validation-->
-                        <div class="mt-1 mb-4 p-3 button-container bg-white border shadow-sm">
-                            <h6 class="mb-2">Examen / Devoir</h6>
-                            <p>Enables you to perform basic validation such as <code>required</code> fields</p>
-                        
-
-                            <form class="needs-validation">
-                                <div class="form-row">
-                                    <div class="col-sm-6 mb-2 mt-1">
-                                        <label for="sujetFile">Sujet <span class="text-danger">*</span></label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="sujetFile" required>
-                                            <label class="custom-file-label" for="sujetFile">Choose file...</label>
-                                            <div class="invalid-feedback">Fichier invalide.</div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="col-sm-6 mb-2 mt-1">
-                                        <label for="correctionFile">Correction</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="correctionFile">
-                                            <label class="custom-file-label" for="correctionFile">Choose file...</label>
-                                            <div class="invalid-feedback">Fichier invalide.</div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="col-sm-6 mb-2">
-                                        <div class="form-group">
-                                            <label for="evaluationType">Type Evaluation <span class="text-danger">*</span></label>
-                                            <select class="custom-select" id="evaluationType" required>
-                                                <option value="">Sélectionnez...</option>
-                                                <option value="1">Contrôle Continu</option>
-                                                <option value="2">Travaux Pratiques</option>
-                                                <option value="3">Travaux Dirigés</option>
-                                                <option value="4">Devoir Surveillé</option>
-                                            </select>
-                                            <div class="invalid-feedback">Veuillez choisir un type d'évaluation.</div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="col-sm-6 mb-2">
-                                        <div class="form-group">
-                                            <label for="classe">Classe <span class="text-danger">*</span></label>
-                                            <select class="custom-select" id="classe" required>
-                                                <option value="">Sélectionnez...</option>
-                                            </select>
-                                            <div class="invalid-feedback">Veuillez choisir une classe.</div>
-                                        </div>
-                                    </div>
-                            
-                                    <div class="col-sm-6 mb-2">
-                                        <div class="form-group">
-                                            <label for="matiere">Matière <span class="text-danger">*</span></label>
-                                            <select class="custom-select" id="matiere" required>
-                                                <option value="">Sélectionnez...</option>
-                                            </select>
-                                            <div class="invalid-feedback">Veuillez choisir une matière.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 mb-2">
-                                        <label for="dateLimite">Date Limite (Deadline) <span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" id="dateLimite" required>
-                                    </div>
-                            
-                                    <div class="col-md-4 mb-2">
-                                        <label for="startTime">Heure de Début <span class="text-danger"></span></label>
-                                        <input type="time" class="form-control" id="startTime">
-                                    </div>
-                                    
-                                    <div class="col-md-4 mb-2">
-                                        <label for="endTime">Heure Limite (Deadline) <span class="text-danger">*</span></label>
-                                        <input type="time" class="form-control" id="endTime" required>
-                                        <div class="invalid-feedback">L'heure limite doit être après l'heure de début.</div>
-                                    </div>
-                                    
-                            
-                                    <div class="col-md-10 mb-2">
-                                        <label for="description">Description</label>
-                                        <textarea rows="5" class="form-control" id="description" placeholder="Ajoutez une description..."></textarea>
-                                    </div>
-                                </div>
-                            
-                                <button class="btn btn-primary" type="submit">Save Exam</button>
-                            </form>
-                            
-                            
-                            
+                    <div class="col-sm-6 mb-2">
+                      <div class="form-group">
+                        <label for="evaluationType"
+                          >Type Evaluation
+                          <span class="text-danger">*</span></label
+                        >
+                        <select
+                          class="custom-select"
+                          id="evaluationType"
+                          name="title"
+                          required
+                        >
+                          <option value="">Sélectionnez...</option>
+                          <option value="Contrôle Continu">
+                            Contrôle Continu
+                          </option>
+                          <option value="Travaux Pratiques">
+                            Travaux Pratiques
+                          </option>
+                          <option value="Travaux Dirigés">
+                            Travaux Dirigés
+                          </option>
+                          <option value="Devoir Surveillé">
+                            Devoir Surveillé
+                          </option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Veuillez choisir un type d'évaluation.
                         </div>
-                        <!--/Default bootstrap validation-->
+                      </div>
+                    </div>
 
+                    <div class="col-sm-6 mb-2">
+                      <div class="form-group">
+                        <label for="classe"
+                          >Classe <span class="text-danger">*</span></label
+                        >
+                        <select
+                          class="custom-select"
+                          id="classe"
+                          name="classId"
+                          required
+                        >
+                          <option value="">Sélectionnez...</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Veuillez choisir une classe.
+                        </div>
+                      </div>
+                    </div>
 
-                        
-                   
-                </div>
+                    <div class="col-sm-6 mb-2">
+                      <div class="form-group">
+                        <label for="matiere"
+                          >Matière <span class="text-danger">*</span></label
+                        >
+                        <select
+                          class="custom-select"
+                          id="matiere"
+                          name="subjectId"
+                          required
+                        >
+                          <option value="">Sélectionnez...</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Veuillez choisir une matière.
+                        </div>
+                      </div>
+                    </div>
 
+                    <div class="col-md-4 mb-2">
+                      <label for="dateLimite"
+                        >Date Limite (Deadline)
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="dateLimite"
+                        name="date"
+                        required
+                      />
+                    </div>
 
+                    <div class="col-md-4 mb-2">
+                      <label for="startTime"
+                        >Heure de Début <span class="text-danger"></span
+                      ></label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="startTime"
+                        name="startTime"
+                      />
+                    </div>
+
+                    <div class="col-md-4 mb-2">
+                      <label for="endTime"
+                        >Heure Limite (Deadline)
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="endTime"
+                        name="endTime"
+                        required
+                      />
+                      <div class="invalid-feedback">
+                        L'heure limite doit être après l'heure de début.
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                      <label for="description">Description</label>
+                      <textarea
+                        rows="5"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        placeholder="Ajoutez une description..."
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <button class="btn btn-primary" type="submit">
+                    Enregistrer
+                  </button>
+                </form>
+              </div>
+              <!--/Default bootstrap validation-->
             </div>
+          </div>
         </div>
-
-        <!--Main Content-->
-
+      </div>
+      <!--Main Content-->
     </div>
-
     <!--Page Wrapper-->
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".custom-file-input").forEach(input => {
-                input.addEventListener("change", function (e) {
-                    let fileName = e.target.files[0] ? e.target.files[0].name : "Choose file...";
-                    e.target.nextElementSibling.innerText = fileName;
-                });
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Gestion de l'affichage des noms de fichiers sélectionnés
+        document.querySelectorAll(".custom-file-input").forEach((input) => {
+          input.addEventListener("change", function (e) {
+            let fileName = e.target.files[0]
+              ? e.target.files[0].name
+              : "Choose file...";
+            e.target.nextElementSibling.innerText = fileName;
+          });
         });
+
+        // Récupérer le token d'authentification et les données utilisateur
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user")
+          ? JSON.parse(localStorage.getItem("user"))
+          : null;
+
+        // Vérifier si l'utilisateur est connecté
+        if (!token || !userData) {
+          console.error("Utilisateur non connecté");
+          swal({
+            title: "Erreur!",
+            text: "Vous devez être connecté pour accéder à cette page.",
+            icon: "error",
+            button: "OK",
+          }).then(() => {
+            window.location.href = "Connexion.html";
+          });
+          return;
+        }
+
+        // Charger les matières et classes de l'enseignant connecté
+        loadTeacherSubjectsAndClasses();
+
+        function loadTeacherSubjectsAndClasses() {
+          console.log("Chargement des matières et classes de l'enseignant...");
+
+          fetch("http://localhost:5000/api/data/teacher-subjects-classes", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des données");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Données reçues:", data);
+              populateSubjectsDropdown(data.subjects);
+              populateClassesDropdown(data.classes);
+            })
+            .catch((error) => {
+              console.error("Erreur:", error);
+              swal({
+                title: "Erreur!",
+                text: "Impossible de charger vos matières et classes.",
+                icon: "error",
+                button: "OK",
+              });
+            });
+        }
+
+        // Remplir le dropdown des matières
+        function populateSubjectsDropdown(subjects) {
+          const matiereSelect = document.getElementById("matiere");
+          matiereSelect.innerHTML = '<option value="">Sélectionnez...</option>';
+
+          if (subjects && subjects.length > 0) {
+            subjects.forEach((subject) => {
+              const option = document.createElement("option");
+              option.value = subject.id;
+              option.textContent = subject.name;
+              matiereSelect.appendChild(option);
+            });
+          } else {
+            console.warn("Aucune matière trouvée pour cet enseignant");
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = "Aucune matière disponible";
+            option.disabled = true;
+            matiereSelect.appendChild(option);
+          }
+        }
+
+        // Remplir le dropdown des classes
+        function populateClassesDropdown(classes) {
+          const classeSelect = document.getElementById("classe");
+          classeSelect.innerHTML = '<option value="">Sélectionnez...</option>';
+
+          if (classes && classes.length > 0) {
+            classes.forEach((classe) => {
+              const option = document.createElement("option");
+              option.value = classe.id;
+              option.textContent = classe.className;
+              classeSelect.appendChild(option);
+            });
+          } else {
+            console.warn("Aucune classe trouvée pour cet enseignant");
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = "Aucune classe disponible";
+            option.disabled = true;
+            classeSelect.appendChild(option);
+          }
+        }
+
+        // Gestion de la soumission du formulaire et redirection
+        document
+          .getElementById("examForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault(); // Empêcher la soumission normale du formulaire
+
+            // Vérifier si le formulaire est valide
+            if (this.checkValidity() === false) {
+              e.stopPropagation();
+              this.classList.add("was-validated");
+              return;
+            }
+
+            // Créer un FormData pour l'envoi du fichier et des données
+            const formData = new FormData();
+
+            // Récupérer les valeurs des champs
+            const title = document.getElementById("evaluationType").value;
+            const description = document.getElementById("description").value;
+            const classId = document.getElementById("classe").value;
+            const subjectId = document.getElementById("matiere").value;
+            const examFile = document.getElementById("sujetFile").files[0];
+
+            // Construire la date limite en combinant la date et l'heure
+            const dateLimite = document.getElementById("dateLimite").value;
+            const endTime = document.getElementById("endTime").value;
+            const deadline = `${dateLimite}T${endTime}:00`;
+
+            // Ajouter les données au FormData
+            formData.append("title", title);
+            formData.append("description", description);
+            formData.append("classId", classId);
+            formData.append("subjectId", subjectId);
+            formData.append("deadline", deadline);
+            formData.append("examFile", examFile);
+
+            // Envoyer les données au serveur
+            fetch("http://localhost:5000/api/data/exams", {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+              body: formData,
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(
+                    "Erreur lors de l'enregistrement de l'examen"
+                  );
+                }
+                return response.json();
+              })
+              .then((data) => {
+                console.log("Examen enregistré:", data);
+
+                swal({
+                  title: "Succès!",
+                  text: "L'examen a été déposé avec succès.",
+                  icon: "success",
+                  button: "OK",
+                }).then(() => {
+                  window.location.href = "CorrigeType.html";
+                });
+              })
+              .catch((error) => {
+                console.error("Erreur:", error);
+                swal({
+                  title: "Erreur!",
+                  text: "Impossible d'enregistrer l'examen.",
+                  icon: "error",
+                  button: "OK",
+                });
+              });
+
+            this.classList.add("was-validated");
+          });
+      });
     </script>
-    
 
     <!-- Page JavaScript Files-->
     <script src="assets/js/jquery.min.js"></script>
@@ -300,22 +547,11 @@
     <!--Bootstrap Calendar JS-->
     <script src="assets/js/calendar/bootstrap_calendar.js"></script>
     <script src="assets/js/calendar/demo.js"></script>
-    <!--Bootstrap Calendar-->
     <!--Form validator-->
     <script src="assets/js/form-validator/jquery.form-validator.min.js"></script>
-
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>
-    <!--Custom Js Script-->
-
-    <script>
-        $.validate({
-            form : '#validation_style',
-            modules : 'security'
-        });
-        $('#Rlength1').restrictLength( $('#max-length-element') );
-    </script>
     <script src="assets/js/dashboard-profile.js"></script>
-<script src="assets/js/sidebar-navigation.js"></script>
+    <script src="assets/js/sidebar-navigation.js"></script>
   </body>
 </html>

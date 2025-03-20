@@ -30,7 +30,30 @@
       rel="stylesheet"
       href="assets/js/form-validator/theme-default.min.css"
     />
+    <style>
+      @media (min-width: 576px) {
+        .main-content {
+          display: flex;
+          flex-wrap: nowrap;
+        }
 
+        .sidebar {
+          max-width: 25%;
+          flex: 0 0 25%;
+        }
+
+        .content {
+          max-width: 75%;
+          flex: 0 0 75%;
+          overflow-x: auto;
+        }
+
+        #document_editor {
+          max-width: 100%;
+          overflow-x: auto;
+        }
+      }
+    </style>
     <!--Ckeditor-->
     <script src="assets/js/ckeditor5/build-document/ckeditor.js"></script>
     <!-- Ajout de html2canvas -->
@@ -112,64 +135,62 @@
 
             <!--Sidebar Navigation Menu-->
             <div class="sidebar-menu-container">
-                <ul class="sidebar-menu mt-4 mb-4">
-                  <li class="parent">
-                    <a href="#"
-                      ><i class="fa fa-dashboard mr-3"> </i>
-                      <span class="none">Dashboard </span>
-                    </a>
-                  </li>
-                  <li class="parent">
-                    <a
-                      href="#"
-                      onclick="toggle_menu('dashboard'); return false"
-                      class=""
-                      ><i class="fa fa-book mr-3"> </i>
-                      <span class="none"
-                        >Evaluation
-                        <i class="fa fa-angle-down pull-right align-bottom"></i
-                      ></span>
-                    </a>
-                    <ul class="children" id="dashboard">
-                      <li class="child">
-                        <a href="#" class="ml-4"
-                          ><i class="fa fa-angle-right mr-2"></i> Creer
-                          Evaluation</a
-                        >
-                      </li>
-                      <li class="child">
-                        <a href="#" class="ml-4"
-                          ><i class="fa fa-angle-right mr-2"></i> Deposer
-                          Evaluation</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="parent">
-                    <a href="#" class=""
-                      ><i class="fa fa-pencil mr-3"></i>
-                      <span class="none">Gestion Notes </span>
-                    </a>
-                  </li>
-                  <li class="parent">
-                    <a href="#" class=""
-                      ><i class="fa fa-rocket mr-3"></i>
-                      <span class="none">ExamXpert</span>
-                    </a>
-                  </li>
-                  <br /><br />
-  
-                  <li class="parent">
-                    <a href="#" class=""
-                      ><i class="fa fa-sign-out mr-3"></i>
-                      <span class="none">Log Out </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-                </ul>
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="#">
+                    <i class="fa fa-dashboard mr-3"> </i>
+                    <span class="none">Dashboard </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a
+                    href="#"
+                    onclick="toggle_menu('dashboard'); return false"
+                    class=""
+                    ><i class="fa fa-book mr-3"> </i>
+                    <span class="none"
+                      >Evaluation
+                      <i class="fa fa-angle-down pull-right align-bottom"></i
+                    ></span>
+                  </a>
+                  <ul class="children" id="dashboard">
+                    <li class="child">
+                      <a href="#" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Creer
+                        Evaluation</a
+                      >
+                    </li>
+                    <li class="child">
+                      <a href="#" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Deposer
+                        Evaluation</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Gestion Notes </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-rocket mr-3"></i>
+                    <span class="none">ExamXpert</span>
+                  </a>
+                </li>
+                <br /><br />
+
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Log Out </span>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <!--Sidebar Naigation Menu-->
+            <!--Sidebar Navigation Menu-->
           </div>
         </div>
         <!--Sidebar left-->
@@ -338,6 +359,6 @@
     <script src="assets/js/custom.js"></script>
     <!--Custom Js Script-->
     <script src="assets/js/dashboard-profile.js"></script>
-<script src="assets/js/sidebar-navigation.js"></script>
+    <script src="assets/js/sidebar-navigation.js"></script>
   </body>
 </html>
