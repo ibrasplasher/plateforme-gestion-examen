@@ -85,14 +85,13 @@ CREATE TABLE submission (
 );
 
 -- Table des corrections automatiques
-CREATE TABLE correction (
+CREATE TABLE correction_template (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    submission_id INT NOT NULL,
-    corrected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ai_score FLOAT NOT NULL,
-    comments TEXT,
-    FOREIGN KEY (submission_id) REFERENCES submission(id) ON DELETE CASCADE,
-    CONSTRAINT chk_ai_score CHECK (ai_score >= 0 AND ai_score <= 20)
+    exam_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (exam_id) REFERENCES exam(id) ON DELETE CASCADE
 );
 
 -- Index pour optimiser les recherches

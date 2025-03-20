@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const dataRoutes = require("./routes/dataRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 // Initialiser Express
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", dashboardRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/data", dataRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Vérification des variables d'environnement essentielles
 if (

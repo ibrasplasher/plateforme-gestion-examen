@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--Meta Responsive tag-->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <!--Custom style.css-->
+    <link rel="stylesheet" href="assets/css/quicksand.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <!--Chartist CSS-->
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
+    <!--Bootstrap Calendar-->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
+    <!--Form validator-->
+    <link
+      rel="stylesheet"
+      href="assets/js/form-validator/theme-default.min.css"
+    />
+
+    <!--Ckeditor-->
+    <script src="assets/js/ckeditor5/build-document/ckeditor.js"></script>
+    <!-- Ajout de html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <title>ExamXpress - Corrigé Type</title>
+  </head>
+  <body>
+    <!--Page loader-->
+    <div class="loader-wrapper">
+      <div class="loader-circle">
+        <div class="loader-wave">ExamXpress</div>
+      </div>
+    </div>
+    <!--Page loader-->
+
+    <!--Page Wrapper-->
+
+    <div class="container-fluid">
+      <!--Header-->
+      <div class="row header shadow-sm">
+        <!--Logo-->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+          <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo">
+              <a href="#" class="text-secondary logo"
+                ><i class="fa fa-rocket"></i> ExamX<span class="small"
+                  >pert</span
+                ></a
+              >
+            </h3>
+          </div>
+        </div>
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+          <div class="row">
+            <!--Menu Icons-->
+            <div class="col-sm-4 col-8 pl-0">
+              <!--Toggle sidebar-->
+              <span class="menu-icon" onclick="toggle_sidebar()">
+                <span id="sidebar-toggle-btn"></span>
+              </span>
+            </div>
+
+            <!--Search box and avatar-->
+            <div
+              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end"
+            >
+              <h6 class="mb-2">
+                Dashboard <i class="fa fa-angle-right"></i> Corrigé Type IA
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Header-->
+
+      <!--Main Content-->
+
+      <div class="row main-content">
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+          <div class="inner-sidebar mr-3">
+            <!--Image Avatar-->
+            <br /><br />
+            <div class="avatar text-center">
+              <img
+                src="assets/img/client-img4.png"
+                alt=""
+                class="rounded-circle"
+              />
+              <p><strong> NOM UTILISATEUR </strong></p>
+              <span class="text-primary small"
+                ><strong>PROFFESSION UTILISATEUR</strong></span
+              >
+              >
+            </div>
+            <!--Image Avatar-->
+
+            <!--Sidebar Navigation Menu-->
+            <div class="sidebar-menu-container">
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="#"
+                    ><i class="fa fa-dashboard mr-3"> </i>
+                    <span class="none">Dashboard </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a
+                    href="#"
+                    onclick="toggle_menu('dashboard'); return false"
+                    class=""
+                    ><i class="fa fa-book mr-3"> </i>
+                    <span class="none"
+                      >Evaluation
+                      <i class="fa fa-angle-down pull-right align-bottom"></i
+                    ></span>
+                  </a>
+                  <ul class="children" id="dashboard">
+                    <li class="child">
+                      <a href="#" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Creer
+                        Evaluation</a
+                      >
+                    </li>
+                    <li class="child">
+                      <a href="#" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Deposer
+                        Evaluation</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Gestion Notes </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-rocket mr-3"></i>
+                    <span class="none">ExamXpert</span>
+                  </a>
+                </li>
+                <br /><br />
+
+                <li class="parent">
+                  <a href="#" class=""
+                    ><i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Log Out </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!--Sidebar Navigation Menu-->
+          </div>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+          <h5 class="mb-3"><strong>Corrigé Type Généré par IA</strong></h5>
+
+          <div class="mt-1 mb-3 button-container">
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="card shadow">
+                  <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">Informations sur l'examen</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <p>
+                          <strong>Titre:</strong>
+                          <span id="exam-title">Chargement...</span>
+                        </p>
+                      </div>
+                      <div class="col-sm-4">
+                        <p>
+                          <strong>Matière:</strong>
+                          <span id="exam-subject">Chargement...</span>
+                        </p>
+                      </div>
+                      <div class="col-sm-4">
+                        <p>
+                          <strong>Classe:</strong>
+                          <span id="exam-class">Chargement...</span>
+                        </p>
+                      </div>
+                    </div>
+                    <p>
+                      <strong>Description:</strong>
+                      <span id="exam-description">Chargement...</span>
+                    </p>
+                    <p>
+                      <strong>Échéance:</strong>
+                      <span id="exam-deadline">Chargement...</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card shadow mb-4">
+              <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0">Corrigé Type</h6>
+                  <div>
+                    <button id="generateCorrectionBtn" class="btn btn-primary">
+                      <i class="fa fa-magic mr-2"></i>Générer avec IA
+                    </button>
+                    <div id="ai-loading" class="d-none">
+                      <span
+                        class="spinner-border spinner-border-sm text-primary"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      <span class="ml-2">Génération en cours...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="" id="toolbar-container"></div>
+                <div class="p-3" style="background: #eee">
+                  <div
+                    id="document_editor"
+                    class="editor bg-white shadow-sm mx-3 p-4"
+                  >
+                    <h3 style="text-align: center">Corrigé Type</h3>
+                    <p>
+                      Le corrigé type sera généré à partir du contenu de
+                      l'examen. Cliquez sur "Générer avec IA" pour créer un
+                      corrigé automatiquement, ou rédigez votre propre corrigé
+                      directement dans cet éditeur.
+                    </p>
+                    <p>
+                      Vous pourrez ensuite modifier le corrigé généré avant de
+                      le télécharger ou de l'enregistrer.
+                    </p>
+                  </div>
+
+                  <div class="mt-3 text-right">
+                    <button
+                      class="btn btn-outline-secondary mr-2"
+                      onclick="downloadDocument('txt')"
+                    >
+                      <i class="fa fa-file-text-o mr-1"></i> Télécharger en TXT
+                    </button>
+                    <button
+                      class="btn btn-danger"
+                      onclick="downloadDocument('pdf')"
+                    >
+                      <i class="fa fa-file-pdf-o mr-1"></i> Télécharger en PDF
+                    </button>
+                    <button id="saveCorrectionBtn" class="btn btn-success ml-2">
+                      <i class="fa fa-save mr-1"></i> Enregistrer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--/Document CKeditor-->
+          </div>
+        </div>
+      </div>
+
+      <!--Main Content-->
+    </div>
+
+    <!--Page Wrapper-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      let editorInstance; // Stocker l'éditeur globalement
+      let currentExamId; // ID de l'examen actuel
+      let currentExamData; // Données de l'examen actuel
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Récupérer le token d'authentification
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user")
+          ? JSON.parse(localStorage.getItem("user"))
+          : null;
+
+        // Vérifier si l'utilisateur est connecté
+        if (!token || !userData) {
+          console.error("Utilisateur non connecté");
+          swal({
+            title: "Erreur!",
+            text: "Vous devez être connecté pour accéder à cette page.",
+            icon: "error",
+            button: "OK",
+          }).then(() => {
+            window.location.href = "Connexion.html";
+          });
+          return;
+        }
+
+        // Initialisation de CKEditor
+        DecoupledEditor.create(document.querySelector("#document_editor"))
+          .then((editor) => {
+            editorInstance = editor; // Sauvegarde de l'éditeur
+            const toolbarContainer =
+              document.querySelector("#toolbar-container");
+            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+          })
+          .catch((error) => {
+            console.error("Erreur de chargement de CKEditor :", error);
+          });
+
+        // Récupérer l'ID de l'examen depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        currentExamId = urlParams.get("id");
+
+        if (currentExamId) {
+          // Charger les données de l'examen
+          loadExamData(currentExamId);
+
+          // Charger le corrigé existant s'il y en a un
+          loadExistingCorrection(currentExamId);
+        } else {
+          swal({
+            title: "Erreur!",
+            text: "Aucun examen spécifié.",
+            icon: "error",
+            button: "OK",
+          }).then(() => {
+            window.location.href = "dashboardEnseignant.html";
+          });
+        }
+
+        // Événement pour générer un corrigé avec l'IA
+        document
+          .getElementById("generateCorrectionBtn")
+          .addEventListener("click", generateCorrection);
+
+        // Événement pour enregistrer le corrigé
+        document
+          .getElementById("saveCorrectionBtn")
+          .addEventListener("click", saveCorrection);
+      });
+
+      // Fonction pour charger les données de l'examen
+      function loadExamData(examId) {
+        const token = localStorage.getItem("token");
+
+        fetch(`http://localhost:5000/api/data/exams/${examId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Erreur lors de la récupération des données de l'examen"
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            currentExamData = data;
+
+            // Mettre à jour les informations de l'examen dans l'interface
+            document.getElementById("exam-title").textContent =
+              data.title || "Non spécifié";
+            document.getElementById("exam-subject").textContent =
+              data.subjectName || "Non spécifié";
+            document.getElementById("exam-class").textContent =
+              data.className || "Non spécifié";
+            document.getElementById("exam-description").textContent =
+              data.description || "Aucune description disponible";
+
+            // Formater la date d'échéance
+            const deadline = new Date(data.deadline);
+            const formattedDate =
+              deadline.toLocaleDateString() +
+              " à " +
+              deadline.toLocaleTimeString();
+            document.getElementById("exam-deadline").textContent =
+              formattedDate;
+          })
+          .catch((error) => {
+            console.error("Erreur:", error);
+            swal({
+              title: "Erreur!",
+              text: "Impossible de charger les données de l'examen.",
+              icon: "error",
+              button: "OK",
+            });
+          });
+      }
+
+      // Fonction pour charger un corrigé existant
+      function loadExistingCorrection(examId) {
+        const token = localStorage.getItem("token");
+
+        fetch(`http://localhost:5000/api/data/corrections/${examId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => {
+            if (response.status === 404) {
+              console.log(
+                "Aucun corrigé existant trouvé. C'est normal pour un nouvel examen."
+              );
+              return null;
+            }
+            if (!response.ok) {
+              throw new Error(`Erreur serveur: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data && data.content) {
+              // Mettre à jour l'éditeur avec le contenu existant
+              editorInstance.setData(data.content);
+            } else {
+              console.log(
+                "Aucun contenu de corrigé trouvé, l'éditeur reste vide."
+              );
+            }
+          })
+          .catch((error) => {
+            console.log(
+              "Note: Il n'y a pas encore de corrigé pour cet examen. Vous pouvez en générer un avec l'IA."
+            );
+            // Ne pas afficher d'alerte pour ne pas perturber l'expérience utilisateur
+          });
+      }
+      // Fonction pour générer un corrigé avec l'IA
+      function generateCorrection() {
+        if (!currentExamData) {
+          swal({
+            title: "Erreur!",
+            text: "Les données de l'examen ne sont pas disponibles.",
+            icon: "error",
+            button: "OK",
+          });
+          return;
+        }
+
+        // Afficher le chargement
+        document
+          .getElementById("generateCorrectionBtn")
+          .classList.add("d-none");
+        document.getElementById("ai-loading").classList.remove("d-none");
+
+        const token = localStorage.getItem("token");
+
+        // Préparer les données pour l'IA
+        const promptData = {
+          title: currentExamData.title,
+          subject: currentExamData.subjectName,
+          class: currentExamData.className,
+          description: currentExamData.description,
+          examContent:
+            currentExamData.content || "Contenu de l'examen non disponible",
+        };
+
+        // Appeler l'API pour générer le corrigé avec Ollama
+        fetch("http://localhost:5000/api/ai/generate-correction", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(promptData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de la génération du corrigé");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Mettre à jour l'éditeur avec le contenu généré
+            editorInstance.setData(data.generatedCorrection);
+
+            // Cacher le chargement
+            document
+              .getElementById("generateCorrectionBtn")
+              .classList.remove("d-none");
+            document.getElementById("ai-loading").classList.add("d-none");
+
+            swal({
+              title: "Succès!",
+              text: "Le corrigé a été généré avec succès.",
+              icon: "success",
+              button: "OK",
+            });
+          })
+          .catch((error) => {
+            console.error("Erreur:", error);
+
+            // Cacher le chargement
+            document
+              .getElementById("generateCorrectionBtn")
+              .classList.remove("d-none");
+            document.getElementById("ai-loading").classList.add("d-none");
+
+            swal({
+              title: "Erreur!",
+              text: "Impossible de générer le corrigé avec l'IA.",
+              icon: "error",
+              button: "OK",
+            });
+          });
+      }
+
+      // Fonction pour enregistrer le corrigé
+      function saveCorrection() {
+        if (!editorInstance) {
+          console.error("L'éditeur n'est pas encore chargé.");
+          return;
+        }
+
+        const token = localStorage.getItem("token");
+        const htmlContent = editorInstance.getData();
+
+        // Données à envoyer
+        const correctionData = {
+          examId: currentExamId,
+          content: htmlContent,
+        };
+
+        // Envoyer au serveur
+        fetch("http://localhost:5000/api/data/save-correction", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(correctionData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de l'enregistrement du corrigé");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            swal({
+              title: "Succès!",
+              text: "Le corrigé a été enregistré avec succès.",
+              icon: "success",
+              button: "OK",
+            });
+          })
+          .catch((error) => {
+            console.error("Erreur:", error);
+            swal({
+              title: "Erreur!",
+              text: "Impossible d'enregistrer le corrigé.",
+              icon: "error",
+              button: "OK",
+            });
+          });
+      }
+
+      function downloadDocument(format) {
+        if (!editorInstance) {
+          console.error("L'éditeur n'est pas encore chargé.");
+          return;
+        }
+
+        const htmlContent = editorInstance.getData(); // Récupérer le contenu HTML
+        const tempElement = document.createElement("div");
+        tempElement.innerHTML = htmlContent;
+        const textContent = tempElement.innerText || tempElement.textContent; // Extraire le texte brut
+
+        if (format === "txt") {
+          // Téléchargement en TXT
+          const blob = new Blob([textContent], { type: "text/plain" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "corrige_type.txt";
+          link.click();
+          URL.revokeObjectURL(link.href);
+        } else if (format === "pdf") {
+          // Télécharger en PDF avec mise en forme
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF("p", "mm", "a4");
+
+          // Utilisation de html2canvas pour capturer le rendu de l'éditeur
+          html2canvas(document.querySelector("#document_editor"), {
+            scale: 2,
+          }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const imgWidth = 190; // Largeur en mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            doc.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+            doc.save("corrige_type.pdf");
+          });
+        }
+      }
+    </script>
+
+    <!-- Page JavaScript Files-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <!--Popper JS-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet alert JS-->
+    <script src="assets/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="assets/js/progressbar.min.js"></script>
+    <!--Charts-->
+    <!--Canvas JS-->
+    <script src="assets/js/charts/canvas.min.js"></script>
+    <!--Bootstrap Calendar JS-->
+    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
+    <script src="assets/js/calendar/demo.js"></script>
+    <!--Bootstrap Calendar-->
+
+    <!--Custom Js Script-->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/dashboard-profile.js"></script>
+    <script src="assets/js/sidebar-navigation.js"></script>
+  </body>
+</html>

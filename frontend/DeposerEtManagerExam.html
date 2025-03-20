@@ -512,7 +512,7 @@
                   icon: "success",
                   button: "OK",
                 }).then(() => {
-                  window.location.href = "CorrigeType.html";
+                  window.location.href = `CorrigeType.html?id=${data.examId}`;
                 });
               })
               .catch((error) => {
