@@ -503,4 +503,190 @@ router.post("/assign-teacher", async (req, res) => {
   }
 });
 
+// Route pour récupérer tous les examens d'un enseignant avec les détails de classe et matière
+router.get("/teacher-exams", authMiddleware, (req, res) => {
+  // Vérifier que l'utilisateur est un enseignant
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Vous devez être un enseignant." });
+  }
+
+  const teacherId = req.user.id;
+
+  // Requête SQL pour obtenir les examens avec les noms de matière et classe
+  const query = `
+    SELECT e.*, s.name as subjectName, c.className 
+    FROM exam e
+    JOIN subject s ON e.subject_id = s.id
+    JOIN class c ON e.class_id = c.id
+    WHERE e.teacher_id = ?
+    ORDER BY e.created_at DESC
+  `;
+
+  db.query(query, [teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la récupération des examens:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    res.json(results);
+  });
+});
+
+// Route pour récupérer le nombre de soumissions pour un examen
+router.get("/exam-submissions-count/:examId", authMiddleware, (req, res) => {
+  const examId = req.params.examId;
+  const teacherId = req.user.id;
+
+  // Vérifier que l'enseignant a accès à cet examen
+  const verifyQuery = `
+    SELECT id FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la vérification de l'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à accéder à cet examen",
+      });
+    }
+
+    // Compter les soumissions
+    const countQuery = `
+      SELECT COUNT(*) as count FROM submission WHERE exam_id = ?
+    `;
+
+    db.query(countQuery, [examId], (err, results) => {
+      if (err) {
+        console.error("Erreur lors du comptage des soumissions:", err);
+        return res.status(500).json({ error: "Erreur serveur" });
+      }
+
+      res.json({ count: results[0].count });
+    });
+  });
+});
+
+// Route pour mettre à jour un examen
+router.put("/exams/:id", authMiddleware, (req, res) => {
+  // Vérifier que l'utilisateur est un enseignant
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Vous devez être un enseignant." });
+  }
+
+  const examId = req.params.id;
+  const teacherId = req.user.id;
+  const { title, description, deadline } = req.body;
+
+  // Vérifier que l'enseignant est bien le propriétaire de l'examen
+  const verifyQuery = `
+    SELECT id FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la vérification de l'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à modifier cet examen",
+      });
+    }
+
+    // Mettre à jour l'examen
+    const updateQuery = `
+      UPDATE exam 
+      SET title = ?, description = ?, deadline = ?
+      WHERE id = ? AND teacher_id = ?
+    `;
+
+    db.query(
+      updateQuery,
+      [title, description, deadline, examId, teacherId],
+      (err, result) => {
+        if (err) {
+          console.error("Erreur lors de la mise à jour de l'examen:", err);
+          return res.status(500).json({ error: "Erreur serveur" });
+        }
+
+        res.json({
+          message: "Examen mis à jour avec succès",
+          id: examId,
+        });
+      }
+    );
+  });
+});
+
+// Route pour supprimer un examen
+router.delete("/exams/:id", authMiddleware, (req, res) => {
+  // Vérifier que l'utilisateur est un enseignant
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Vous devez être un enseignant." });
+  }
+
+  const examId = req.params.id;
+  const teacherId = req.user.id;
+
+  // Vérifier que l'enseignant est bien le propriétaire de l'examen
+  const verifyQuery = `
+    SELECT file_path FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la vérification de l'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à supprimer cet examen",
+      });
+    }
+
+    const filePath = results[0].file_path;
+    const fullPath = path.join(__dirname, "../../frontend", filePath);
+
+    // Supprimer l'examen de la base de données (la suppression des soumissions
+    // est automatique grâce à la contrainte ON DELETE CASCADE)
+    const deleteQuery = `
+      DELETE FROM exam WHERE id = ? AND teacher_id = ?
+    `;
+
+    db.query(deleteQuery, [examId, teacherId], (err, result) => {
+      if (err) {
+        console.error("Erreur lors de la suppression de l'examen:", err);
+        return res.status(500).json({ error: "Erreur serveur" });
+      }
+
+      // Tenter de supprimer le fichier physique
+      if (fs.existsSync(fullPath)) {
+        try {
+          fs.unlinkSync(fullPath);
+        } catch (err) {
+          console.error("Erreur lors de la suppression du fichier:", err);
+          // On continue malgré l'erreur de suppression du fichier
+        }
+      }
+
+      res.json({
+        message: "Examen supprimé avec succès",
+        id: examId,
+      });
+    });
+  });
+});
+
 module.exports = router;

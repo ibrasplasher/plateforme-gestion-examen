@@ -2,6 +2,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const path = require("path");
 const cors = require("cors");
+const plagiarismRoutes = require("./routes/plagiarismRoutes");
+
 require("dotenv").config({ path: "./docker/.env" });
 
 // Import des routes
@@ -33,6 +35,7 @@ app.use("/api", dashboardRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/data", dataRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/plagiarism", plagiarismRoutes);
 
 // Vérification des variables d'environnement essentielles
 if (

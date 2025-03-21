@@ -2,249 +2,219 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="" >
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!--Meta Responsive tag-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <!--Custom style.css-->
-    <link rel="stylesheet" href="assets/css/quicksand.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/quicksand.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <!--Font Awesome-->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
     <!--Chartist CSS-->
-    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
     <!--Bootstrap Calendar-->
-    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
-    <!--JsGrid CSS-->
-    <link rel="stylesheet" href="assets/css/jsgrid.min.css">
-    <link rel="stylesheet" href="assets/css/jsgrid-theme.min.css">
-    
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
+    <!-- DataTables CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"
+    />
 
-    <title>ExamXpress</title>
+    <title>ExamXpress - Gestion des Examens</title>
+    <style>
+      .action-btn {
+        margin: 0 2px;
+      }
+    </style>
   </head>
   <body>
     <!--Page loader-->
     <div class="loader-wrapper">
-        <div class="loader-circle">
-            <div class="loader-wave">ExamXpress</div>
-        </div>
+      <div class="loader-circle">
+        <div class="loader-wave">ExamXpress</div>
+      </div>
     </div>
     <!--Page loader-->
-    
+
     <!--Page Wrapper-->
 
     <div class="container-fluid">
-
-        <!--Header-->
-        <div class="row header shadow-sm">
-            
-            <!--Logo-->
-            <div class="col-sm-3 pl-0 text-center header-logo">
-               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
-               </div>
-
-            </div>
-            <!--Logo-->
-            <!--Header Menu-->
-            <div class="col-sm-9 header-menu pt-2 pb-0">
-                <div class="row">
-                    
-                    <!--Menu Icons-->
-                    <div class="col-sm-4 col-8 pl-0">
-                        <!--Toggle sidebar-->
-                        <span class="menu-icon" onclick="toggle_sidebar()">
-                            <span id="sidebar-toggle-btn"></span>
-                        </span>
-                    </div>
-
-                    <!--Search box and avatar-->
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                        
-                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> NOMPAGECREER</h6>
-                    </div>
-                
-                </div>
-            </div> 
-
+      <!--Header-->
+      <div class="row header shadow-sm">
+        <!--Logo-->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+          <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo">
+              <a href="#" class="text-secondary logo"
+                ><i class="fa fa-rocket"></i> ExamX<span class="small"
+                  >pert</span
+                ></a
+              >
+            </h3>
+          </div>
         </div>
-        <!--Header-->
-
-        <!--Main Content-->
-
-        <div class="row main-content">
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <br><br>
-                    <div class="avatar text-center">
-                        <img src="assets/img/default-avatar.jpg" alt="" class="rounded-circle" />
-                        <p><strong> NOM UTILISATEUR </strong></p>
-                        <span class="text-primary small"><strong>PROFFESSION UTILISATEUR</strong></span>
-                    </div>
-                    <!--Image Avatar-->
-
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container">
-                        <ul class="sidebar-menu mt-4 mb-4">
-                          <li class="parent">
-                            <a href="#"
-                              ><i class="fa fa-dashboard mr-3"> </i>
-                              <span class="none">Dashboard </span>
-                            </a>
-                          </li>
-                          <li class="parent">
-                            <a
-                              href="#"
-                              onclick="toggle_menu('dashboard'); return false"
-                              class=""
-                              ><i class="fa fa-book mr-3"> </i>
-                              <span class="none"
-                                >Evaluation
-                                <i class="fa fa-angle-down pull-right align-bottom"></i
-                              ></span>
-                            </a>
-                            <ul class="children" id="dashboard">
-                              <li class="child">
-                                <a href="#" class="ml-4"
-                                  ><i class="fa fa-angle-right mr-2"></i> Creer
-                                  Evaluation</a
-                                >
-                              </li>
-                              <li class="child">
-                                <a href="#" class="ml-4"
-                                  ><i class="fa fa-angle-right mr-2"></i> Deposer
-                                  Evaluation</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-pencil mr-3"></i>
-                              <span class="none">Gestion Notes </span>
-                            </a>
-                          </li>
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-rocket mr-3"></i>
-                              <span class="none">ExamXpert</span>
-                            </a>
-                          </li>
-                          <br /><br />
-          
-                          <li class="parent">
-                            <a href="#" class=""
-                              ><i class="fa fa-sign-out mr-3"></i>
-                              <span class="none">Log Out </span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                        </ul>
-                    </div>
-                    <!--Sidebar Naigation Menu-->
-                </div>
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+          <div class="row">
+            <!--Menu Icons-->
+            <div class="col-sm-4 col-8 pl-0">
+              <!--Toggle sidebar-->
+              <span class="menu-icon" onclick="toggle_sidebar()">
+                <span id="sidebar-toggle-btn"></span>
+              </span>
             </div>
-            <!--Sidebar left-->
 
-            <!--Content right-->
-            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-                <h5 class="mb-0" ><strong>NOM PAGE CREER</strong></h5>
-                
-                        <!--Default bootstrap 4 validation-->
-                        <div class="row mt-3">
-                            <div class="col-sm-12"> 
-
-                        <!--JsGrid Sorting-->
-                        <div class="container">
-                            <h3 align="center">Gestion des Examens avec jsGrid</h3>
-                            <div id="grid_table"></div>
-                        </div>
-                        
-                        <!--/JsGrid Sorting-->
-
-                        
-                   
-                </div>
-
-
+            <!--Search box and avatar-->
+            <div
+              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end"
+            >
+              <h6 class="mb-2">
+                Dashboard <i class="fa fa-angle-right"></i> Gestion des Examens
+              </h6>
             </div>
+          </div>
         </div>
+      </div>
+      <!--Header-->
 
-        <!--Main Content-->
+      <!--Main Content-->
 
+      <div class="row main-content">
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+          <div class="inner-sidebar mr-3">
+            <!--Image Avatar-->
+            <br /><br />
+            <div class="avatar text-center">
+              <img
+                id="profile-image"
+                src="assets/img/default-avatar.jpg"
+                alt=""
+                class="rounded-circle"
+              />
+              <p><strong id="user-name">NOM UTILISATEUR</strong></p>
+              <span class="text-primary small"
+                ><strong id="user-role">PROFESSION UTILISATEUR</strong></span
+              >
+            </div>
+            <!--Image Avatar-->
+
+            <!--Sidebar Navigation Menu-->
+            <div class="sidebar-menu-container">
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="dashboardEnseignant.html"
+                    ><i class="fa fa-dashboard mr-3"> </i>
+                    <span class="none">Dashboard </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a
+                    href="#"
+                    onclick="toggle_menu('dashboard'); return false"
+                    class="active"
+                    ><i class="fa fa-book mr-3"> </i>
+                    <span class="none"
+                      >Evaluation
+                      <i class="fa fa-angle-down pull-right align-bottom"></i
+                    ></span>
+                  </a>
+                  <ul class="children" id="dashboard">
+                    <li class="child">
+                      <a href="CreateExam.html" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Créer
+                        Évaluation</a
+                      >
+                    </li>
+                    <li class="child">
+                      <a href="DeposerEtManagerExam.html" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Gérer
+                        Évaluations</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <a href="Grade.html" class=""
+                    ><i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Gestion Notes </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="Exam.html" class=""
+                    ><i class="fa fa-rocket mr-3"></i>
+                    <span class="none">ExamXpert</span>
+                  </a>
+                </li>
+                <br /><br />
+
+                <li class="parent">
+                  <a href="#" onclick="logout()" class=""
+                    ><i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Déconnexion</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!--Sidebar Navigation Menu-->
+          </div>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+          <h5 class="mb-3"><strong>Gestion des Examens</strong></h5>
+
+          <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6 class="mb-2">Liste des Examens</h6>
+              </div>
+              <div class="col-md-6 text-right">
+                <a href="CreateExam.html" class="btn btn-primary">
+                  <i class="fa fa-plus mr-2"></i>Créer un nouvel examen
+                </a>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table id="examsTable" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Matière</th>
+                    <th>Classe</th>
+                    <th>Date limite</th>
+                    <th>Copies soumises</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Les données seront injectées ici dynamiquement -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!--Content right-->
+      </div>
+      <!--Main Content-->
     </div>
+    <!--Page Wrapper-->
 
-    <script>
-        $(document).ready(function () {
-            $('#grid_table').jsGrid({
-                width: "100%",
-                height: "auto",
-                filtering: true,
-                inserting: true,
-                editing: true,
-                sorting: true,
-                paging: true,
-                autoload: true,
-                pageSize: 10,
-                pageButtonCount: 5,
-                deleteConfirm: "Voulez-vous vraiment supprimer cet examen ?",
-    
-                controller: {
-                    loadData: function (filter) {
-                        return $.ajax({
-                            type: "GET",
-                            url: "fetch_exams.php",
-                            data: filter
-                        });
-                    },
-                    insertItem: function (item) {
-                        return $.ajax({
-                            type: "POST",
-                            url: "fetch_exams.php",
-                            data: item
-                        });
-                    },
-                    updateItem: function (item) {
-                        return $.ajax({
-                            type: "POST",
-                            url: "fetch_exams.php",
-                            data: { ...item, action: "update" }
-                        });
-                    },
-                    deleteItem: function (item) {
-                        return $.ajax({
-                            type: "POST",
-                            url: "fetch_exams.php",
-                            data: { id: item.id, action: "delete" }
-                        });
-                    }
-                },
-    
-                fields: [
-                    { name: "id", type: "hidden", css: "hide" },
-                    { name: "sujet", title: "Sujet", type: "text", width: 150, validate: "required" },
-                    { name: "type_evaluation", title: "Type", type: "text", width: 100, validate: "required" },
-                    { name: "classe", title: "Classe", type: "text", width: 100, validate: "required" },
-                    { name: "matiere", title: "Matière", type: "text", width: 100, validate: "required" },
-                    { name: "date_limite", title: "Date Limite", type: "text", width: 100, validate: "required" },
-                    { name: "heure_debut", title: "Début", type: "text", width: 80, validate: "required" },
-                    { name: "heure_fin", title: "Fin", type: "text", width: 80, validate: "required" },
-                    { type: "control" }
-                ]
-            });
-        });
-    </script>
-    
     <!-- Page JavaScript Files-->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery-1.12.4.min.js"></script>
@@ -256,105 +226,311 @@
     <script src="assets/js/sweetalert.js"></script>
     <!--Progressbar JS-->
     <script src="assets/js/progressbar.min.js"></script>
-    <!--Charts-->
+    <!--DataTables-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
     <!--Canvas JS-->
     <script src="assets/js/charts/canvas.min.js"></script>
     <!--Bootstrap Calendar JS-->
     <script src="assets/js/calendar/bootstrap_calendar.js"></script>
     <script src="assets/js/calendar/demo.js"></script>
-    <!--Bootstrap Calendar-->
-    <!--JsGrid table-->
-    <script src="assets/js/jsgrid.min.js"></script>
-    <script src="assets/js/jsgrid-demo.js"></script>
 
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>
-    <!--Custom Js Script-->
     <script src="assets/js/dashboard-profile.js"></script>
-<script src="assets/js/sidebar-navigation.js"></script>
+    <script src="assets/js/sidebar-navigation.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        // Récupérer le token d'authentification
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user")
+          ? JSON.parse(localStorage.getItem("user"))
+          : null;
+
+        // Vérifier si l'utilisateur est connecté
+        if (!token || !userData) {
+          swal({
+            title: "Erreur !",
+            text: "Vous devez être connecté pour accéder à cette page.",
+            icon: "error",
+            button: "OK",
+          }).then(() => {
+            window.location.href = "Connexion.html";
+          });
+          return;
+        }
+
+        // Afficher les infos de l'utilisateur
+        $("#user-name").text(userData.firstName + " " + userData.lastName);
+        $("#user-role").text(
+          userData.role === "teacher" ? "Enseignant" : "Étudiant"
+        );
+
+        // Charger les examens dans la table
+        function loadExams() {
+          $.ajax({
+            type: "GET",
+            url: "http://localhost:5000/api/data/teacher-exams",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            success: function (response) {
+              let tableBody = $("#examsTable tbody");
+              tableBody.empty(); // Vider la table avant d'ajouter les nouvelles données
+
+              if (response.length === 0) {
+                tableBody.append(
+                  '<tr><td colspan="7" class="text-center">Aucun examen trouvé</td></tr>'
+                );
+                return;
+              }
+
+              // Pour chaque examen, récupérer le nombre de soumissions
+              const examPromises = response.map((exam) => {
+                return $.ajax({
+                  type: "GET",
+                  url: `http://localhost:5000/api/data/exam-submissions-count/${exam.id}`,
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
+                  .then((data) => {
+                    exam.submissionsCount = data.count || 0;
+                    return exam;
+                  })
+                  .catch(() => {
+                    exam.submissionsCount = 0;
+                    return exam;
+                  });
+              });
+
+              // Quand toutes les requêtes sont terminées
+              $.when.apply($, examPromises).then(function () {
+                // Afficher les examens avec le nombre de soumissions
+                response.forEach((exam) => {
+                  let row = `
+                    <tr data-id="${exam.id}">
+                      <td>${exam.id}</td>
+                      <td>${exam.title}</td>
+                      <td>${exam.subjectName || "-"}</td>
+                      <td>${exam.className || "-"}</td>
+                      <td>${formatDate(exam.deadline)}</td>
+                      <td>
+                        <a href="GestionNotes.html?id=${
+                          exam.id
+                        }" class="badge badge-primary">
+                          ${exam.submissionsCount} copies
+                        </a>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm action-btn view-correction-btn" data-id="${
+                          exam.id
+                        }">
+                          <i class="fa fa-file-text-o"></i> Corrigé
+                        </button>
+                        <button type="button" class="btn btn-warning btn-sm action-btn edit-exam-btn" data-id="${
+                          exam.id
+                        }">
+                          <i class="fa fa-pencil"></i> Éditer
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm action-btn plagiarism-btn" data-id="${
+                          exam.id
+                        }">
+                          <i class="fa fa-search"></i> Plagiat
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm action-btn delete-exam-btn" data-id="${
+                          exam.id
+                        }">
+                          <i class="fa fa-trash"></i> Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  `;
+                  tableBody.append(row);
+                });
+
+                // Initialiser DataTables
+                if (!$.fn.DataTable.isDataTable("#examsTable")) {
+                  $("#examsTable").DataTable({
+                    language: {
+                      url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json",
+                    },
+                    responsive: true,
+                    columnDefs: [
+                      { orderable: false, targets: 6 }, // Désactiver le tri sur la colonne Actions
+                    ],
+                  });
+                } else {
+                  $("#examsTable").DataTable().draw();
+                }
+              });
+            },
+            error: function (xhr) {
+              let errorMessage = "Impossible de charger les examens.";
+              if (xhr.responseJSON && xhr.responseJSON.error) {
+                errorMessage = xhr.responseJSON.error;
+              }
+
+              swal("Erreur", errorMessage, "error");
+            },
+          });
+        }
+
+        // Voir le corrigé
+        $(document).on("click", ".view-correction-btn", function () {
+          const examId = $(this).data("id");
+          window.location.href = `CorrigeType.html?id=${examId}`;
+        });
+
+        // Éditer un examen
+        $(document).on("click", ".edit-exam-btn", function () {
+          const examId = $(this).data("id");
+          window.location.href = `ModifierEvaluation.html?id=${examId}`;
+        });
+
+        // Analyser le plagiat pour un examen
+        $(document).on("click", ".plagiarism-btn", function () {
+          const examId = $(this).data("id");
+
+          swal({
+            title: "Détection de plagiat",
+            text: "Cette opération va analyser toutes les soumissions de cet examen et générer un rapport. Cela peut prendre un moment. Voulez-vous continuer ?",
+            icon: "info",
+            buttons: ["Annuler", "Continuer"],
+            dangerMode: false,
+          }).then((willProceed) => {
+            if (willProceed) {
+              // Afficher un indicateur de chargement
+              swal({
+                title: "Analyse en cours",
+                text: "Veuillez patienter pendant l'analyse des soumissions...",
+                icon: "info",
+                buttons: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+              });
+
+              $.ajax({
+                type: "POST",
+                url: `http://localhost:5000/api/plagiarism/detect/${examId}`,
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+                success: function (response) {
+                  swal.close();
+
+                  if (response.reportUrl) {
+                    swal({
+                      title: "Analyse terminée !",
+                      text: "Le rapport de plagiat a été généré avec succès.",
+                      icon: "success",
+                      buttons: {
+                        cancel: "Fermer",
+                        download: "Télécharger le rapport",
+                      },
+                    }).then((value) => {
+                      if (value === "download") {
+                        window.location.href = `http://localhost:5000/${response.reportUrl}`;
+                      }
+                    });
+                  } else {
+                    swal({
+                      title: "Analyse terminée !",
+                      text:
+                        response.message ||
+                        "Aucun plagiat significatif n'a été détecté.",
+                      icon: "success",
+                    });
+                  }
+                },
+                error: function (xhr) {
+                  let errorMessage =
+                    "Une erreur est survenue lors de l'analyse.";
+                  if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                  }
+
+                  swal({
+                    title: "Erreur !",
+                    text: errorMessage,
+                    icon: "error",
+                  });
+                },
+              });
+            }
+          });
+        });
+
+        // Supprimer un examen
+        $(document).on("click", ".delete-exam-btn", function () {
+          const examId = $(this).data("id");
+          const examRow = $(this).closest("tr");
+
+          swal({
+            title: "Êtes-vous sûr ?",
+            text: "Cette action supprimera l'examen ainsi que toutes les soumissions associées. Cette action est irréversible !",
+            icon: "warning",
+            buttons: ["Annuler", "Supprimer"],
+            dangerMode: true,
+          }).then((willDelete) => {
+            if (willDelete) {
+              $.ajax({
+                type: "DELETE",
+                url: `http://localhost:5000/api/data/exams/${examId}`,
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+                success: function (response) {
+                  // Supprimer la ligne du tableau
+                  if ($.fn.DataTable.isDataTable("#examsTable")) {
+                    $("#examsTable").DataTable().row(examRow).remove().draw();
+                  } else {
+                    examRow.remove();
+                  }
+
+                  swal(
+                    "Supprimé !",
+                    "L'examen a été supprimé avec succès.",
+                    "success"
+                  );
+                },
+                error: function (xhr) {
+                  let errorMessage = "Impossible de supprimer l'examen.";
+                  if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                  }
+
+                  swal("Erreur", errorMessage, "error");
+                },
+              });
+            }
+          });
+        });
+
+        // Fonction de déconnexion
+        window.logout = function () {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "Connexion.html";
+        };
+
+        // Charger les données au démarrage
+        loadExams();
+      });
+
+      // Fonction pour formater la date
+      function formatDate(dateString) {
+        if (!dateString) return "-";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+    </script>
   </body>
 </html>
-
-
-<!--------------
-<?php
-
-$connect = new PDO("mysql:host=localhost;dbname=ExamXpressDB", "root", "");
-$connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$method = $_SERVER['REQUEST_METHOD'];
-
-if ($method == 'GET') {
-    $data = array(
-        ':sujet' => "%" . $_GET['sujet'] . "%",
-        ':type_evaluation' => "%" . $_GET['type_evaluation'] . "%",
-        ':classe' => "%" . $_GET['classe'] . "%",
-        ':matiere' => "%" . $_GET['matiere'] . "%",
-        ':date_limite' => "%" . $_GET['date_limite'] . "%",
-        ':heure_debut' => "%" . $_GET['heure_debut'] . "%",
-        ':heure_fin' => "%" . $_GET['heure_fin'] . "%"
-    );
-
-    $query = "SELECT * FROM exams 
-              WHERE sujet LIKE :sujet 
-              AND type_evaluation LIKE :type_evaluation 
-              AND classe LIKE :classe 
-              AND matiere LIKE :matiere 
-              AND date_limite LIKE :date_limite 
-              AND heure_debut LIKE :heure_debut 
-              AND heure_fin LIKE :heure_fin 
-              ORDER BY id DESC";
-
-    $statement = $connect->prepare($query);
-    $statement->execute($data);
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-    header("Content-Type: application/json");
-    echo json_encode($result);
-}
-
-if ($method == 'POST') {
-    if (isset($_POST['action'])) {
-        if ($_POST['action'] == "update") {
-            $query = "UPDATE exams 
-                      SET sujet = :sujet, type_evaluation = :type_evaluation, classe = :classe, matiere = :matiere, 
-                          date_limite = :date_limite, heure_debut = :heure_debut, heure_fin = :heure_fin
-                      WHERE id = :id";
-
-            $statement = $connect->prepare($query);
-            $statement->execute([
-                ':id' => $_POST['id'],
-                ':sujet' => $_POST['sujet'],
-                ':type_evaluation' => $_POST['type_evaluation'],
-                ':classe' => $_POST['classe'],
-                ':matiere' => $_POST['matiere'],
-                ':date_limite' => $_POST['date_limite'],
-                ':heure_debut' => $_POST['heure_debut'],
-                ':heure_fin' => $_POST['heure_fin']
-            ]);
-        } elseif ($_POST['action'] == "delete") {
-            $query = "DELETE FROM exams WHERE id = :id";
-            $statement = $connect->prepare($query);
-            $statement->execute([':id' => $_POST['id']]);
-        }
-    } else {
-        $query = "INSERT INTO exams (sujet, type_evaluation, classe, matiere, date_limite, heure_debut, heure_fin) 
-                  VALUES (:sujet, :type_evaluation, :classe, :matiere, :date_limite, :heure_debut, :heure_fin)";
-
-        $statement = $connect->prepare($query);
-        $statement->execute([
-            ':sujet' => $_POST['sujet'],
-            ':type_evaluation' => $_POST['type_evaluation'],
-            ':classe' => $_POST['classe'],
-            ':matiere' => $_POST['matiere'],
-            ':date_limite' => $_POST['date_limite'],
-            ':heure_debut' => $_POST['heure_debut'],
-            ':heure_fin' => $_POST['heure_fin']
-        ]);
-    }
-}
-?>
-
-
-
--->
