@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="description" content="" >
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Meta Responsive tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Favicon Icon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!--Custom style.css-->
+    <link rel="stylesheet" href="assets/css/quicksand.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <!--Animate CSS-->
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!--Chartist CSS-->
+    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <!--Morris Css-->
+    <link rel="stylesheet" href="assets/css/morris.css">
+    <!--Map-->
+    <link rel="stylesheet" href="assets/css/jquery-jvectormap-2.0.2.css">
+    <!--Bootstrap Calendar-->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <!--Nice select -->
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/chatbot.css">
+
+
+    <title>ExamXpress</title>
+  </head>
+  <body>
+    <!--Page loader-->
+    <div class="loader-wrapper">
+        <div class="loader-circle">
+            <div class="loader-wave">ExamXpress</div>
+        </div>
+    </div>
+    <!--Page loader-->
+    
+    <!--Page Wrapper-->
+
+    <div class="container-fluid">
+
+        <!--Header-->
+        <div class="row header shadow-sm">
+            
+            <!--Logo-->
+            <div class="col-sm-3 pl-0 text-center header-logo">
+               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
+               </div>
+
+            </div>
+            <!--Logo-->
+            <!--Header Menu-->
+            <div class="col-sm-9 header-menu pt-2 pb-0">
+                <div class="row">
+                    
+                    <!--Menu Icons-->
+                    <div class="col-sm-4 col-8 pl-0">
+                        <!--Toggle sidebar-->
+                        <span class="menu-icon" onclick="toggle_sidebar()">
+                            <span id="sidebar-toggle-btn"></span>
+                        </span>
+                        <span class="menu-icon inbox">
+                            <a class="" href="#" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-envelope"></i>
+                                <span class="badge badge-danger">4</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown" aria-labelledby="dropdownMenuLink3">
+                                <a class="dropdown-item" href="#"><strong>Unread messages</strong></a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <div class="media">
+                                        <img class="align-self-center mr-3 rounded-circle" src="assets/img/profile.jpg" width="50px" height="50px" alt="Generic placeholder image">
+                                        <div class="media-body">
+                                            <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
+                                            <p>How are you?</p>
+                                            <small class="text-success">09:23am</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-center link-all" href="#">View all messages</a>
+                            </div>
+                        </span>
+                     </div>
+                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end btn-group">
+                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa  fa-user mr-3"></i>Profile 
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Dashboard</a>
+                            <a class="dropdown-item" href="#">ChatBot</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Log Out</a>
+                        </div>
+                    </div>  
+                
+                </div>
+            </div> 
+
+        </div>
+        <!--Header-->
+
+        <!--Main Content-->
+
+        <div class="row main-content">
+            <!--Sidebar left-->
+            <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                    <!--Image Avatar-->
+                    <br><br>
+                    <div class="avatar text-center">
+                        <p><strong> NOM UTILISATEUR </strong></p>
+                        <span class="text-primary small"><strong>ETUDIANT</strong></span>
+                    </div>
+                    <!--Image Avatar-->
+
+                    <!--Sidebar Navigation Menu-->
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+                            <li class="parent">
+                                <a href="#"><i class="fa fa-dashboard mr-3"> </i>
+                                    <span class="none">Dashboard </span>
+                                </a>
+                            </li>
+                            <li class="parent">
+                                <a href="#" class=""><i class="fa fa-book mr-3"></i>
+                                    <span class="none">Evaluation</span>
+                                </a>
+                            </li>
+                            <li class="parent">
+                                <a href="#" class=""><i class="fa fa-pencil mr-3"></i>
+                                    <span class="none">Notes</span>
+                                </a>
+                            </li>
+                            <li class="parent">
+                                <a href="#" class=""><i class="fa fa-weixin mr-3"></i>
+                                    <span class="none">ChatBot</span>
+                                </a>
+                            </li>
+                            <br><br>
+
+                            <li class="parent">
+                                <a href="#" class=""><i class="fa fa-sign-out mr-3"></i>
+                                    <span class="none">Log Out </span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!--Sidebar Naigation Menu-->
+                </div>
+            </div>
+            <!--Sidebar left-->
+
+            <!--Content right-->
+            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+                <h5 class="mb-0" ><strong>Dashboard</strong></h5>
+                
+                        <!--Default bootstrap 4 validation-->
+                        <div class="row mt-3">
+                            <div class="col-sm-12"> 
+
+
+
+
+                
+                <!--Dashboard widget-->
+                <div class="mt-1 mb-3 button-container">
+                    <div class="row pl-0">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+                            <div class="bg-white border shadow">
+                                <div class="media p-4">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-theme">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <div class="media-body pl-2">
+                                        <h3 class="mt-0 mb-0"><strong>30</strong></h3>
+                                        <p><small class="text-muted bc-description">Best Grade Course</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+                            <div class="bg-white border shadow">
+                                <div class="media p-4">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-danger">
+                                        <i class="fas fa-envelope-open"></i>
+                                    </div>
+                                    <div class="media-body pl-2">
+                                        <h3 class="mt-0 mb-0"><strong>3</strong></h3>
+                                        <p><small class="text-muted bc-description">Worst Grade Course</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+                            <div class="bg-theme border shadow">
+                                <div class="media p-4">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                                        <i class="fa fa-tags text-theme"></i>
+                                    </div>
+                                    <div class="media-body pl-2">
+                                        <h3 class="mt-0 mb-0"><strong>72%</strong></h3>
+                                        <p><small class="bc-description text-white">Taux De Reussite</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-6">
+                        <!--Area Chart-->
+                        <div class="mt-1 mb-3 p-3 button-container  bg-white shadow-sm border">
+                            <h6>Validation Chart</h6>
+
+                            <div class="ct-chart" id="areaChartChartist"  style="height: 300px;"></div>
+                        </div>
+                        <!--/Area Table-->
+                    </div>
+                    <div class="col-sm-6">
+                        <!--Avancement Scolaire-->
+                        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                            <h6 class="mb-2">Avancement Scolaire</h6>
+                            
+                            <div class="ct-chart" id="donutChartEcharts" style="height: 300px;"></div>
+
+                            <p>Taux d'evolution : 70%</p>
+                        </div>
+                        <!--/Avancement Scolaire-->
+                    </div>    
+                </div>
+
+                <!--/Dashboard widget-->
+
+
+                                        <!--Latest projects-->
+                                        <div class="shadow panel-head-danger">
+                                            <h5 class="text-center mt-3 mb-3"><strong>Evaluation</strong></h5>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped" id="project_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Matiere</th>
+                                                            <th>Evaluation</th>
+                                                            <th>Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>HTML/CSS</td>
+                                                            <td>Web design</td>
+                                                            <td>13 Feb, 2018</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Java</td>
+                                                            <td>App development</td>
+                                                            <td>03 July, 2018</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>PPP</td>
+                                                            <td>App prototyping</td>
+                                                            <td>31 January, 2018</td>
+                                                        </tr>
+                
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                        
+            
+                 </div></div> 
+
+                 <!---------CHATBOT-------->
+
+                 <div class="robot" id="robot" onclick="showLaugh()">
+                    <div class="head">
+                        <div class="eyes">
+                            <div class="eye" id="eyeLeft"></div>
+                            <div class="eye" id="eyeRight"></div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="modal fade" id="thechatbot" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">The ChatBot</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="chat-container">
+                                    <div class="chat-header">Chatbot Intelligent</div>
+                                    <div class="chat-body" id="chatBody">
+                                        <div class="message bot-message">Bonjour ! Comment puis-je vous aider ?</div>
+                                    </div>
+                                    <div class="chat-footer">
+                                        <input type="text" id="userInput" placeholder="Écrivez un message...">
+                                        <button onclick="sendMessage()">Envoyer</button>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!---------CHATBOT-------->
+
+                
+                <!--Footer-->
+                <div class="row mt-5 mb-4 footer">
+                    <div class="col-sm-8">
+                        <span>&copy; All rights reserved  <a class="text-theme" href=#> Ecole Superieur Polytechnique Dakar</a></span>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        <a href="#" class="ml-2">Contact Us</a>
+                        <a href="#" class="ml-2">Support</a>
+                    </div>
+                </div>
+                <!--Footer-->
+
+            </div>
+        </div>
+
+        <!--Main Content-->
+
+    </div>
+
+    <!--Page Wrapper-->
+
+
+
+
+
+
+    <script src="assets/js/Chatbot.js"></script>
+    <!-- Page JavaScript Files-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-1.12.4.min.js"></script>
+    <!--Popper JS-->
+    <script src="assets/js/popper.min.js"></script>
+        <!--Echarts.JS-->
+        <script src="assets/js/charts/echarts.min.js"></script>
+        <script src="assets/js/charts/echarts-data.js"></script>
+    <!--Bootstrap-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--Sweet alert JS-->
+    <script src="assets/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="assets/js/progressbar.min.js"></script>
+    <!--Flot.JS-->
+    <script src="assets/js/charts/jquery.flot.min.js"></script>
+    <script src="assets/js/charts/jquery.flot.pie.min.js"></script>
+    <script src="assets/js/charts/jquery.flot.categories.min.js"></script>
+    <script src="assets/js/charts/jquery.flot.stack.min.js"></script>
+    <!--Sparkline-->
+    <script src="assets/js/charts/sparkline.min.js"></script>
+    <!--Morris.JS-->
+    <script src="assets/js/charts/raphael.min.js"></script>
+    <script src="assets/js/charts/morris.js"></script>
+    <!--Chart JS-->
+    <script src="assets/js/charts/chart.min.js"></script>
+    <!--Chartist JS-->
+    <script src="assets/js/charts/chartist.min.js"></script>
+    <script src="assets/js/charts/chartist-data.js"></script>
+    <script src="assets/js/charts/demo.js"></script>
+    <!--Maps-->
+    <script src="assets/js/maps/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="assets/js/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="assets/js/maps/jvector-maps.js"></script>
+    <!--Bootstrap Calendar JS-->
+    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
+    <script src="assets/js/calendar/demo.js"></script>
+    <!--Nice select-->
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+
+    <!--Custom Js Script-->
+    <script src="assets/js/custom.js"></script>
+  </body>
+</html>
