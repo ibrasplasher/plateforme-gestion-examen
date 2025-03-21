@@ -95,6 +95,66 @@ router.get("/teacher-subjects-classes", authMiddleware, (req, res) => {
   });
 });
 
+// Route pour récupérer le contenu d'un fichier d'examen
+router.get("/exam-content/:examId", authMiddleware, (req, res) => {
+  const examId = req.params.examId;
+  const teacherId = req.user.id;
+
+  // Vérifier que l'enseignant a accès à cet examen
+  const verifyQuery = `
+    SELECT file_path FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la récupération du fichier d'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à accéder à ce fichier",
+      });
+    }
+
+    const filePath = results[0].file_path;
+    const fullPath = path.join(__dirname, "../../frontend", filePath);
+
+    // Vérifier si le fichier existe
+    if (!fs.existsSync(fullPath)) {
+      console.error("Fichier non trouvé:", fullPath);
+      return res.status(404).json({ error: "Fichier d'examen non trouvé" });
+    }
+
+    // Détecter le type de fichier
+    const fileExtension = path.extname(fullPath).toLowerCase();
+
+    // Pour les fichiers texte, lire directement le contenu
+    if (fileExtension === ".txt") {
+      fs.readFile(fullPath, "utf8", (err, data) => {
+        if (err) {
+          console.error("Erreur lors de la lecture du fichier:", err);
+          return res
+            .status(500)
+            .json({ error: "Erreur lors de la lecture du fichier" });
+        }
+
+        res.json({ content: data });
+      });
+    }
+    // Pour les autres types de fichiers (PDF, etc.), renvoyer le chemin et indiquer qu'une extraction de texte est nécessaire
+    else {
+      res.json({
+        content: `Ce fichier est un ${fileExtension
+          .substring(1)
+          .toUpperCase()} et nécessite une extraction de texte spécifique.`,
+        filePath: filePath,
+        fileType: fileExtension.substring(1),
+      });
+    }
+  });
+});
+
 // Route pour uploader un examen
 router.post(
   "/upload-exam",
@@ -191,6 +251,181 @@ router.post("/exams", authMiddleware, upload.single("examFile"), (req, res) => {
   });
 });
 
+// Route pour récupérer un corrigé existant
+router.get("/corrections/:examId", authMiddleware, (req, res) => {
+  // Vérifier que l'utilisateur est un enseignant
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Vous devez être un enseignant." });
+  }
+
+  const examId = req.params.examId;
+  const teacherId = req.user.id;
+
+  // Vérifier que l'enseignant est bien celui qui a créé l'examen
+  const verifyQuery = `
+    SELECT * FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la vérification de l'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à accéder à ce corrigé",
+      });
+    }
+
+    // L'enseignant est autorisé, récupérer le corrigé
+    const query = `
+      SELECT * FROM correction_template 
+      WHERE exam_id = ?
+    `;
+
+    db.query(query, [examId], (err, results) => {
+      if (err) {
+        console.error("Erreur lors de la récupération du corrigé:", err);
+        return res.status(500).json({ error: "Erreur serveur" });
+      }
+
+      if (results.length === 0) {
+        // Pas de corrigé trouvé
+        return res.status(404).json({
+          error: "Aucun corrigé trouvé pour cet examen",
+        });
+      }
+
+      res.json(results[0]);
+    });
+  });
+});
+
+// Route pour enregistrer un corrigé
+router.post("/save-correction", authMiddleware, (req, res) => {
+  // Vérifier que l'utilisateur est un enseignant
+  if (req.user.role !== "teacher") {
+    return res
+      .status(403)
+      .json({ error: "Accès refusé. Vous devez être un enseignant." });
+  }
+
+  const { examId, content } = req.body;
+  const teacherId = req.user.id;
+
+  if (!examId || !content) {
+    return res.status(400).json({ error: "Données incomplètes" });
+  }
+
+  // Vérifier que l'enseignant est bien celui qui a créé l'examen
+  const verifyQuery = `
+    SELECT * FROM exam WHERE id = ? AND teacher_id = ?
+  `;
+
+  db.query(verifyQuery, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error("Erreur lors de la vérification de l'examen:", err);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(403).json({
+        error: "Vous n'êtes pas autorisé à modifier ce corrigé",
+      });
+    }
+
+    // Vérifier si un corrigé existe déjà pour cet examen
+    const checkQuery = `
+      SELECT * FROM correction_template WHERE exam_id = ?
+    `;
+
+    db.query(checkQuery, [examId], (err, results) => {
+      if (err) {
+        console.error(
+          "Erreur lors de la vérification du corrigé existant:",
+          err
+        );
+        return res.status(500).json({ error: "Erreur serveur" });
+      }
+
+      if (results.length > 0) {
+        // Mettre à jour le corrigé existant
+        const updateQuery = `
+          UPDATE correction_template 
+          SET content = ?, updated_at = NOW() 
+          WHERE exam_id = ?
+        `;
+
+        db.query(updateQuery, [content, examId], (err, result) => {
+          if (err) {
+            console.error("Erreur lors de la mise à jour du corrigé:", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+          }
+
+          res.status(200).json({
+            message: "Corrigé mis à jour avec succès",
+            id: results[0].id,
+          });
+        });
+      } else {
+        // Créer un nouveau corrigé
+        const insertQuery = `
+          INSERT INTO correction_template (exam_id, content, created_at, updated_at)
+          VALUES (?, ?, NOW(), NOW())
+        `;
+
+        db.query(insertQuery, [examId, content], (err, result) => {
+          if (err) {
+            console.error("Erreur lors de la création du corrigé:", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+          }
+
+          res.status(201).json({
+            message: "Corrigé créé avec succès",
+            id: result.insertId,
+          });
+        });
+      }
+    });
+  });
+});
+
+// Route pour récupérer les détails d'un examen
+router.get("/exams/:id", authMiddleware, (req, res) => {
+  const examId = req.params.id;
+  const teacherId = req.user.id;
+
+  // Requête pour obtenir les détails de l'examen avec le nom de la matière et de la classe
+  const query = `
+    SELECT e.*, s.name as subjectName, c.className 
+    FROM exam e 
+    JOIN subject s ON e.subject_id = s.id 
+    JOIN class c ON e.class_id = c.id 
+    WHERE e.id = ? AND e.teacher_id = ?
+  `;
+
+  db.query(query, [examId, teacherId], (err, results) => {
+    if (err) {
+      console.error(
+        "Erreur lors de la récupération des détails de l'examen:",
+        err
+      );
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({
+        error: "Examen non trouvé ou vous n'êtes pas autorisé à y accéder",
+      });
+    }
+
+    res.json(results[0]);
+  });
+});
+
 // Route pour assigner un enseignant à des matières et classes
 router.post("/assign-teacher", async (req, res) => {
   const { teacherId, subjects, classes } = req.body;
@@ -238,180 +473,6 @@ router.post("/assign-teacher", async (req, res) => {
     console.error("Erreur:", error);
     res.status(500).json({ error: "Erreur serveur lors de l'assignation." });
   }
-});
-// Route pour récupérer un corrigé existant
-router.get("/corrections/:examId", authMiddleware, (req, res) => {
-  // Vérifier que l'utilisateur est un enseignant
-  if (req.user.role !== "teacher") {
-    return res
-      .status(403)
-      .json({ error: "Accès refusé. Vous devez être un enseignant." });
-  }
-
-  const examId = req.params.examId;
-  const teacherId = req.user.id;
-
-  // Vérifier que l'enseignant est bien celui qui a créé l'examen
-  const verifyQuery = `
-      SELECT * FROM exam WHERE id = ? AND teacher_id = ?
-    `;
-
-  db.query(verifyQuery, [examId, teacherId], (err, results) => {
-    if (err) {
-      console.error("Erreur lors de la vérification de l'examen:", err);
-      return res.status(500).json({ error: "Erreur serveur" });
-    }
-
-    if (results.length === 0) {
-      return res.status(403).json({
-        error: "Vous n'êtes pas autorisé à accéder à ce corrigé",
-      });
-    }
-
-    // L'enseignant est autorisé, récupérer le corrigé
-    const query = `
-        SELECT * FROM correction_template 
-        WHERE exam_id = ?
-      `;
-
-    db.query(query, [examId], (err, results) => {
-      if (err) {
-        console.error("Erreur lors de la récupération du corrigé:", err);
-        return res.status(500).json({ error: "Erreur serveur" });
-      }
-
-      if (results.length === 0) {
-        // Pas de corrigé trouvé
-        return res.status(404).json({
-          error: "Aucun corrigé trouvé pour cet examen",
-        });
-      }
-
-      res.json(results[0]);
-    });
-  });
-});
-
-// Route pour enregistrer un corrigé
-router.post("/save-correction", authMiddleware, (req, res) => {
-  // Vérifier que l'utilisateur est un enseignant
-  if (req.user.role !== "teacher") {
-    return res
-      .status(403)
-      .json({ error: "Accès refusé. Vous devez être un enseignant." });
-  }
-
-  const { examId, content } = req.body;
-  const teacherId = req.user.id;
-
-  if (!examId || !content) {
-    return res.status(400).json({ error: "Données incomplètes" });
-  }
-
-  // Vérifier que l'enseignant est bien celui qui a créé l'examen
-  const verifyQuery = `
-      SELECT * FROM exam WHERE id = ? AND teacher_id = ?
-    `;
-
-  db.query(verifyQuery, [examId, teacherId], (err, results) => {
-    if (err) {
-      console.error("Erreur lors de la vérification de l'examen:", err);
-      return res.status(500).json({ error: "Erreur serveur" });
-    }
-
-    if (results.length === 0) {
-      return res.status(403).json({
-        error: "Vous n'êtes pas autorisé à modifier ce corrigé",
-      });
-    }
-
-    // Vérifier si un corrigé existe déjà pour cet examen
-    const checkQuery = `
-        SELECT * FROM correction_template WHERE exam_id = ?
-      `;
-
-    db.query(checkQuery, [examId], (err, results) => {
-      if (err) {
-        console.error(
-          "Erreur lors de la vérification du corrigé existant:",
-          err
-        );
-        return res.status(500).json({ error: "Erreur serveur" });
-      }
-
-      if (results.length > 0) {
-        // Mettre à jour le corrigé existant
-        const updateQuery = `
-            UPDATE correction_template 
-            SET content = ?, updated_at = NOW() 
-            WHERE exam_id = ?
-          `;
-
-        db.query(updateQuery, [content, examId], (err, result) => {
-          if (err) {
-            console.error("Erreur lors de la mise à jour du corrigé:", err);
-            return res.status(500).json({ error: "Erreur serveur" });
-          }
-
-          res.status(200).json({
-            message: "Corrigé mis à jour avec succès",
-            id: results[0].id,
-          });
-        });
-      } else {
-        // Créer un nouveau corrigé
-        const insertQuery = `
-            INSERT INTO correction_template (exam_id, content, created_at, updated_at)
-            VALUES (?, ?, NOW(), NOW())
-          `;
-
-        db.query(insertQuery, [examId, content], (err, result) => {
-          if (err) {
-            console.error("Erreur lors de la création du corrigé:", err);
-            return res.status(500).json({ error: "Erreur serveur" });
-          }
-
-          res.status(201).json({
-            message: "Corrigé créé avec succès",
-            id: result.insertId,
-          });
-        });
-      }
-    });
-  });
-});
-
-// Route pour récupérer les détails d'un examen
-router.get("/exams/:id", authMiddleware, (req, res) => {
-  const examId = req.params.id;
-  const teacherId = req.user.id;
-
-  // Requête pour obtenir les détails de l'examen avec le nom de la matière et de la classe
-  const query = `
-      SELECT e.*, s.name as subjectName, c.className 
-      FROM exam e 
-      JOIN subject s ON e.subject_id = s.id 
-      JOIN class c ON e.class_id = c.id 
-      WHERE e.id = ? AND e.teacher_id = ?
-    `;
-
-  db.query(query, [examId, teacherId], (err, results) => {
-    if (err) {
-      console.error(
-        "Erreur lors de la récupération des détails de l'examen:",
-        err
-      );
-      return res.status(500).json({ error: "Erreur serveur" });
-    }
-
-    if (results.length === 0) {
-      return res.status(404).json({
-        error: "Examen non trouvé ou vous n'êtes pas autorisé à y accéder",
-      });
-    }
-
-    res.json(results[0]);
-  });
 });
 
 module.exports = router;

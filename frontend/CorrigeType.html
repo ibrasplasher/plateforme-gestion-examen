@@ -449,6 +449,7 @@
           });
       }
       // Fonction pour générer un corrigé avec l'IA
+      // Fonction pour générer un corrigé avec l'IA
       function generateCorrection() {
         if (!currentExamData) {
           swal({
@@ -468,25 +469,44 @@
 
         const token = localStorage.getItem("token");
 
-        // Préparer les données pour l'IA
-        const promptData = {
-          title: currentExamData.title,
-          subject: currentExamData.subjectName,
-          class: currentExamData.className,
-          description: currentExamData.description,
-          examContent:
-            currentExamData.content || "Contenu de l'examen non disponible",
-        };
-
-        // Appeler l'API pour générer le corrigé avec Ollama
-        fetch("http://localhost:5000/api/ai/generate-correction", {
-          method: "POST",
+        // D'abord récupérer le contenu du fichier d'examen
+        fetch(`http://localhost:5000/api/data/exam-content/${currentExamId}`, {
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(promptData),
         })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Erreur lors de la récupération du contenu de l'examen"
+              );
+            }
+            return response.json();
+          })
+          .then((fileData) => {
+            // Maintenant que nous avons le contenu du fichier, générer le corrigé
+
+            // Préparer les données pour l'IA
+            const promptData = {
+              title: currentExamData.title,
+              subject: currentExamData.subjectName,
+              class: currentExamData.className,
+              description: currentExamData.description,
+              examContent:
+                fileData.content || "Contenu de l'examen non disponible",
+            };
+
+            // Appeler l'API pour générer le corrigé
+            return fetch("http://localhost:5000/api/ai/generate-correction", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(promptData),
+            });
+          })
           .then((response) => {
             if (!response.ok) {
               throw new Error("Erreur lors de la génération du corrigé");
