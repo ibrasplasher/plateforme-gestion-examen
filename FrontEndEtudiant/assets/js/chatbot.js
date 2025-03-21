@@ -74,10 +74,11 @@ async function sendMessage() {
 
 // Fonction pour récupérer la réponse de l'IA
 async function getBotResponse(message) {
-    const API_KEY = "TA_CLE_API_GEMINI"; // Remplace par ta clé API Gemini
+    const API_KEY = "AIzaSyB7J_LMWaFJDpluv423Kw9ZsubV4qCS63s"; // Remplace par ta nouvelle clé API
+    const API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -101,3 +102,7 @@ async function getBotResponse(message) {
         return "Une erreur s'est produite en contactant l'IA. 🚨";
     }
 }
+
+
+
+

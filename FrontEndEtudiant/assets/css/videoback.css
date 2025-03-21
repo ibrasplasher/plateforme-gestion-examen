@@ -1,0 +1,19 @@
+    /* Style pour le fond vidéo */
+    #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1; /* Place la vidéo en arrière-plan */
+    }
+
+    /* Ajout d'un filtre sombre pour améliorer la lisibilité du texte */
+    .login-wrapper {
+        position: relative;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.5); /* Ajoute un fond semi-transparent */
+        padding: 20px;
+        border-radius: 10px;
+    }
