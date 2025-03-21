@@ -449,7 +449,6 @@
           });
       }
       // Fonction pour générer un corrigé avec l'IA
-      // Fonction pour générer un corrigé avec l'IA
       function generateCorrection() {
         if (!currentExamData) {
           swal({
@@ -485,17 +484,35 @@
             return response.json();
           })
           .then((fileData) => {
-            // Maintenant que nous avons le contenu du fichier, générer le corrigé
+            console.log("Contenu du fichier récupéré:", fileData);
 
-            // Préparer les données pour l'IA
+            // Vérifier si une erreur est présente
+            if (fileData.error) {
+              throw new Error(fileData.error);
+            }
+
+            // Vérifier si le contenu est réellement exploitable
+            if (
+              !fileData.content ||
+              fileData.content.includes(
+                "nécessite une extraction de texte spécifique"
+              )
+            ) {
+              throw new Error(
+                `Ce type de fichier (${fileData.fileType}) n'est pas encore pris en charge pour la génération automatique de corrigé.`
+              );
+            }
+
+            // Maintenant que nous avons le contenu du fichier, générer le corrigé
             const promptData = {
               title: currentExamData.title,
               subject: currentExamData.subjectName,
               class: currentExamData.className,
               description: currentExamData.description,
-              examContent:
-                fileData.content || "Contenu de l'examen non disponible",
+              examContent: fileData.content,
             };
+
+            console.log("Données envoyées à l'IA:", promptData);
 
             // Appeler l'API pour générer le corrigé
             return fetch("http://localhost:5000/api/ai/generate-correction", {
@@ -541,7 +558,8 @@
 
             swal({
               title: "Erreur!",
-              text: "Impossible de générer le corrigé avec l'IA.",
+              text:
+                error.message || "Impossible de générer le corrigé avec l'IA.",
               icon: "error",
               button: "OK",
             });

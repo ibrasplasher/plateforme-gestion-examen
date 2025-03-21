@@ -5,6 +5,7 @@ const { authMiddleware } = require("../middleware/authMiddleware");
 const { upload } = require("../middleware/uploadMiddleware");
 const path = require("path");
 const fs = require("fs");
+const pdfParse = require("pdf-parse"); // Ajout de pdf-parse
 const router = express.Router();
 
 // Créer le dossier pour les examens s'il n'existe pas
@@ -48,7 +49,7 @@ router.get("/teacher-subjects-classes", authMiddleware, (req, res) => {
 
   // Requête pour obtenir les matières et classes affectées à cet enseignant
   const query = `
-    SELECT DISTINCT s.id as subjectId, s.name as subjectName, 
+    SELECT DISTINCT s.id as subjectId, s.name as subjectName,
                    c.id as classId, c.className
     FROM teachSubject ts
     JOIN subject s ON ts.subject_id = s.id
@@ -142,7 +143,32 @@ router.get("/exam-content/:examId", authMiddleware, (req, res) => {
         res.json({ content: data });
       });
     }
-    // Pour les autres types de fichiers (PDF, etc.), renvoyer le chemin et indiquer qu'une extraction de texte est nécessaire
+    // Pour les fichiers PDF, utiliser pdf-parse
+    else if (fileExtension === ".pdf") {
+      // Lire le fichier PDF comme un buffer
+      fs.readFile(fullPath, (err, buffer) => {
+        if (err) {
+          console.error("Erreur lors de la lecture du fichier PDF:", err);
+          return res
+            .status(500)
+            .json({ error: "Erreur lors de la lecture du fichier PDF" });
+        }
+
+        // Utiliser pdf-parse pour extraire le texte
+        pdfParse(buffer)
+          .then((data) => {
+            // data.text contient le texte extrait du PDF
+            res.json({ content: data.text });
+          })
+          .catch((err) => {
+            console.error("Erreur lors de l'extraction du texte du PDF:", err);
+            return res
+              .status(500)
+              .json({ error: "Erreur lors de l'extraction du texte du PDF" });
+          });
+      });
+    }
+    // Pour les autres types de fichiers, renvoyer le chemin et indiquer qu'une extraction de texte est nécessaire
     else {
       res.json({
         content: `Ce fichier est un ${fileExtension
@@ -150,6 +176,8 @@ router.get("/exam-content/:examId", authMiddleware, (req, res) => {
           .toUpperCase()} et nécessite une extraction de texte spécifique.`,
         filePath: filePath,
         fileType: fileExtension.substring(1),
+        error:
+          "Format de fichier non pris en charge pour l'extraction automatique de texte",
       });
     }
   });
@@ -199,7 +227,7 @@ router.post("/exams", authMiddleware, upload.single("examFile"), (req, res) => {
 
   // Vérifier que l'enseignant a le droit d'assigner un examen à cette classe et cette matière
   const verifyQuery = `
-    SELECT COUNT(*) as count FROM teachSubject 
+    SELECT COUNT(*) as count FROM teachSubject
     WHERE teacher_id = ? AND subject_id = ? AND class_id = ?
   `;
 
@@ -282,7 +310,7 @@ router.get("/corrections/:examId", authMiddleware, (req, res) => {
 
     // L'enseignant est autorisé, récupérer le corrigé
     const query = `
-      SELECT * FROM correction_template 
+      SELECT * FROM correction_template
       WHERE exam_id = ?
     `;
 
@@ -354,8 +382,8 @@ router.post("/save-correction", authMiddleware, (req, res) => {
       if (results.length > 0) {
         // Mettre à jour le corrigé existant
         const updateQuery = `
-          UPDATE correction_template 
-          SET content = ?, updated_at = NOW() 
+          UPDATE correction_template
+          SET content = ?, updated_at = NOW()
           WHERE exam_id = ?
         `;
 
@@ -400,10 +428,10 @@ router.get("/exams/:id", authMiddleware, (req, res) => {
 
   // Requête pour obtenir les détails de l'examen avec le nom de la matière et de la classe
   const query = `
-    SELECT e.*, s.name as subjectName, c.className 
-    FROM exam e 
-    JOIN subject s ON e.subject_id = s.id 
-    JOIN class c ON e.class_id = c.id 
+    SELECT e.*, s.name as subjectName, c.className
+    FROM exam e
+    JOIN subject s ON e.subject_id = s.id
+    JOIN class c ON e.class_id = c.id
     WHERE e.id = ? AND e.teacher_id = ?
   `;
 
