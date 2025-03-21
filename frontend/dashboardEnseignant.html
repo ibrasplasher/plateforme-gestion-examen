@@ -1,148 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="Tableau de bord pour les enseignants" />
+    <meta name="author" content="ExamXpress" />
+    <meta name="keywords" content="education, exams, assessment" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!--Meta Responsive tag-->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!--Favicon Icon-->
+    <!-- Favicon -->
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <!--Bootstrap CSS-->
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <!--Custom style.css-->
+
+    <!-- Font styles -->
     <link rel="stylesheet" href="assets/css/quicksand.css" />
+
+    <!-- Custom styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
-    <!--Font Awesome-->
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="assets/css/fontawesome.css" />
-    <!--Animate CSS-->
-    <link rel="stylesheet" href="assets/css/animate.min.css" />
-    <!--Chartist CSS-->
-    <link rel="stylesheet" href="assets/css/chartist.min.css" />
-    <!--Morris Css-->
-    <link rel="stylesheet" href="assets/css/morris.css" />
-    <!--Map-->
-    <link rel="stylesheet" href="assets/css/jquery-jvectormap-2.0.2.css" />
-    <!--Bootstrap Calendar-->
-    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
-    <!--Nice select -->
-    <link rel="stylesheet" href="assets/css/nice-select.css" />
 
-    <title>ExamXpress</title>
+    <!-- Animation -->
+    <link rel="stylesheet" href="assets/css/animate.min.css" />
+
+    <!-- Chart styles -->
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
+    <link rel="stylesheet" href="assets/css/morris.css" />
+
+    <!-- Map styles -->
+    <link rel="stylesheet" href="assets/css/jquery-jvectormap-2.0.2.css" />
+
+    <!-- Calendar -->
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
+
+    <!-- Datatables -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css"
+    />
+
+    <!-- ApexCharts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.35.3/dist/apexcharts.css"
+    />
+
+    <!-- Custom Dashboard Style -->
+    <style>
+      .card-stats {
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .card-stats:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .card-stats .icon-big {
+        font-size: 3em;
+        min-height: 64px;
+        line-height: 64px;
+      }
+      .card-stats .card-body {
+        padding: 15px;
+      }
+      .card-stats .card-footer {
+        background-color: rgba(0, 0, 0, 0.03);
+        padding: 0.75rem 1.25rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+      }
+      .card-stats .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .chart-container {
+        position: relative;
+        min-height: 300px;
+        margin: 10px auto;
+      }
+      .activity-timeline {
+        position: relative;
+        margin-left: 20px;
+      }
+      .activity-timeline:before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background: #e9ecef;
+      }
+      .activity-item {
+        position: relative;
+        padding-left: 45px;
+        margin-bottom: 20px;
+      }
+      .activity-dot {
+        position: absolute;
+        left: 12px;
+        top: 0;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        background: #4e73df;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .activity-dot i {
+        color: white;
+        font-size: 10px;
+      }
+      .exam-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+      .exam-item:hover {
+        background-color: #f8f9fa;
+        transform: translateX(5px);
+      }
+      .progress-thin {
+        height: 5px;
+      }
+    </style>
+
+    <title>ExamXpress - Dashboard Enseignant</title>
   </head>
   <body>
-    <!--Page loader-->
+    <!-- Page loader -->
     <div class="loader-wrapper">
       <div class="loader-circle">
         <div class="loader-wave">ExamXpress</div>
       </div>
     </div>
-    <!--Page loader-->
-
-    <!--Page Wrapper-->
 
     <div class="container-fluid">
-      <!--Header-->
+      <!-- Header -->
       <div class="row header shadow-sm">
-        <!--Logo-->
+        <!-- Logo -->
         <div class="col-sm-3 pl-0 text-center header-logo">
           <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
             <h3 class="logo">
-              <a href="#" class="text-secondary logo"
-                ><i class="fa fa-rocket"></i> ExamX<span class="small"
+              <a href="#" class="text-secondary logo">
+                <i class="fa fa-rocket"></i> ExamX<span class="small"
                   >pert</span
-                ></a
-              >
+                >
+              </a>
             </h3>
           </div>
         </div>
-        <!--Logo-->
-        <!--Header Menu-->
+
+        <!-- Header Menu -->
         <div class="col-sm-9 header-menu pt-2 pb-0">
           <div class="row">
-            <!--Menu Icons-->
             <div class="col-sm-4 col-8 pl-0">
-              <!--Toggle sidebar-->
+              <!-- Toggle sidebar -->
               <span class="menu-icon" onclick="toggle_sidebar()">
                 <span id="sidebar-toggle-btn"></span>
               </span>
               <div class="menu-icon">
-                <a class="" href="#" role="button" class="dropdown-toggle">
-                  <i class="fa fa-weixin"> Chatbot</i>
+                <a href="#" role="button">
+                  <i class="fa fa-weixin"></i> Chatbot
                 </a>
               </div>
             </div>
 
-            <div
-              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end btn-group"
-            >
-              <button
-                type="button"
-                class="btn btn-dark dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="fa fa-user mr-3"></i>Profile
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Dashboard</a>
-                <a class="dropdown-item" href="#">ChatBot</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Log Out</a>
-              </div>
-            </div>
-
-            <!--Search box and avatar-->
+            <!-- Profile dropdown -->
             <div
               class="col-sm-8 col-4 text-right flex-header-menu justify-content-end"
-            ></div>
+            >
+              <div class="dropdown">
+                <button
+                  class="btn btn-dark dropdown-toggle"
+                  type="button"
+                  id="profileDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fa fa-user mr-2"></i>
+                  <span id="header-user-name">Utilisateur</span>
+                </button>
+                <div
+                  class="dropdown-menu dropdown-menu-right"
+                  aria-labelledby="profileDropdown"
+                >
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa fa-user-circle mr-2"></i> Mon Profil</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i class="fa fa-cog mr-2"></i> Paramètres</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="header-logout-link"
+                    ><i class="fa fa-sign-out-alt mr-2"></i> Déconnexion</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!--Header-->
 
-      <!--Main Content-->
-
+      <!-- Main Content -->
       <div class="row main-content">
-        <!--Sidebar left-->
+        <!-- Sidebar left -->
         <div class="col-sm-3 col-xs-6 sidebar pl-0">
           <div class="inner-sidebar mr-3">
-            <!--Image Avatar-->
-            <br /><br />
-            <div class="avatar text-center">
+            <!-- Image Avatar -->
+            <div class="avatar text-center mt-4">
               <img
+                id="sidebar-user-image"
                 src="assets/img/client-img4.png"
                 alt=""
-                class="rounded-circle"
+                class="rounded-circle shadow-sm"
+                style="width: 100px; height: 100px; object-fit: cover"
               />
-              <p><strong> NOM UTILISATEUR </strong></p>
-              <span class="text-primary small"
-                ><strong>PROFFESSION UTILISATEUR</strong></span
-              >
+              <p class="mt-2 mb-0">
+                <strong id="sidebar-user-name">NOM UTILISATEUR</strong>
+              </p>
+              <p class="text-primary small mb-2">
+                <strong id="sidebar-user-role">PROFESSION UTILISATEUR</strong>
+              </p>
             </div>
-            <!--Image Avatar-->
 
+            <!-- Sidebar Navigation Menu -->
             <!--Sidebar Navigation Menu-->
             <div class="sidebar-menu-container">
-              <!-- Ajouter cette ligne juste avant la fermeture de la balise body -->
-              <script src="assets/js/sidebar-navigation.js"></script>
-
-              <!-- Remplacer les liens de la sidebar pour qu'ils aient des identifiants uniques -->
               <ul class="sidebar-menu mt-4 mb-4">
                 <li class="parent">
-                  <a href="#" id="sidebar-dashboard">
-                    <i class="fa fa-dashboard mr-3"> </i>
+                  <a href="#"
+                    ><i class="fa fa-dashboard mr-3"> </i>
                     <span class="none">Dashboard </span>
                   </a>
                 </li>
@@ -159,13 +257,13 @@
                   </a>
                   <ul class="children" id="dashboard">
                     <li class="child">
-                      <a href="#" id="sidebar-create-exam" class="ml-4"
+                      <a href="#" class="ml-4"
                         ><i class="fa fa-angle-right mr-2"></i> Creer
                         Evaluation</a
                       >
                     </li>
                     <li class="child">
-                      <a href="#" id="sidebar-deposit-exam" class="ml-4"
+                      <a href="#" class="ml-4"
                         ><i class="fa fa-angle-right mr-2"></i> Deposer
                         Evaluation</a
                       >
@@ -173,13 +271,13 @@
                   </ul>
                 </li>
                 <li class="parent">
-                  <a href="#" id="sidebar-grades" class=""
+                  <a href="#" class=""
                     ><i class="fa fa-pencil mr-3"></i>
                     <span class="none">Gestion Notes </span>
                   </a>
                 </li>
                 <li class="parent">
-                  <a href="#" id="sidebar-examxpert" class=""
+                  <a href="#" class=""
                     ><i class="fa fa-rocket mr-3"></i>
                     <span class="none">ExamXpert</span>
                   </a>
@@ -187,7 +285,7 @@
                 <br /><br />
 
                 <li class="parent">
-                  <a href="#" id="sidebar-logout" class=""
+                  <a href="#" class=""
                     ><i class="fa fa-sign-out mr-3"></i>
                     <span class="none">Log Out </span>
                   </a>
@@ -197,142 +295,227 @@
             <!--Sidebar Naigation Menu-->
           </div>
         </div>
-        <!--Sidebar left-->
 
-        <!--Content right-->
+        <!-- Content right -->
         <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-          <h5 class="mb-0"><strong>Dashboard</strong></h5>
+          <h5 class="mb-4"><strong>Tableau de bord</strong></h5>
 
-          <!--Default bootstrap 4 validation-->
-          <div class="row mt-3">
-            <div class="col-sm-12">
-              <!--Dashboard widget-->
-              <div class="mt-1 mb-3 button-container">
-                <div class="row pl-0">
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-                    <div class="bg-white border shadow">
-                      <div class="media p-4">
-                        <div
-                          class="align-self-center mr-3 rounded-circle notify-icon bg-theme"
-                        >
-                          <i class="fa fa-user"></i>
-                        </div>
-                        <div class="media-body pl-2">
-                          <h3 class="mt-0 mb-0"><strong>30</strong></h3>
-                          <p>
-                            <small class="text-muted bc-description"
-                              >Nombre d'Eleve</small
-                            >
-                          </p>
-                        </div>
+          <!-- Statistics Cards -->
+          <div class="row mb-4">
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+              <div class="card card-stats bg-white border shadow">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-5 col-md-4">
+                      <div class="icon-big text-center text-primary">
+                        <i class="fa fa-users"></i>
+                      </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                      <div class="numbers">
+                        <p class="card-category">Étudiants</p>
+                        <p class="card-title" id="student-count">0</p>
                       </div>
                     </div>
                   </div>
-
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-                    <div class="bg-white border shadow">
-                      <div class="media p-4">
-                        <div
-                          class="align-self-center mr-3 rounded-circle notify-icon bg-danger"
-                        >
-                          <i class="fas fa-envelope-open"></i>
-                        </div>
-                        <div class="media-body pl-2">
-                          <h3 class="mt-0 mb-0"><strong>3</strong></h3>
-                          <p>
-                            <small class="text-muted bc-description"
-                              >Nombre de Classe</small
-                            >
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-                    <div class="bg-theme border shadow">
-                      <div class="media p-4">
-                        <div
-                          class="align-self-center mr-3 rounded-circle notify-icon bg-white"
-                        >
-                          <i class="fa fa-tags text-theme"></i>
-                        </div>
-                        <div class="media-body pl-2">
-                          <h3 class="mt-0 mb-0"><strong>72%</strong></h3>
-                          <p>
-                            <small class="bc-description text-white"
-                              >Taux De Reussite</small
-                            >
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                </div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fa fa-clock"></i> Dernière mise à jour il y a 1
+                    heure
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="row mt-3">
-                <div class="col-sm-6">
-                  <!--Bar Chart-->
-                  <div
-                    class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border"
-                  >
-                    <h6 class="mb-2">Bar chart</h6>
-
-                    <div id="barChartMorris" height="150px"></div>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+              <div class="card card-stats bg-white border shadow">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-5 col-md-4">
+                      <div class="icon-big text-center text-warning">
+                        <i class="fa fa-file-alt"></i>
+                      </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                      <div class="numbers">
+                        <p class="card-category">Examens</p>
+                        <p class="card-title" id="exam-count">0</p>
+                      </div>
+                    </div>
                   </div>
-                  <!--/Bar Chart-->
                 </div>
-
-                <div class="col-sm-6">
-                  <!--Doughnut Chart-->
-                  <div
-                    class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border"
-                  >
-                    <h6 class="mb-2">Donut chart</h6>
-
-                    <div id="doughnutChartMorris" height="150px"></div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fa fa-calendar"></i> Cette année
                   </div>
-                  <!--/Doughnut Chart-->
                 </div>
               </div>
-              <!--/Dashboard widget-->
+            </div>
 
-              <div class="row mt-3">
-                <div class="col-sm-12 col-md-8">
-                  <!--Analytics-->
-                  <div
-                    class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border"
-                  >
-                    <h6 class="mb-3">Analytics</h6>
-                    <hr />
-
-                    <canvas
-                      id="orderRevenue"
-                      class="orderRevenue"
-                      height="150px"
-                    ></canvas>
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+              <div class="card card-stats bg-white border shadow">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-5 col-md-4">
+                      <div class="icon-big text-center text-success">
+                        <i class="fa fa-check-circle"></i>
+                      </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                      <div class="numbers">
+                        <p class="card-category">Soumissions</p>
+                        <p class="card-title" id="submission-count">0</p>
+                      </div>
+                    </div>
                   </div>
-                  <!--/Analytics-->
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 card-calendar mb-3">
-                  <!--Calendar-->
-                  <div class="calendar-wrapper panel-head-info shadow">
-                    <div id="calendar" class="calendar-box"></div>
-                    <div class="dropdown-divider"></div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fa fa-clock"></i> Aujourd'hui
                   </div>
-                  <!--Calendar-->
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+              <div class="card card-stats bg-white border shadow">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-5 col-md-4">
+                      <div class="icon-big text-center text-danger">
+                        <i class="fa fa-graduation-cap"></i>
+                      </div>
+                    </div>
+                    <div class="col-7 col-md-8">
+                      <div class="numbers">
+                        <p class="card-category">Taux de réussite</p>
+                        <p class="card-title" id="success-rate">0%</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <i class="fa fa-trophy"></i> Performance moyenne
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!--Footer-->
+          <!-- Charts -->
+          <div class="row mb-4">
+            <div class="col-md-8 mb-3">
+              <div class="card shadow border">
+                <div class="card-header bg-white">
+                  <h6 class="mb-0">Performance des étudiants</h6>
+                </div>
+                <div class="card-body">
+                  <div
+                    id="student-performance-chart"
+                    class="chart-container"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <div class="card shadow border">
+                <div class="card-header bg-white">
+                  <h6 class="mb-0">Répartition des notes</h6>
+                </div>
+                <div class="card-body">
+                  <div
+                    id="grade-distribution-chart"
+                    class="chart-container"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity and Upcoming Exams -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+              <div class="card shadow border">
+                <div class="card-header bg-white">
+                  <h6 class="mb-0">Activité récente</h6>
+                </div>
+                <div class="card-body p-0">
+                  <div class="activity-timeline p-3">
+                    <div id="recent-activities">
+                      <!-- Activities will be loaded here -->
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer text-center">
+                  <a href="#" class="text-primary">Voir toutes les activités</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <div class="card shadow border">
+                <div class="card-header bg-white">
+                  <h6 class="mb-0">Examens à venir</h6>
+                </div>
+                <div class="card-body p-0">
+                  <div id="upcoming-exams" class="p-3">
+                    <!-- Upcoming exams will be loaded here -->
+                  </div>
+                </div>
+                <div class="card-footer text-center">
+                  <a href="Exam.html" class="text-primary"
+                    >Gérer tous les examens</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Submissions Table -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card shadow border">
+                <div class="card-header bg-white">
+                  <h6 class="mb-0">Soumissions récentes</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table
+                      id="recent-submissions-table"
+                      class="table table-striped table-bordered"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Étudiant</th>
+                          <th>Examen</th>
+                          <th>Date</th>
+                          <th>Note</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Recent submissions will be loaded here -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
           <div class="row mt-5 mb-4 footer">
             <div class="col-sm-8">
               <span
                 >&copy; All rights reserved
-                <a class="text-theme" href="#"> Fatou Kine THIOUB</a></span
+                <a class="text-theme" href="#">ExamXpress</a></span
               >
             </div>
             <div class="col-sm-4 text-right">
@@ -340,57 +523,785 @@
               <a href="#" class="ml-2">Support</a>
             </div>
           </div>
-          <!--Footer-->
         </div>
       </div>
-
-      <!--Main Content-->
     </div>
 
-    <!--Page Wrapper-->
-
-    <!-- Page JavaScript Files-->
+    <!-- JavaScript Libraries -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery-1.12.4.min.js"></script>
-    <!--Popper JS-->
     <script src="assets/js/popper.min.js"></script>
-    <!--Bootstrap-->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!--Sweet alert JS-->
     <script src="assets/js/sweetalert.js"></script>
-    <!--Progressbar JS-->
     <script src="assets/js/progressbar.min.js"></script>
-    <!--Flot.JS-->
-    <script src="assets/js/charts/jquery.flot.min.js"></script>
-    <script src="assets/js/charts/jquery.flot.pie.min.js"></script>
-    <script src="assets/js/charts/jquery.flot.categories.min.js"></script>
-    <script src="assets/js/charts/jquery.flot.stack.min.js"></script>
-    <!--Sparkline-->
-    <script src="assets/js/charts/sparkline.min.js"></script>
-    <!--Morris.JS-->
-    <script src="assets/js/charts/raphael.min.js"></script>
-    <script src="assets/js/charts/morris.js"></script>
-    <!--Chart JS-->
-    <script src="assets/js/charts/chart.min.js"></script>
-    <!--Chartist JS-->
-    <script src="assets/js/charts/chartist.min.js"></script>
-    <script src="assets/js/charts/chartist-data.js"></script>
-    <script src="assets/js/charts/demo.js"></script>
-    <!--Maps-->
-    <script src="assets/js/maps/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="assets/js/maps/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="assets/js/maps/jvector-maps.js"></script>
-    <!--Bootstrap Calendar JS-->
-    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
-    <script src="assets/js/calendar/demo.js"></script>
-    <!--Nice select-->
-    <script src="assets/js/jquery.nice-select.min.js"></script>
 
-    <!--Custom Js Script-->
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.3/dist/apexcharts.min.js"></script>
+
+    <!-- Datatables -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Custom Scripts -->
     <script src="assets/js/custom.js"></script>
-
     <script src="assets/js/dashboard-profile.js"></script>
-
     <script src="assets/js/sidebar-navigation.js"></script>
+
+    <!-- Dashboard Script -->
+    <script>
+      $(document).ready(function () {
+        // Check if user is logged in
+        const token = localStorage.getItem("token");
+        const userData = localStorage.getItem("user")
+          ? JSON.parse(localStorage.getItem("user"))
+          : null;
+
+        if (!token || !userData) {
+          swal({
+            title: "Erreur !",
+            text: "Vous devez être connecté pour accéder à cette page.",
+            icon: "error",
+            button: "OK",
+          }).then(() => {
+            window.location.href = "Connexion.html";
+          });
+          return;
+        }
+
+        // Set user information
+        $("#header-user-name, #sidebar-user-name").text(
+          userData.firstName + " " + userData.lastName
+        );
+        $("#sidebar-user-role").text(
+          userData.role === "teacher" ? "Enseignant" : "Étudiant"
+        );
+
+        // Load profile picture if available
+        if (userData.photoPath) {
+          const photoUrl = `http://localhost:5000/${userData.photoPath}`;
+          $("#sidebar-user-image").attr("src", photoUrl);
+        }
+
+        // Load dashboard data
+        loadDashboardData();
+
+        // Logout functionality
+        $("#header-logout-link, #sidebar-logout-link").click(function () {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "Connexion.html";
+        });
+      });
+
+      // Function to load dashboard data
+      function loadDashboardData() {
+        const token = localStorage.getItem("token");
+
+        // Load statistics
+        $.ajax({
+          url: "http://localhost:5000/api/data/teacher-statistics",
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          success: function (data) {
+            // Update statistics
+            $("#student-count").text(data.studentCount || 0);
+            $("#exam-count").text(data.examCount || 0);
+            $("#submission-count").text(data.submissionCount || 0);
+            $("#success-rate").text(`${data.successRate || 0}%`);
+
+            // Initialize charts
+            initializeCharts(data);
+
+            // Load recent activities
+            loadRecentActivities();
+
+            // Load upcoming exams
+            loadUpcomingExams();
+
+            // Load recent submissions
+            loadRecentSubmissions();
+          },
+          error: function (xhr) {
+            console.error("Error loading dashboard data:", xhr);
+            // Use demo data if API fails
+            useDemoData();
+          },
+        });
+      }
+
+      // Function to use demo data if API fails
+      function useDemoData() {
+        // Demo statistics
+        $("#student-count").text("45");
+        $("#exam-count").text("12");
+        $("#submission-count").text("187");
+        $("#success-rate").text("76%");
+
+        // Initialize charts with demo data
+        initializeChartsWithDemoData();
+
+        // Load demo activities
+        loadDemoActivities();
+
+        // Load demo upcoming exams
+        loadDemoUpcomingExams();
+
+        // Load demo submissions
+        loadDemoSubmissions();
+      }
+
+      // Function to initialize charts with real data
+      function initializeCharts(data) {
+        // If real data is available, use it, otherwise fallback to demo data
+        if (!data || !data.performance || !data.gradeDistribution) {
+          initializeChartsWithDemoData();
+          return;
+        }
+
+        // Student Performance Chart
+        const performanceOptions = {
+          series: [
+            {
+              name: "Note moyenne",
+              data: data.performance.averages || [],
+            },
+          ],
+          chart: {
+            type: "line",
+            height: 350,
+            zoom: {
+              enabled: false,
+            },
+            toolbar: {
+              show: false,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            curve: "smooth",
+            width: 3,
+          },
+          grid: {
+            row: {
+              colors: ["#f3f3f3", "transparent"],
+              opacity: 0.5,
+            },
+          },
+          xaxis: {
+            categories: data.performance.labels || [],
+          },
+          yaxis: {
+            min: 0,
+            max: 20,
+            title: {
+              text: "Note sur 20",
+            },
+          },
+          colors: ["#4e73df"],
+        };
+
+        const performanceChart = new ApexCharts(
+          document.querySelector("#student-performance-chart"),
+          performanceOptions
+        );
+        performanceChart.render();
+
+        // Grade Distribution Chart
+        const gradeDistributionOptions = {
+          series: data.gradeDistribution.values || [10, 20, 30, 25, 15],
+          chart: {
+            type: "donut",
+            height: 350,
+          },
+          labels: data.gradeDistribution.labels || [
+            "0-5",
+            "6-10",
+            "11-13",
+            "14-16",
+            "17-20",
+          ],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200,
+                },
+                legend: {
+                  position: "bottom",
+                },
+              },
+            },
+          ],
+          colors: ["#e74a3b", "#f6c23e", "#36b9cc", "#1cc88a", "#4e73df"],
+        };
+
+        const gradeDistributionChart = new ApexCharts(
+          document.querySelector("#grade-distribution-chart"),
+          gradeDistributionOptions
+        );
+        gradeDistributionChart.render();
+      }
+
+      // Function to initialize charts with demo data
+      function initializeChartsWithDemoData() {
+        // Student Performance Chart
+        const performanceOptions = {
+          series: [
+            {
+              name: "Note moyenne",
+              data: [12.5, 11.2, 14.8, 13.5, 15.2, 10.7, 13.9],
+            },
+          ],
+          chart: {
+            type: "line",
+            height: 350,
+            zoom: {
+              enabled: false,
+            },
+            toolbar: {
+              show: false,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            curve: "smooth",
+            width: 3,
+          },
+          grid: {
+            row: {
+              colors: ["#f3f3f3", "transparent"],
+              opacity: 0.5,
+            },
+          },
+          xaxis: {
+            categories: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil"],
+          },
+          yaxis: {
+            min: 0,
+            max: 20,
+            title: {
+              text: "Note sur 20",
+            },
+          },
+          colors: ["#4e73df"],
+        };
+
+        const performanceChart = new ApexCharts(
+          document.querySelector("#student-performance-chart"),
+          performanceOptions
+        );
+        performanceChart.render();
+
+        // Grade Distribution Chart
+        const gradeDistributionOptions = {
+          series: [10, 20, 30, 25, 15],
+          chart: {
+            type: "donut",
+            height: 350,
+          },
+          labels: ["0-5", "6-10", "11-13", "14-16", "17-20"],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200,
+                },
+                legend: {
+                  position: "bottom",
+                },
+              },
+            },
+          ],
+          colors: ["#e74a3b", "#f6c23e", "#36b9cc", "#1cc88a", "#4e73df"],
+        };
+
+        const gradeDistributionChart = new ApexCharts(
+          document.querySelector("#grade-distribution-chart"),
+          gradeDistributionOptions
+        );
+        gradeDistributionChart.render();
+      }
+
+      // Function to load recent activities
+      function loadRecentActivities() {
+        const token = localStorage.getItem("token");
+
+        $.ajax({
+          url: "http://localhost:5000/api/data/teacher-activities",
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          success: function (activities) {
+            if (!activities || activities.length === 0) {
+              loadDemoActivities();
+              return;
+            }
+
+            let html = "";
+            activities.forEach((activity) => {
+              let iconClass = "fa-bell";
+
+              if (activity.type === "exam_created") {
+                iconClass = "fa-file-alt";
+              } else if (activity.type === "submission_received") {
+                iconClass = "fa-upload";
+              } else if (activity.type === "grade_assigned") {
+                iconClass = "fa-check-circle";
+              }
+
+              html += `
+                <div class="activity-item">
+                  <div class="activity-dot">
+                    <i class="fa ${iconClass}"></i>
+                  </div>
+                  <div class="activity-content">
+                    <h6 class="mb-1">${activity.title}</h6>
+                    <p class="text-muted mb-0">${activity.description}</p>
+                    <small class="text-muted">${formatDate(
+                      activity.timestamp
+                    )}</small>
+                  </div>
+                </div>
+              `;
+            });
+
+            $("#recent-activities").html(html);
+          },
+          error: function () {
+            loadDemoActivities();
+          },
+        });
+      }
+
+      // Function to load demo activities
+      function loadDemoActivities() {
+        const activities = [
+          {
+            type: "exam_created",
+            title: "Nouvel examen créé",
+            description:
+              'Vous avez créé l\'examen "Algorithmes et structures de données"',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+          },
+          {
+            type: "submission_received",
+            title: "Nouvelle soumission",
+            description:
+              'Jean Dupont a soumis sa copie pour l\'examen "Bases de données"',
+            timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000),
+          },
+          {
+            type: "grade_assigned",
+            title: "Note attribuée",
+            description: "Vous avez noté la copie de Marie Martin (15/20)",
+            timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
+          },
+          {
+            type: "exam_created",
+            title: "Corrigé type généré",
+            description:
+              'Corrigé type généré pour l\'examen "Programmation Web"',
+            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
+          },
+        ];
+
+        let html = "";
+        activities.forEach((activity) => {
+          let iconClass = "fa-bell";
+
+          if (activity.type === "exam_created") {
+            iconClass = "fa-file-alt";
+          } else if (activity.type === "submission_received") {
+            iconClass = "fa-upload";
+          } else if (activity.type === "grade_assigned") {
+            iconClass = "fa-check-circle";
+          }
+
+          html += `
+            <div class="activity-item">
+              <div class="activity-dot">
+                <i class="fa ${iconClass}"></i>
+              </div>
+              <div class="activity-content">
+                <h6 class="mb-1">${activity.title}</h6>
+                <p class="text-muted mb-0">${activity.description}</p>
+                <small class="text-muted">${formatDate(
+                  activity.timestamp
+                )}</small>
+              </div>
+            </div>
+          `;
+        });
+
+        $("#recent-activities").html(html);
+      }
+
+      // Function to load upcoming exams
+      function loadUpcomingExams() {
+        const token = localStorage.getItem("token");
+
+        $.ajax({
+          url: "http://localhost:5000/api/data/teacher-upcoming-exams",
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          success: function (exams) {
+            if (!exams || exams.length === 0) {
+              loadDemoUpcomingExams();
+              return;
+            }
+
+            let html = "";
+            exams.forEach((exam) => {
+              const daysLeft = calculateDaysLeft(exam.deadline);
+              let badgeClass = "badge-success";
+
+              if (daysLeft <= 1) {
+                badgeClass = "badge-danger";
+              } else if (daysLeft <= 3) {
+                badgeClass = "badge-warning";
+              }
+
+              html += `
+                <div class="exam-item border-left-${badgeClass.replace(
+                  "badge-",
+                  ""
+                )} pl-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">${exam.title}</h6>
+                    <span class="badge ${badgeClass}">${daysLeft} jour${
+                daysLeft > 1 ? "s" : ""
+              }</span>
+                  </div>
+                  <p class="text-muted small mb-2">${
+                    exam.subjectName || ""
+                  } - ${exam.className || ""}</p>
+                  <div class="d-flex justify-content-between">
+                    <small class="text-muted">${formatDate(
+                      exam.deadline
+                    )}</small>
+                    <small>${exam.submissionsCount || 0} soumissions</small>
+                  </div>
+                </div>
+              `;
+            });
+
+            $("#upcoming-exams").html(html);
+          },
+          error: function () {
+            loadDemoUpcomingExams();
+          },
+        });
+      }
+
+      // Function to load demo upcoming exams
+      function loadDemoUpcomingExams() {
+        const exams = [
+          {
+            id: 1,
+            title: "Examen Final de Programmation Web",
+            subjectName: "Développement Web",
+            className: "DIC2",
+            deadline: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+            submissionsCount: 12,
+          },
+          {
+            id: 2,
+            title: "Contrôle continu de Base de données",
+            subjectName: "Base de données",
+            className: "DIC1",
+            deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+            submissionsCount: 8,
+          },
+          {
+            id: 3,
+            title: "TP d'Algorithmes",
+            subjectName: "Algorithmes",
+            className: "DIC3",
+            deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            submissionsCount: 0,
+          },
+        ];
+
+        let html = "";
+        exams.forEach((exam) => {
+          const daysLeft = calculateDaysLeft(exam.deadline);
+          let badgeColorClass = "success";
+
+          if (daysLeft <= 1) {
+            badgeColorClass = "danger";
+          } else if (daysLeft <= 3) {
+            badgeColorClass = "warning";
+          }
+
+          html += `
+            <div class="exam-item border-left-${badgeColorClass} pl-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">${exam.title}</h6>
+                <span class="badge badge-${badgeColorClass}">${daysLeft} jour${
+            daysLeft > 1 ? "s" : ""
+          }</span>
+              </div>
+              <p class="text-muted small mb-2">${exam.subjectName} - ${
+            exam.className
+          }</p>
+              <div class="d-flex justify-content-between">
+                <small class="text-muted">${formatDate(exam.deadline)}</small>
+                <small>${exam.submissionsCount} soumissions</small>
+              </div>
+            </div>
+          `;
+        });
+
+        $("#upcoming-exams").html(html);
+      }
+
+      // Function to load recent submissions
+      function loadRecentSubmissions() {
+        const token = localStorage.getItem("token");
+
+        $.ajax({
+          url: "http://localhost:5000/api/data/teacher-recent-submissions",
+          type: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          success: function (submissions) {
+            if (!submissions || submissions.length === 0) {
+              loadDemoSubmissions();
+              return;
+            }
+
+            let html = "";
+            submissions.forEach((submission) => {
+              let badgeClass = "badge-secondary";
+              let statusText = "Non noté";
+
+              if (submission.score !== null) {
+                if (submission.score >= 10) {
+                  badgeClass = "badge-success";
+                } else {
+                  badgeClass = "badge-danger";
+                }
+                statusText = submission.score + "/20";
+              }
+
+              html += `
+                <tr>
+                  <td>${submission.firstName} ${submission.lastName}</td>
+                  <td>${submission.examTitle}</td>
+                  <td>${formatDate(submission.submitted_at)}</td>
+                  <td><span class="badge ${badgeClass}">${statusText}</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary view-submission-btn" data-id="${
+                      submission.id
+                    }" data-path="${submission.file_path}">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success grade-submission-btn" data-id="${
+                      submission.id
+                    }">
+                      <i class="fa fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+              `;
+            });
+
+            $("#recent-submissions-table tbody").html(html);
+
+            // Initialize DataTable
+            if (!$.fn.DataTable.isDataTable("#recent-submissions-table")) {
+              $("#recent-submissions-table").DataTable({
+                language: {
+                  url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json",
+                },
+                responsive: true,
+                order: [[2, "desc"]], // Sort by date
+                pageLength: 5,
+                lengthMenu: [5, 10, 25],
+                columnDefs: [
+                  { orderable: false, targets: 4 }, // No sorting on actions column
+                ],
+              });
+            }
+
+            // Add event handlers for buttons
+            addSubmissionEventHandlers();
+          },
+          error: function () {
+            loadDemoSubmissions();
+          },
+        });
+      }
+
+      // Function to load demo submissions
+      function loadDemoSubmissions() {
+        const submissions = [
+          {
+            id: 1,
+            firstName: "Jean",
+            lastName: "Dupont",
+            examTitle: "Algorithmes et structures de données",
+            submitted_at: new Date(Date.now() - 2 * 60 * 60 * 1000),
+            score: 16.5,
+            file_path: "submissions/submission1.pdf",
+          },
+          {
+            id: 2,
+            firstName: "Marie",
+            lastName: "Martin",
+            examTitle: "Base de données",
+            submitted_at: new Date(Date.now() - 5 * 60 * 60 * 1000),
+            score: 18,
+            file_path: "submissions/submission2.pdf",
+          },
+          {
+            id: 3,
+            firstName: "Pierre",
+            lastName: "Leroy",
+            examTitle: "Programmation Web",
+            submitted_at: new Date(Date.now() - 12 * 60 * 60 * 1000),
+            score: 8.5,
+            file_path: "submissions/submission3.pdf",
+          },
+          {
+            id: 4,
+            firstName: "Sophie",
+            lastName: "Dubois",
+            examTitle: "Algorithmes et structures de données",
+            submitted_at: new Date(Date.now() - 24 * 60 * 60 * 1000),
+            score: null,
+            file_path: "submissions/submission4.pdf",
+          },
+          {
+            id: 5,
+            firstName: "Lucas",
+            lastName: "Bernard",
+            examTitle: "Base de données",
+            submitted_at: new Date(Date.now() - 36 * 60 * 60 * 1000),
+            score: 14.25,
+            file_path: "submissions/submission5.pdf",
+          },
+        ];
+
+        let html = "";
+        submissions.forEach((submission) => {
+          let badgeClass = "badge-secondary";
+          let statusText = "Non noté";
+
+          if (submission.score !== null) {
+            if (submission.score >= 10) {
+              badgeClass = "badge-success";
+            } else {
+              badgeClass = "badge-danger";
+            }
+            statusText = submission.score + "/20";
+          }
+
+          html += `
+            <tr>
+              <td>${submission.firstName} ${submission.lastName}</td>
+              <td>${submission.examTitle}</td>
+              <td>${formatDate(submission.submitted_at)}</td>
+              <td><span class="badge ${badgeClass}">${statusText}</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary view-submission-btn" data-id="${
+                  submission.id
+                }" data-path="${submission.file_path}">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-success grade-submission-btn" data-id="${
+                  submission.id
+                }">
+                  <i class="fa fa-check"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        $("#recent-submissions-table tbody").html(html);
+
+        // Initialize DataTable
+        if (!$.fn.DataTable.isDataTable("#recent-submissions-table")) {
+          $("#recent-submissions-table").DataTable({
+            language: {
+              url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/French.json",
+            },
+            responsive: true,
+            order: [[2, "desc"]], // Sort by date
+            pageLength: 5,
+            lengthMenu: [5, 10, 25],
+            columnDefs: [
+              { orderable: false, targets: 4 }, // No sorting on actions column
+            ],
+          });
+        }
+
+        // Add event handlers for buttons
+        addSubmissionEventHandlers();
+      }
+
+      // Function to add event handlers for submission buttons
+      function addSubmissionEventHandlers() {
+        // View submission
+        $(".view-submission-btn").click(function () {
+          const submissionId = $(this).data("id");
+          const filePath = $(this).data("path");
+
+          // If it's a PDF, open in a new tab
+          if (filePath.toLowerCase().endsWith(".pdf")) {
+            window.open(`http://localhost:5000/${filePath}`, "_blank");
+          } else {
+            // Otherwise, redirect to a page that displays the content
+            window.location.href = `ViewSubmission.html?id=${submissionId}`;
+          }
+        });
+
+        // Grade submission
+        $(".grade-submission-btn").click(function () {
+          const submissionId = $(this).data("id");
+          window.location.href = `GestionNotes.html?submission=${submissionId}`;
+        });
+      }
+
+      // Helper function to format date
+      function formatDate(dateString) {
+        if (!dateString) return "-";
+
+        const date = new Date(dateString);
+        return date.toLocaleDateString("fr-FR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+
+      // Helper function to calculate days left
+      function calculateDaysLeft(deadline) {
+        const today = new Date();
+        const deadlineDate = new Date(deadline);
+
+        // Reset time part for accurate day calculation
+        today.setHours(0, 0, 0, 0);
+        deadlineDate.setHours(0, 0, 0, 0);
+
+        const differenceMs = deadlineDate.getTime() - today.getTime();
+        return Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+      }
+    </script>
   </body>
 </html>

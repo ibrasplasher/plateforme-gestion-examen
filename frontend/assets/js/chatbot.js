@@ -4,6 +4,8 @@ const chatBody = document.getElementById("chatBody");
 const userInput = document.getElementById("userInput");
 const eyeLeft = document.getElementById("eyeLeft");
 const eyeRight = document.getElementById("eyeRight");
+const chatbotModal = document.getElementById("thechatbot");
+const chatbotCloseBtn = chatbotModal.querySelector(".close");
 
 // Suivi des yeux du robot
 document.addEventListener("mousemove", function (event) {
@@ -27,11 +29,24 @@ document.addEventListener("mousemove", function (event) {
 
 // Affichage de la modal au clic sur le robot
 robot.addEventListener("click", function () {
-  const modal = document.getElementById("thechatbot");
-  modal.classList.add("show");
-  modal.style.display = "block";
+  chatbotModal.classList.add("show");
+  chatbotModal.style.display = "block";
   document.body.classList.add("modal-open");
 });
+
+// Fonction pour fermer la modal
+function closeChatbot() {
+  chatbotModal.classList.remove("show");
+  chatbotModal.style.display = "none";
+  document.body.classList.remove("modal-open");
+}
+
+// Ajout de l'écouteur d'événement pour fermer la modal
+chatbotCloseBtn.addEventListener("click", closeChatbot);
+
+// Ajout de l'écouteur d'événement pour le bouton de fermeture dans le footer
+const modalFooterCloseBtn = chatbotModal.querySelector(".btn-secondary");
+modalFooterCloseBtn.addEventListener("click", closeChatbot);
 
 // Fonction pour afficher une bulle de rire du robot
 function showLaugh() {
@@ -41,12 +56,6 @@ function showLaugh() {
   robot.appendChild(laughBubble);
   setTimeout(() => robot.removeChild(laughBubble), 2000);
 }
-
-// Affichage du chat au clic sur le robot
-robot.addEventListener(
-  "click",
-  () => (chatContainer.style.transform = "translateY(0)")
-);
 
 // Envoi du message et affichage de la réponse
 async function sendMessage() {
@@ -81,7 +90,7 @@ async function sendMessage() {
 
 // Fonction pour récupérer la réponse de l'IA
 async function getBotResponse(message) {
-  const API_KEY = "AIzaSyB7J_LMWaFJDpluv423Kw9ZsubV4qCS63s"; // Remplace par ta nouvelle clé API
+  const API_KEY = "AIzaSyB7J_LMWaFJDpluv423Kw9ZsubV4qCS63s";
   const API_URL =
     "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" +
     API_KEY;
