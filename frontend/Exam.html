@@ -288,25 +288,30 @@
 
               // Pour chaque examen, récupérer le nombre de soumissions
               const examPromises = response.map((exam) => {
-                return $.ajax({
+                // Créer une promesse compatible jQuery
+                var dfd = $.Deferred();
+
+                $.ajax({
                   type: "GET",
                   url: `http://localhost:5000/api/data/exam-submissions-count/${exam.id}`,
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
-                })
-                  .then((data) => {
+                  success: function (data) {
                     exam.submissionsCount = data.count || 0;
-                    return exam;
-                  })
-                  .catch(() => {
+                    dfd.resolve(exam);
+                  },
+                  error: function () {
                     exam.submissionsCount = 0;
-                    return exam;
-                  });
+                    dfd.resolve(exam);
+                  },
+                });
+
+                return dfd.promise();
               });
 
               // Quand toutes les requêtes sont terminées
-              $.when.apply($, examPromises).then(function () {
+              $.when.apply($, examPromises).done(function () {
                 // Afficher les examens avec le nombre de soumissions
                 response.forEach((exam) => {
                   let row = `

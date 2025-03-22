@@ -576,11 +576,27 @@
         const token = localStorage.getItem("token");
         const htmlContent = editorInstance.getData();
 
+        // S'assurer que l'ID est converti en nombre
+        const examId = parseInt(currentExamId, 10);
+
+        // Vérifier que l'ID est valide
+        if (isNaN(examId) || examId <= 0) {
+          swal({
+            title: "Erreur!",
+            text: "ID d'examen invalide.",
+            icon: "error",
+            button: "OK",
+          });
+          return;
+        }
+
         // Données à envoyer
         const correctionData = {
-          examId: currentExamId,
+          examId: examId,
           content: htmlContent,
         };
+
+        console.log("Données du corrigé à envoyer:", correctionData); // Log pour débogage
 
         // Envoyer au serveur
         fetch("http://localhost:5000/api/data/save-correction", {
@@ -593,7 +609,11 @@
         })
           .then((response) => {
             if (!response.ok) {
-              throw new Error("Erreur lors de l'enregistrement du corrigé");
+              return response.json().then((data) => {
+                throw new Error(
+                  data.error || "Erreur lors de l'enregistrement du corrigé"
+                );
+              });
             }
             return response.json();
           })
@@ -609,7 +629,7 @@
             console.error("Erreur:", error);
             swal({
               title: "Erreur!",
-              text: "Impossible d'enregistrer le corrigé.",
+              text: error.message || "Impossible d'enregistrer le corrigé.",
               icon: "error",
               button: "OK",
             });
