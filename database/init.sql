@@ -2,6 +2,14 @@ DROP DATABASE IF EXISTS exam_platform;
 CREATE DATABASE exam_platform;
 USE exam_platform;
 
+ALTER TABLE student ADD COLUMN class_id INT;
+ALTER TABLE student ADD FOREIGN KEY (class_id) REFERENCES class(id);
+
+-- Mettre à jour les étudiants existants en utilisant les informations de la table inClass
+UPDATE student s
+JOIN inClass ic ON s.id = ic.student_id
+SET s.class_id = ic.class_id;
+
 -- Table des étudiants
 CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,

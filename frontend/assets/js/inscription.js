@@ -1,86 +1,94 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.querySelector("form"); // Sélectionne le formulaire
+// Ajoutez ou mettez à jour cette route dans votre fichier backend/routes/authRoutes.js
 
-  form.addEventListener("submit", async function (event) {
-    event.preventDefault(); // Empêche le rechargement de la page
+// Route pour l'inscription des étudiants
+router.post("/register/student", async (req, res) => {
+  try {
+    const { numCarte, firstName, lastName, email, password, classId } =
+      req.body;
 
-    // Récupérer les valeurs des champs du formulaire
-    const numCarte = document.querySelector(
-      'input[aria-label="cardNumber"]'
-    ).value;
-    const firstName = document.querySelector(
-      'input[aria-label="FirstName"]'
-    ).value;
-    const lastName = document.querySelector(
-      'input[aria-label="LastName"]'
-    ).value;
-    const email = document.querySelector('input[aria-label="email"]').value;
-    const password = document.querySelector(
-      'input[aria-label="Password"]'
-    ).value;
-    const confirmPassword = document.querySelector(
-      'input[aria-label="Confirme Password"]'
-    ).value;
-
-    // Vérifier si les mots de passe correspondent
-    if (password !== confirmPassword) {
-      alert("Les mots de passe ne correspondent pas !");
-      return;
+    // Validation des données
+    if (
+      !numCarte ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !classId
+    ) {
+      return res
+        .status(400)
+        .json({ error: "Veuillez remplir tous les champs" });
     }
 
-    // AJOUTEZ CE CODE ICI - Solution 4
-    // Vérifier que le numéro de carte est bien un nombre
-
-    // Objet contenant les données
-    const userData = {
-      numCarte, // Garde le format texte
-      firstName,
-      lastName,
-      email,
-      password,
-    };
-
-    // Le reste du code reste inchangé...
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/register/student",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        }
-      );
-
-      const contentType = response.headers.get("Content-Type");
-      let data;
-
-      if (contentType && contentType.includes("application/json")) {
-        data = await response.json(); // Si la réponse est un JSON
-      } else {
-        data = await response.text(); // Sinon, récupérer la réponse sous forme de texte brut
+    // Vérifier si l'email existe déjà
+    const emailCheckQuery = "SELECT * FROM student WHERE email = ?";
+    db.query(emailCheckQuery, [email], async (err, results) => {
+      if (err) {
+        console.error("Erreur lors de la vérification de l'email:", err);
+        return res.status(500).json({ error: "Erreur serveur" });
       }
 
-      if (response.ok) {
-        alert("Inscription réussie !");
-        window.location.href = "Connexion.html"; // Redirection vers la page de connexion
-      } else {
-        // Loguer le message d'erreur du serveur
-        console.error("Erreur du serveur:", data);
-        if (data.errors && Array.isArray(data.errors)) {
-          // Afficher les erreurs de validation
-          const errorMessages = data.errors.map((err) => err.msg).join("\n");
-          alert("Erreurs de validation:\n" + errorMessages);
-        } else {
-          // Afficher l'erreur générale
-          alert("Erreur : " + (data.error || "Erreur inconnue"));
-        }
+      if (results.length > 0) {
+        return res.status(400).json({ error: "Cet email est déjà utilisé" });
       }
-    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-      alert("Une erreur s'est produite. Veuillez réessayer. " + error.message);
-    }
-  });
+
+      // Vérifier si le numéro de carte existe déjà
+      const numCarteCheckQuery = "SELECT * FROM student WHERE numCarte = ?";
+      db.query(numCarteCheckQuery, [numCarte], async (err, results) => {
+        if (err) {
+          console.error(
+            "Erreur lors de la vérification du numéro de carte:",
+            err
+          );
+          return res.status(500).json({ error: "Erreur serveur" });
+        }
+
+        if (results.length > 0) {
+          return res
+            .status(400)
+            .json({ error: "Ce numéro de carte est déjà utilisé" });
+        }
+
+        // Vérifier si la classe existe
+        const classCheckQuery = "SELECT * FROM class WHERE id = ?";
+        db.query(classCheckQuery, [classId], async (err, results) => {
+          if (err) {
+            console.error("Erreur lors de la vérification de la classe:", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+          }
+
+          if (results.length === 0) {
+            return res.status(400).json({ error: "Classe invalide" });
+          }
+
+          // Hashage du mot de passe (utiliser votre méthode de hashage actuelle)
+          const hashedPassword = await bcrypt.hash(password, 10);
+
+          // Insertion dans la base de données avec le champ class_id
+          const insertQuery =
+            "INSERT INTO student (firstName, lastName, numCarte, email, password_hash, class_id) VALUES (?, ?, ?, ?, ?, ?)";
+          db.query(
+            insertQuery,
+            [firstName, lastName, numCarte, email, hashedPassword, classId],
+            (err, result) => {
+              if (err) {
+                console.error("Erreur lors de l'inscription:", err);
+                return res
+                  .status(500)
+                  .json({ error: "Erreur serveur lors de l'inscription" });
+              }
+
+              res.status(201).json({
+                message: "Inscription réussie",
+                userId: result.insertId,
+              });
+            }
+          );
+        });
+      });
+    });
+  } catch (error) {
+    console.error("Erreur:", error);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
 });

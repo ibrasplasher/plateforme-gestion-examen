@@ -14,7 +14,6 @@ const { body, validationResult } = require("express-validator");
 /**
  * 🔹 INSCRIPTION (AVEC HASHAGE)
  */
-
 // Inscription des étudiants
 router.post(
   "/register/student",
@@ -26,6 +25,7 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Le mot de passe doit contenir au moins 6 caractères."),
+    body("classId").notEmpty().withMessage("La classe est requise."),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -33,7 +33,8 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, numCarte, email, password } = req.body;
+    const { firstName, lastName, numCarte, email, password, classId } =
+      req.body;
 
     try {
       // Vérifier si l'email existe déjà
@@ -47,27 +48,44 @@ router.post(
             return res.status(400).json({ error: "Email déjà utilisé." });
           }
 
-          // Hachage du mot de passe
-          const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-
-          // Insérer l'étudiant
+          // Vérifier si la classe existe
           db.query(
-            "INSERT INTO student (firstName, lastName, numCarte, email, password_hash) VALUES (?, ?, ?, ?, ?)",
-            [firstName, lastName, numCarte, email, hashedPassword],
-            (err) => {
-              if (err) return res.status(500).json({ error: "Erreur SQL." });
+            "SELECT * FROM class WHERE id = ?",
+            [classId],
+            async (err, classResults) => {
+              if (err)
+                return res.status(500).json({ error: "Erreur serveur." });
 
-              res.status(201).json({ message: "Étudiant enregistré !" });
+              if (classResults.length === 0) {
+                return res.status(400).json({ error: "Classe invalide." });
+              }
+
+              // Hachage du mot de passe
+              const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+              // Insérer l'étudiant avec sa classe
+              db.query(
+                "INSERT INTO student (firstName, lastName, numCarte, email, password_hash, class_id) VALUES (?, ?, ?, ?, ?, ?)",
+                [firstName, lastName, numCarte, email, hashedPassword, classId],
+                (err) => {
+                  if (err) {
+                    console.error("Erreur SQL lors de l'insertion:", err);
+                    return res.status(500).json({ error: "Erreur SQL." });
+                  }
+
+                  res.status(201).json({ message: "Étudiant enregistré !" });
+                }
+              );
             }
           );
         }
       );
     } catch (error) {
+      console.error("Erreur lors de l'enregistrement:", error);
       res.status(500).json({ error: "Erreur lors de l'enregistrement." });
     }
   }
 );
-
 // Inscription des enseignants avec plus de logs
 router.post("/register/teacher", async (req, res) => {
   console.log("========= INSCRIPTION ENSEIGNANT =========");
