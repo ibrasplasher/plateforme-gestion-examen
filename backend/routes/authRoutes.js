@@ -69,8 +69,13 @@ router.post(
                 [firstName, lastName, numCarte, email, hashedPassword, classId],
                 (err) => {
                   if (err) {
-                    console.error("Erreur SQL lors de l'insertion:", err);
-                    return res.status(500).json({ error: "Erreur SQL." });
+                    console.error(
+                      "Erreur SQL détaillée lors de l'insertion:",
+                      err
+                    );
+                    return res
+                      .status(500)
+                      .json({ error: "Erreur SQL: " + err.message });
                   }
 
                   res.status(201).json({ message: "Étudiant enregistré !" });

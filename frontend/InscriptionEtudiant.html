@@ -126,14 +126,13 @@
                 <select
                   class="form-control mt-0"
                   id="class"
-                  name="class"
                   aria-label="Classe"
                   aria-describedby="basic-addon1"
                 >
                   <option value="" selected disabled>
                     Sélectionnez votre classe
                   </option>
-                  <!-- Les options seront remplies dynamiquement via JavaScript -->
+                  <!-- Options chargées dynamiquement -->
                 </select>
               </div>
 
@@ -191,6 +190,137 @@
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>
     <!--Custom Js Script-->
-    <script src="assets/js/inscription.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("Script d'inscription intégré directement");
+
+        // Charger les classes
+        console.log("Chargement des classes...");
+        fetch("http://localhost:5000/api/data/classes")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erreur lors de la récupération des classes");
+            }
+            return response.json();
+          })
+          .then((classes) => {
+            console.log("Classes reçues:", classes);
+            const classSelect = document.getElementById("class");
+
+            if (!classSelect) {
+              console.error("Le sélecteur de classe n'existe pas");
+              return;
+            }
+
+            // Ajouter les options de classe
+            classes.forEach((cls) => {
+              const option = document.createElement("option");
+              option.value = cls.id;
+              option.textContent = cls.className;
+              classSelect.appendChild(option);
+            });
+          })
+          .catch((error) => {
+            console.error("Erreur:", error);
+          });
+
+        // Gestion du formulaire
+        const form = document.querySelector("form");
+        if (form) {
+          form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const numCarte = document.querySelector(
+              'input[aria-label="cardNumber"]'
+            ).value;
+            const firstName = document.querySelector(
+              'input[aria-label="FirstName"]'
+            ).value;
+            const lastName = document.querySelector(
+              'input[aria-label="LastName"]'
+            ).value;
+            const email = document.querySelector(
+              'input[aria-label="email"]'
+            ).value;
+            const password = document.querySelector(
+              'input[aria-label="Password"]'
+            ).value;
+            const confirmPassword = document.querySelector(
+              'input[aria-label="Confirme Password"]'
+            ).value;
+            const classId = document.getElementById("class").value;
+
+            if (
+              !numCarte ||
+              !firstName ||
+              !lastName ||
+              !email ||
+              !password ||
+              !classId
+            ) {
+              alert("Veuillez remplir tous les champs, y compris la classe!");
+              return;
+            }
+
+            if (password !== confirmPassword) {
+              alert("Les mots de passe ne correspondent pas!");
+              return;
+            }
+
+            try {
+              console.log("Envoi des données d'inscription...");
+              const response = await fetch(
+                "http://localhost:5000/api/auth/register/student",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    numCarte,
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    classId,
+                  }),
+                }
+              );
+
+              console.log("Réponse reçue, statut:", response.status);
+              let data;
+
+              try {
+                data = await response.json();
+                console.log("Données reçues:", data);
+              } catch (e) {
+                console.error(
+                  "Erreur lors de la lecture de la réponse JSON:",
+                  e
+                );
+                data = { error: "Erreur de format de réponse" };
+              }
+
+              if (response.ok) {
+                alert("Inscription réussie!");
+                window.location.href = "Connexion.html";
+              } else {
+                if (data.errors && Array.isArray(data.errors)) {
+                  const errorMessages = data.errors
+                    .map((err) => err.msg)
+                    .join("\n");
+                  alert("Erreurs de validation:\n" + errorMessages);
+                } else {
+                  alert("Erreur: " + (data.error || "Une erreur est survenue"));
+                }
+              }
+            } catch (error) {
+              console.error("Erreur lors de l'inscription:", error);
+              alert("Une erreur s'est produite: " + error.message);
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

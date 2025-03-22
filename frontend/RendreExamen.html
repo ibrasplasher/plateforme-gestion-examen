@@ -27,8 +27,11 @@
     <!-- Chatbot CSS -->
     <link rel="stylesheet" href="assets/css/chatbot.css" />
 
-    <!-- SweetAlert CSS -->
-    <link rel="stylesheet" href="assets/css/sweetalert.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 
     <style>
       :root {
@@ -403,7 +406,7 @@
       $(document).ready(function () {
         $("#examTable").DataTable({
           language: {
-            url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/French.json",
+            url: "assets/js/datatables-french.json",
           },
         });
       });

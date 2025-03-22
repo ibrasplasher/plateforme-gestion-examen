@@ -2,14 +2,6 @@ DROP DATABASE IF EXISTS exam_platform;
 CREATE DATABASE exam_platform;
 USE exam_platform;
 
-ALTER TABLE student ADD COLUMN class_id INT;
-ALTER TABLE student ADD FOREIGN KEY (class_id) REFERENCES class(id);
-
--- Mettre à jour les étudiants existants en utilisant les informations de la table inClass
-UPDATE student s
-JOIN inClass ic ON s.id = ic.student_id
-SET s.class_id = ic.class_id;
-
 -- Table des étudiants
 CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +9,8 @@ CREATE TABLE student (
     lastName VARCHAR(255) NOT NULL,
     numCarte VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL
+    password_hash VARCHAR(255) NOT NULL,
+    class_id INT -- Ajouter directement la colonne ici
 );
 
 -- Table des enseignants
@@ -37,6 +30,10 @@ CREATE TABLE class (
     className VARCHAR(255) NOT NULL
 );
 
+-- Ajouter la clé étrangère après avoir créé les deux tables
+ALTER TABLE student 
+ADD FOREIGN KEY (class_id) REFERENCES class(id);
+
 -- Table d'affectation des étudiants aux classes
 CREATE TABLE inClass (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +42,6 @@ CREATE TABLE inClass (
     FOREIGN KEY (class_id) REFERENCES class(id) ON DELETE CASCADE,
     FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE CASCADE
 );
-
 -- Table des matières
 CREATE TABLE subject (
     id INT AUTO_INCREMENT PRIMARY KEY,

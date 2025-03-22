@@ -140,9 +140,9 @@ router.get("/student-available-exams", authMiddleware, (req, res) => {
 
   const studentId = req.user.id;
 
-  // Récupérer la classe de l'étudiant
+  // Récupérer la classe de l'étudiant - MODIFIÉ POUR UTILISER LA COLONNE class_id
   db.query(
-    "SELECT class_id FROM inClass WHERE student_id = ?",
+    "SELECT class_id FROM student WHERE id = ?",
     [studentId],
     (err, results) => {
       if (err) {
@@ -150,7 +150,7 @@ router.get("/student-available-exams", authMiddleware, (req, res) => {
         return res.status(500).json({ error: "Erreur serveur" });
       }
 
-      if (results.length === 0) {
+      if (results.length === 0 || !results[0].class_id) {
         return res
           .status(404)
           .json({ error: "Étudiant non assigné à une classe" });
