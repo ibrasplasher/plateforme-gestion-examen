@@ -1,64 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="" >
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Plateforme de gestion des examens" />
+    <meta name="author" content="ExamXpress Team" />
 
-    <!--Meta Responsive tag-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ExamXpress - Évaluation</title>
 
-    <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <!--Custom style.css-->
-    <link rel="stylesheet" href="assets/css/quicksand.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <!--Font Awesome-->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <!--Chartist CSS-->
-    <link rel="stylesheet" href="assets/css/chartist.min.css">
-    <!--Bootstrap Calendar-->
-    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
-    <!--Datatable-->
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="assets/css/quicksand.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <!-- Chartist CSS -->
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css" />
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="assets/css/chatbot.css" />
 
-    <link rel="stylesheet" href="assets/css/chatbot.css">
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="assets/css/sweetalert.css" />
 
-    <title>ExamXpress</title>
-  </head>
-  <body>
     <style>
+      :root {
+        --blue: #0071ff;
+        --light-blue: #b6dbf6;
+        --dark-blue: #005dd1;
+        --grey: #f2f2f2;
+      }
 
-        :root {
-            --blue: #0071FF;
-            --light-blue: #B6DBF6;
-            --dark-blue: #005DD1;
-            --grey: #f2f2f2;
-        }
-
-    .containerUpload {
+      .containerUpload {
         max-width: 500px;
         background: #fff;
         border-radius: 7px;
         padding: 20px 25px 15px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
       }
-      .containerUpload header h1{
+      .containerUpload header h1 {
         font-size: 27px;
         font-weight: 500;
       }
-      .containerUpload header p{
+      .containerUpload header p {
         margin-top: 5px;
         font-size: 18px;
         color: #474747;
       }
-      .containerUpload form{
+      .containerUpload form {
         margin: 20px 0 27px;
       }
-      .containerUpload form input{
+      .containerUpload form input {
         width: 100%;
         height: 60px;
         outline: none;
@@ -68,13 +67,13 @@
         border: 1px solid #b3b2b2;
         transition: 0.1s ease;
       }
-      .containerUpload form input::placeholder{
+      .containerUpload form input::placeholder {
         color: #b3b2b2;
       }
-      .containerUpload form input:focus{
-        box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+      .containerUpload form input:focus {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
       }
-      .containerUpload form button{
+      .containerUpload form button {
         width: 100%;
         border: none;
         opacity: 0.7;
@@ -86,437 +85,338 @@
         padding: 15px 0;
         border-radius: 5px;
         pointer-events: none;
-        background: #4285F4;
+        background: #4285f4;
         transition: opacity 0.15s ease;
       }
-      .containerUpload form input:valid ~ button{
+      .containerUpload form input:valid ~ button {
         opacity: 1;
         pointer-events: auto;
       }
-
     </style>
-
-    <!--Page loader-->
+  </head>
+  <body>
+    <!-- Page Loader -->
     <div class="loader-wrapper">
-        <div class="loader-circle">
-            <div class="loader-wave">ExamXpress</div>
-        </div>
+      <div class="loader-circle">
+        <div class="loader-wave">ExamXpress</div>
+      </div>
     </div>
-    <!--Page loader-->
-    
-    <!--Page Wrapper-->
 
     <div class="container-fluid">
-
-        <!--Header-->
-        <div class="row header shadow-sm">
-            
-            <!--Logo-->
-            <div class="col-sm-3 pl-0 text-center header-logo">
-               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
-               </div>
-
-            </div>
-            <!--Logo-->
-            <!--Header Menu-->
-            <div class="col-sm-9 header-menu pt-2 pb-0">
-                <div class="row">
-                    
-                    <!--Menu Icons-->
-                    <div class="col-sm-4 col-8 pl-0">
-                        <!--Toggle sidebar-->
-                        <span class="menu-icon" onclick="toggle_sidebar()">
-                            <span id="sidebar-toggle-btn"></span>
-                        </span> 
-                        <span class="menu-icon inbox">
-                            <a class="" href="#" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-envelope"></i>
-                                <span class="badge badge-danger">4</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown" aria-labelledby="dropdownMenuLink3">
-                                <a class="dropdown-item" href="#"><strong>Unread messages</strong></a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="assets/img/profile.jpg" width="50px" height="50px" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
-                                            <p>How are you?</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-center link-all" href="#">View all messages</a>
-                            </div>
-                        </span>       
-                    </div>
-                   
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end btn-group">
-                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa  fa-user mr-3"></i>Profile 
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Dashboard</a>
-                            <a class="dropdown-item" href="#">ChatBot</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Log Out</a>
-                        </div>
-                    </div>  
-
-                    <!--Search box and avatar-->
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                        
-                        
-                    </div>
-                
-                </div>
-            </div> 
-
+      <!-- Header -->
+      <div class="row header shadow-sm">
+        <!-- Logo -->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+          <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo">
+              <a href="#" class="text-secondary logo">
+                <i class="fa fa-rocket"></i> ExamX<span class="small"
+                  >pert</span
+                >
+              </a>
+            </h3>
+          </div>
         </div>
-        <!--Header-->
 
-        <!--Main Content-->
+        <!-- Header Menu -->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+          <div class="row">
+            <!-- Menu Icons -->
+            <div class="col-sm-4 col-8 pl-0">
+              <!-- Sidebar Toggle -->
+              <span class="menu-icon" onclick="toggle_sidebar()">
+                <span id="sidebar-toggle-btn"></span>
+              </span>
 
-        <div class="row main-content">
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <br><br>
-                    <div class="avatar text-center">
-                        <p><strong>Jonathan Clarke</strong></p>
-                        <span class="text-primary small"><strong>UI/UX Designer</strong></span>
+              <!-- Messages Dropdown -->
+              <span class="menu-icon inbox">
+                <a
+                  href="#"
+                  role="button"
+                  id="dropdownMenuLink3"
+                  data-toggle="dropdown"
+                >
+                  <i class="fa fa-envelope"></i>
+                  <span class="badge badge-danger">4</span>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown"
+                >
+                  <a class="dropdown-item" href="#"
+                    ><strong>Messages non lus</strong></a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <!-- Sample message -->
+                  <a href="#" class="dropdown-item">
+                    <div class="media">
+                      <img
+                        class="align-self-center mr-3 rounded-circle"
+                        src="assets/img/profile.jpg"
+                        width="50px"
+                        height="50px"
+                        alt="Profile"
+                      />
+                      <div class="media-body">
+                        <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
+                        <p>Comment allez-vous ?</p>
+                        <small class="text-success">09:23</small>
+                      </div>
                     </div>
-                    <!--Image Avatar-->
-
-                    <!--Sidebar Navigation Menu-->
-            <div class="sidebar-menu-container">
-                <ul class="sidebar-menu mt-4 mb-4">
-                  <li class="parent">
-                    <a href="dashboardEtudiant.html"
-                      ><i class="fa fa-dashboard mr-3"> </i>
-                      <span class="none">Dashboard </span>
-                    </a>
-                  </li>
-                  <li class="parent">
-                    <a href="RendreExamen.html" class=""
-                      ><i class="fa fa-book mr-3"></i>
-                      <span class="none">Evaluation</span>
-                    </a>
-                  </li>
-                  <li class="parent">
-                    <a href="ConsulterNote.html" class=""
-                      ><i class="fa fa-pencil mr-3"></i>
-                      <span class="none">Notes</span>
-                    </a>
-                  </li>
-                  <li class="parent">
-                    <a href="chatbot.html" class=""
-                      ><i class="fa fa-weixin mr-3"></i>
-                      <span class="none">ChatBot</span>
-                    </a>
-                  </li>
-                  <br /><br />
-  
-                  <li class="parent">
-                    <a href="#" class=""
-                      ><i class="fa fa-sign-out mr-3"></i>
-                      <span class="none">Log Out </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <!--Sidebar Naigation Menu-->
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item text-center link-all" href="#"
+                    >Voir tous les messages</a
+                  >
                 </div>
+              </span>
             </div>
-            <!--Sidebar left-->
 
-            <!--Content right-->
-            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-                <h5 class="text-white p-4" 
-                style="background: linear-gradient(45deg, #1f2a40, #0635b5); 
-                       border-radius: 8px; 
-                       text-align: center; 
-                       font-size: 28px; 
-                       font-weight: bold; 
-                       width: 100%; 
-                       display: block;">
-                Evaluation
-            </h5>
-            
-            
-                
-                
-                        <!--Default bootstrap 4 validation-->
-                        <div class="row mt-3">
-                            <div class="col-sm-12">
-                                <!--Datatable-->
+            <!-- Profile Dropdown -->
+            <div
+              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end btn-group"
+            >
+              <button
+                type="button"
+                class="btn btn-dark dropdown-toggle"
+                data-toggle="dropdown"
+              >
+                <i class="fa fa-user mr-3"></i>Profil
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="dashboardEtudiant.html"
+                  >Tableau de bord</a
+                >
+                <a class="dropdown-item" href="chatbot.html">ChatBot</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" id="logout-btn"
+                  >Déconnexion</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                        <div class="card p-3 mt-3 shadow-sm">
-                            <h3 class="mb-3">Liste des examens et soumissions</h3>
+      <!-- Main Content -->
+      <div class="row main-content">
+        <!-- Sidebar -->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+          <div class="inner-sidebar mr-3">
+            <!-- User Avatar -->
+            <div class="avatar text-center mt-4">
+              <p><strong id="user-name">Jonathan Clarke</strong></p>
+              <span class="text-primary small" id="user-role">Étudiant</span>
+            </div>
 
-                            <div class="table-responsive">
-                                <table id="examTable" class="table table-striped table-bordered">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Titre</th>
-                                            <th>Type</th>
-                                            <th>Description</th>
-                                            <th>Date limite</th>
-                                            <th>Heure limite</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr data-student-id="12345">
-                                            <td>Examen de Mathématiques</td>
-                                            <td>Contrôle Continu</td>
-                                            <td>Évaluation semestrielle</td>
-                                            <td>25/03/2025</td>
-                                            <td>23:59</td>
-                                            <td>
-                                                <button class="btn btn-outline-danger btn-sm1" aria-label="Telecharger devoir">
-                                                    <i class="fa fa-cloud-download"></i>
-                                                </button>
-                                                <button class="btn btn-outline-success btn-sm1" aria-label="Soumettre une réponse" data-toggle="modal" data-target="#orderInfo">
-                                                    <i class="fa fa-cloud-upload"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Sidebar Navigation -->
+            <div class="sidebar-menu-container">
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="dashboardEtudiant.html">
+                    <i class="fa fa-dashboard mr-3"></i>
+                    <span class="none">Tableau de bord</span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="RendreExamen.html" class="active">
+                    <i class="fa fa-book mr-3"></i>
+                    <span class="none">Évaluations</span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="ConsulterNote.html">
+                    <i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Notes</span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="chatbot.html">
+                    <i class="fa fa-weixin mr-3"></i>
+                    <span class="none">ChatBot</span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="#" id="sidebar-logout">
+                    <i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Déconnexion</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
+        <!-- Content Area -->
+        <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+          <!-- Page Title -->
+          <h5
+            class="text-white p-4"
+            style="
+              background: linear-gradient(45deg, #1f2a40, #0635b5);
+              border-radius: 8px;
+              text-align: center;
+              font-size: 28px;
+              font-weight: bold;
+            "
+          >
+            Mes Évaluations
+          </h5>
 
+          <!-- Exams Table -->
+          <div class="row mt-3">
+            <div class="col-sm-12">
+              <div class="card p-3 mt-3 shadow-sm">
+                <h3 class="mb-3">Liste des examens</h3>
 
+                <div class="table-responsive">
+                  <table
+                    id="examTable"
+                    class="table table-striped table-bordered"
+                  >
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Titre</th>
+                        <th>Matière</th>
+                        <th>Description</th>
+                        <th>Date limite</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="examTableBody">
+                      <!-- Exams will be dynamically loaded here -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <!-- Exam Submission Modal -->
+      <div
+        class="modal fade"
+        id="examSubmissionModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Soumettre une évaluation</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Fermer"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="containerUpload">
+                <header>
+                  <h1 id="examTitle">Soumettre l'évaluation</h1>
+                  <p>Formats acceptés : PDF, DOC, DOCX (max 50 Mo)</p>
+                </header>
+                <form id="examSubmissionForm">
+                  <input
+                    type="file"
+                    id="examFileInput"
+                    accept=".pdf,.doc,.docx"
+                    required
+                  />
+                  <button
+                    type="button"
+                    id="submitExamButton"
+                    class="select-image"
+                    disabled
+                  >
+                    Soumettre le fichier
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Uplaod Evaluation</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="containerUpload">
-                                        <header>
-                                            <h1>Rendre mon evaluation</h1>
-                                            <p>Docs, txt, or pdf to deliver.</p>
-                                        
-                                          </header>
-                                          <form action="#">
-                                            <input type="file" placeholder="Paste file"  id="file" required>
-                                            <button  class="select-image">Upload File</button>
-                                          </form>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-
-                    <!-- jQuery et DataTables JS -->
-                    <script src="assets/js/jquery.min.js"></script>
-                    <script src="assets/js/bootstrap.min.js"></script>
-                    <script src="assets/js/jquery.dataTables.min.js"></script>
-                    <script src="assets/js/dataTables.bootstrap4.min.js"></script>
-
-                    <script>
-                        $(document).ready(function () {
-                            $('#examTable').DataTable({
-                                "language": {
-                                    "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/French.json"
-                                }
-                            });
-
-                            // Mise à jour des notes en AJAX
-                            $('.editable-note').on('input', function () {
-                                const newValue = $(this).text();
-                                const studentId = $(this).closest('tr').data('student-id');
-
-                                if (studentId) {
-                                    $(this).css('background', '#f8d7da'); // Changement de couleur pour indiquer modification
-
-                                    $.ajax({
-                                        url: '/update-grade',
-                                        method: 'POST',
-                                        contentType: 'application/json',
-                                        data: JSON.stringify({ id: studentId, grade: newValue }),
-                                        success: function (response) {
-                                            console.log('Note mise à jour', response);
-                                            $('.editable-note').css('background', '#d4edda'); // Succès
-                                        },
-                                        error: function () {
-                                            alert('Erreur lors de la mise à jour.');
-                                            $('.editable-note').css('background', '#f8d7da'); // Échec
-                                        }
-                                    });
-                                }
-                            });
-                        });
-
-                        const selectImage = document.querySelector('.select-image');
-                        const inputFile = document.querySelector('#file');
-                        const imgArea = document.querySelector('.img-area');
-
-                        selectImage.addEventListener('click', function () {
-                            inputFile.click();
-                        })
-
-                        inputFile.addEventListener('change', function () {
-                            const image = this.files[0]
-                            if(image.size < 200000000) {
-                                const reader = new FileReader();
-                                reader.onload = ()=> {
-                                    const allImg = imgArea.querySelectorAll('img');
-                                    allImg.forEach(item=> item.remove());
-                                    const imgUrl = reader.result;
-                                    const img = document.createElement('img');
-                                    img.src = imgUrl;
-                                    imgArea.appendChild(img);
-                                    imgArea.classList.add('active');
-                                    imgArea.dataset.img = image.name;
-                                }
-                                reader.readAsDataURL(image);
-                            } else {
-                                alert("Image size more than 2MB");
-                            }
-                        })
-                        </script>
-
-        <!--Main Content-->
-
+      <!-- Footer -->
+      <div class="row mt-5 mb-4 footer">
+        <div class="col-sm-8">
+          <span
+            >&copy; Tous droits réservés
+            <a class="text-theme" href="#"
+              >École Supérieure Polytechnique Dakar</a
+            ></span
+          >
+        </div>
+        <div class="col-sm-4 text-right">
+          <a href="#" class="ml-2">Contactez-nous</a>
+          <a href="#" class="ml-2">Support</a>
+        </div>
+      </div>
     </div>
-                     <!---------CHATBOT-------->
 
-                     <div class="robot" id="robot" onclick="showLaugh()">
-                        <div class="head">
-                            <div class="eyes">
-                                <div class="eye" id="eyeLeft"></div>
-                                <div class="eye" id="eyeRight"></div>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="modal fade" id="thechatbot" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">The ChatBot</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="chat-container">
-                                        <div class="chat-header">Chatbot Intelligent</div>
-                                        <div class="chat-body" id="chatBody">
-                                            <div class="message bot-message">Bonjour ! Comment puis-je vous aider ?</div>
-                                        </div>
-                                        <div class="chat-footer">
-                                            <input type="text" id="userInput" placeholder="Écrivez un message...">
-                                            <button onclick="sendMessage()">Envoyer</button>
-                                        </div>
-                                    </div>  
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                     <!---------CHATBOT-------->
+    <!-- Chatbot -->
+    <div class="robot" id="robot" onclick="showLaugh()">
+      <div class="head">
+        <div class="eyes">
+          <div class="eye" id="eyeLeft"></div>
+          <div class="eye" id="eyeRight"></div>
+        </div>
+      </div>
+    </div>
 
-                    <!--Footer-->
-                    <div class="row mt-5 mb-4 footer">
-                        <div class="col-sm-8">
-                            <span>&copy; All rights reserved  <a class="text-theme" href=#> Ecole Superieur Polytechnique Dakar</a></span>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                            <a href="#" class="ml-2">Contact Us</a>
-                            <a href="#" class="ml-2">Support</a>
-                        </div>
-                    </div>
-                    <!--Footer-->
-
-    
-<script>
-    // Sélectionner toutes les cellules modifiables
-    const editableCells = document.querySelectorAll('.editable-note');
-
-    // Ajouter un événement 'input' pour chaque cellule modifiable
-    editableCells.forEach(cell => {
-        cell.addEventListener('input', function () {
-            const newValue = cell.innerText; // La nouvelle note
-            const studentId = cell.closest('tr').dataset.studentId; // ID de l'étudiant
-
-            // Si vous avez un ID d'étudiant, vous pouvez envoyer la mise à jour au serveur
-            if (studentId) {
-                updateGrade(studentId, newValue);
-            }
-        });
-    });
-
-    // Fonction pour envoyer la modification de la note au serveur via AJAX (fetch)
-    function updateGrade(studentId, newGrade) {
-        fetch('/update-grade', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: studentId, grade: newGrade }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Note mise à jour avec succès', data);
-        })
-        .catch(error => {
-            console.error('Erreur lors de la mise à jour de la note:', error);
-        });
-    }
-</script>
-    <script src="assets/js/chatbot.js"></script>
-    <!-- Page JavaScript Files-->
+    <!-- Scripts -->
+    <!-- Core Libraries -->
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery-1.12.4.min.js"></script>
-    <!--Popper JS-->
     <script src="assets/js/popper.min.js"></script>
-    <!--Bootstrap-->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!--Sweet alert JS-->
-    <script src="assets/js/sweetalert.js"></script>
-    <!--Progressbar JS-->
-    <script src="assets/js/progressbar.min.js"></script>
-    <!--Charts-->
-    <!--Canvas JS-->
-    <script src="assets/js/charts/canvas.min.js"></script>
-    <!--Bootstrap Calendar JS-->
-    <script src="assets/js/calendar/bootstrap_calendar.js"></script>
-    <script src="assets/js/calendar/demo.js"></script>
-    <!--Bootstrap Calendar-->
-    <!--Datatable-->
+
+    <!-- DataTables -->
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
-    <!--Custom Js Script-->
+    <!-- Utility Libraries -->
+    <script src="assets/js/sweetalert.js"></script>
     <script src="assets/js/custom.js"></script>
-    <!--Custom Js Script-->
+    <script src="assets/js/chatbot.js"></script>
 
+    <!-- Page-specific Script -->
+    <script src="assets/js/exam-submission.js"></script>
+
+    <!-- Inline Scripts -->
     <script>
-        $('#example').DataTable();
+      // DataTable initialization
+      $(document).ready(function () {
+        $("#examTable").DataTable({
+          language: {
+            url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/French.json",
+          },
+        });
+      });
+
+      // Logout functionality
+      document
+        .getElementById("logout-btn")
+        ?.addEventListener("click", function (e) {
+          e.preventDefault();
+          // Add logout logic here
+          window.location.href = "login.html";
+        });
     </script>
+    <script src="assets/js/rendre-examen.js"></script>
   </body>
 </html>

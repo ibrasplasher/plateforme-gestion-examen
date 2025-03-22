@@ -1,3 +1,4 @@
+// Mise à jour du backend/server.js
 const express = require("express");
 const mysql = require("mysql2");
 const path = require("path");
@@ -12,6 +13,8 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const dataRoutes = require("./routes/dataRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const studentRoutes = require("./routes/studentRoutes"); // Nouvelles routes pour les étudiants
+const gradeRoutes = require("./routes/gradeRoutes"); // Nouvelles routes pour la gestion des notes
 
 // Initialiser Express
 const app = express();
@@ -36,6 +39,8 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/data", dataRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/plagiarism", plagiarismRoutes);
+app.use("/api/data", studentRoutes); // Routes pour les étudiants
+app.use("/api/data", gradeRoutes); // Routes pour la gestion des notes
 
 // Vérification des variables d'environnement essentielles
 if (
