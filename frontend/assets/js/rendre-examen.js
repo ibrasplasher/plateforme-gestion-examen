@@ -313,7 +313,7 @@ function setupFileUpload() {
 
     // Créer un objet FormData pour l'envoi de fichier
     const formData = new FormData();
-    formData.append("examFile", file); // Modifié pour correspondre au backend
+    formData.append("submissionFile", file); // Modifié pour correspondre au backend
     formData.append("examId", examId);
 
     // Afficher une indication de chargement

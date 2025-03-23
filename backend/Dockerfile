@@ -1,11 +1,19 @@
-# Utiliser une image de base avec un serveur Nginx pour servir des fichiers statiques
-FROM nginx:alpine
+# Utiliser une image Node.js comme base
+FROM node:16-alpine
 
-# Copier les fichiers HTML et CSS dans le dossier de Nginx
-COPY . /usr/share/nginx/html
+# Définir le répertoire de travail
+WORKDIR /app
 
-# Exposer le port sur lequel Nginx fonctionne
-EXPOSE 80
+# Copier les fichiers package.json et package-lock.json
+COPY package*.json ./
 
-# Lancer Nginx au démarrage
-CMD ["nginx", "-g", "daemon off;"]
+# Installer les dépendances
+RUN npm install
+
+# Copier le reste des fichiers de l'application
+COPY . .
+
+# Exposer le port sur lequel l'application fonctionne
+EXPOSE 5000
+
+# La commande de démarrage sera définie dans docker-compose.yml

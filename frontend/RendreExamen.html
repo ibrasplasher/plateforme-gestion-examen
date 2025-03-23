@@ -89,6 +89,12 @@
         opacity: 1;
         pointer-events: auto;
       }
+      .select-image.btn-enabled {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        background: #4285f4 !important;
+        cursor: pointer !important;
+      }
     </style>
   </head>
   <body>
@@ -285,7 +291,7 @@
                   <input
                     type="file"
                     id="examFileInput"
-                    accept=".pdf,.doc,.docx"
+                    accept=".pdf,.doc,.docx, .txt"
                     required
                   />
                   <button
@@ -356,5 +362,28 @@
     <!-- Page-specific Scripts -->
     <script src="assets/js/chatbot.js"></script>
     <script src="assets/js/rendre-examen.js"></script>
+
+    <script>
+      // Script d'urgence pour activer le bouton
+      $(document).ready(function () {
+        $("#examFileInput").on("change", function () {
+          console.log("Fichier sélectionné!");
+          if (this.files.length > 0) {
+            $("#submitExamButton").removeAttr("disabled").css({
+              opacity: "1",
+              cursor: "pointer",
+              "pointer-events": "auto",
+              "background-color": "#4285f4",
+            });
+          } else {
+            $("#submitExamButton").attr("disabled", "disabled").css({
+              opacity: "0.7",
+              cursor: "not-allowed",
+              "pointer-events": "none",
+            });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

@@ -208,7 +208,7 @@ router.get("/download-exam/:examId", authMiddleware, (req, res) => {
   db.query(
     `SELECT e.*, ic.student_id
          FROM exam e
-         JOIN inClass ic ON e.class_id = ic.class_id
+         JOIN student s ON e.class_id = s.class_id
          WHERE e.id = ? AND ic.student_id = ?`,
     [examId, studentId],
     (err, results) => {

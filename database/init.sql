@@ -141,3 +141,33 @@ INSERT INTO teachSubject (teacher_id, subject_id, class_id) VALUES
 -- Assignation d'étudiants à des classes
 INSERT INTO inClass (class_id, student_id) VALUES
 (1, 1), (1, 2), (2, 3), (3, 4), (3, 5);
+
+DELIMITER //
+
+CREATE TRIGGER after_student_class_update
+AFTER UPDATE ON student
+FOR EACH ROW
+BEGIN
+    IF NEW.class_id IS NOT NULL AND (OLD.class_id IS NULL OR NEW.class_id != OLD.class_id) THEN
+        DELETE FROM inClass WHERE student_id = NEW.id;
+        INSERT INTO inClass (student_id, class_id) 
+        VALUES (NEW.id, NEW.class_id);
+    END IF;
+END //
+
+CREATE TRIGGER after_student_insert
+AFTER INSERT ON student
+FOR EACH ROW
+BEGIN
+    IF NEW.class_id IS NOT NULL THEN
+        INSERT INTO inClass (student_id, class_id) 
+        VALUES (NEW.id, NEW.class_id);
+    END IF;
+END //
+
+DELIMITER ;
+
+-- Synchroniser les données existantes
+INSERT IGNORE INTO inClass (student_id, class_id)
+SELECT id, class_id FROM student
+WHERE class_id IS NOT NULL;
