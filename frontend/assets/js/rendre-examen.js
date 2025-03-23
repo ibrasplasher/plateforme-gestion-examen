@@ -187,37 +187,28 @@ function downloadExam(examId) {
     return;
   }
 
-  // Solution de contournement : générer un fichier texte simple au lieu de télécharger
-  const content = `Contenu de l'examen ${examId}\n\nCeci est un fichier généré côté client pour contourner un problème de téléchargement.`;
+  // Afficher un indicateur de chargement
+  const downloadBtn = $(`.download-exam-btn[data-exam-id="${examId}"]`);
+  const originalText = downloadBtn.html();
+  downloadBtn.html('<i class="fa fa-spinner fa-spin"></i> Téléchargement...');
+  downloadBtn.prop("disabled", true);
 
-  // Créer un objet Blob pour le contenu
-  const blob = new Blob([content], { type: "text/plain" });
+  // Créer une nouvelle fenêtre pour le téléchargement
+  const downloadWindow = window.open("", "_blank");
+  downloadWindow.document.write("<h3>Téléchargement en cours...</h3>");
 
-  // Créer une URL pour le Blob
-  const url = window.URL.createObjectURL(blob);
+  // Construire l'URL avec le token
+  const url = `http://localhost:5000/api/data/download-exam/${examId}?token=${token}`;
 
-  // Créer un lien de téléchargement
-  const a = document.createElement("a");
-  a.style.display = "none";
-  a.href = url;
-  a.download = `examen_${examId}.txt`;
+  // Rediriger la fenêtre vers l'URL du fichier
+  downloadWindow.location.href = url;
 
-  // Ajouter le lien au DOM et déclencher le téléchargement
-  document.body.appendChild(a);
-  a.click();
-
-  // Nettoyer
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
-
-  swal({
-    title: "Téléchargement réussi",
-    text: "Un fichier de test a été généré pour cet examen.",
-    icon: "success",
-    button: "OK",
-  });
+  // Réinitialiser le bouton après un délai
+  setTimeout(() => {
+    downloadBtn.html(originalText);
+    downloadBtn.prop("disabled", false);
+  }, 2000);
 }
-
 // Fonction pour configurer l'upload de fichier
 function setupFileUpload() {
   console.log("Initialisation de l'upload de fichier");
