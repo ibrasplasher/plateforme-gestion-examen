@@ -20,10 +20,18 @@ $(document).ready(function () {
   }
 
   // Mettre à jour les informations de l'utilisateur dans l'interface
-  $("p:contains('NOM UTILISATEUR')").text(
-    userData.firstName + " " + userData.lastName
-  );
-  $("span:contains('PROFFESSION UTILISATEUR')").text("Enseignant");
+  $("#user-name").text(userData.firstName + " " + userData.lastName);
+  $("#user-role").text("Enseignant");
+
+  // Configuration de toastr pour les notifications
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: "toast-top-right",
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "5000",
+  };
 
   // Vérifier si un ID d'examen est spécifié dans l'URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -31,7 +39,7 @@ $(document).ready(function () {
   const submissionId = urlParams.get("submission");
 
   if (examId) {
-    // Charger les soumissions pour cet examen
+    // Charger les soumissions pour cet examen spécifique
     loadSubmissionsForExam(examId);
   } else if (submissionId) {
     // Charger une soumission spécifique
@@ -41,14 +49,6 @@ $(document).ready(function () {
     loadRecentSubmissions();
   }
 
-  // Ajouter l'événement de déconnexion
-  $("a:contains('Log Out')").click(function (e) {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "Connexion.html";
-  });
-
   // Gérer les événements de notation
   setupGradingEvents();
 });
@@ -56,6 +56,11 @@ $(document).ready(function () {
 // Fonction pour charger les soumissions pour un examen spécifique
 function loadSubmissionsForExam(examId) {
   const token = localStorage.getItem("token");
+
+  // Afficher un indicateur de chargement
+  $("#example tbody").html(
+    '<tr><td colspan="7" class="text-center"><i class="fa fa-spinner fa-spin"></i> Chargement des données...</td></tr>'
+  );
 
   $.ajax({
     url: `http://localhost:5000/api/data/exam-submissions/${examId}`,
@@ -82,8 +87,20 @@ function loadSubmissionsForExam(examId) {
     error: function (xhr) {
       console.error("Erreur lors du chargement des soumissions:", xhr);
 
-      // Utiliser des données fictives pour les tests
-      useDemoSubmissions();
+      $("#example tbody").html(
+        '<tr><td colspan="7" class="text-center text-danger">Erreur lors du chargement des données. Veuillez réessayer.</td></tr>'
+      );
+
+      // Notification d'erreur
+      toastr.error(
+        "Impossible de charger les soumissions. Veuillez réessayer.",
+        "Erreur"
+      );
+
+      // Si l'erreur persiste, utiliser des données fictives
+      setTimeout(() => {
+        useDemoSubmissions();
+      }, 3000);
     },
   });
 }
@@ -91,6 +108,11 @@ function loadSubmissionsForExam(examId) {
 // Fonction pour charger une soumission spécifique
 function loadSingleSubmission(submissionId) {
   const token = localStorage.getItem("token");
+
+  // Afficher un indicateur de chargement
+  $("#example tbody").html(
+    '<tr><td colspan="7" class="text-center"><i class="fa fa-spinner fa-spin"></i> Chargement des données...</td></tr>'
+  );
 
   $.ajax({
     url: `http://localhost:5000/api/data/submission/${submissionId}`,
@@ -106,7 +128,7 @@ function loadSingleSubmission(submissionId) {
           icon: "error",
           button: "OK",
         }).then(() => {
-          window.location.href = "Exam.html";
+          window.location.href = "DeposerEtManagerExam.html";
         });
         return;
       }
@@ -121,8 +143,20 @@ function loadSingleSubmission(submissionId) {
     error: function (xhr) {
       console.error("Erreur lors du chargement de la soumission:", xhr);
 
-      // Utiliser des données fictives pour les tests
-      useDemoSubmissions(true);
+      $("#example tbody").html(
+        '<tr><td colspan="7" class="text-center text-danger">Erreur lors du chargement des données. Veuillez réessayer.</td></tr>'
+      );
+
+      // Notification d'erreur
+      toastr.error(
+        "Impossible de charger la soumission. Veuillez réessayer.",
+        "Erreur"
+      );
+
+      // Si l'erreur persiste, utiliser des données fictives
+      setTimeout(() => {
+        useDemoSubmissions(true);
+      }, 3000);
     },
   });
 }
@@ -130,6 +164,11 @@ function loadSingleSubmission(submissionId) {
 // Fonction pour charger toutes les soumissions récentes
 function loadRecentSubmissions() {
   const token = localStorage.getItem("token");
+
+  // Afficher un indicateur de chargement
+  $("#example tbody").html(
+    '<tr><td colspan="7" class="text-center"><i class="fa fa-spinner fa-spin"></i> Chargement des données...</td></tr>'
+  );
 
   $.ajax({
     url: "http://localhost:5000/api/data/teacher-recent-submissions",
@@ -151,8 +190,20 @@ function loadRecentSubmissions() {
     error: function (xhr) {
       console.error("Erreur lors du chargement des soumissions récentes:", xhr);
 
-      // Utiliser des données fictives pour les tests
-      useDemoSubmissions();
+      $("#example tbody").html(
+        '<tr><td colspan="7" class="text-center text-danger">Erreur lors du chargement des données. Veuillez réessayer.</td></tr>'
+      );
+
+      // Notification d'erreur
+      toastr.error(
+        "Impossible de charger les soumissions récentes. Veuillez réessayer.",
+        "Erreur"
+      );
+
+      // Si l'erreur persiste, utiliser des données fictives
+      setTimeout(() => {
+        useDemoSubmissions();
+      }, 3000);
     },
   });
 }
@@ -164,35 +215,41 @@ function populateSubmissionsTable(submissions) {
   submissions.forEach((submission) => {
     // Formater la date de soumission
     const submissionDate = new Date(submission.submitted_at);
-    const dateString = submissionDate.toLocaleDateString("fr-FR");
+    const dateString = submissionDate.toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
     // Préparer les données pour chaque ligne
     html += `
-        <tr data-student-id="${submission.student_id}" data-submission-id="${
+          <tr data-student-id="${submission.student_id}" data-submission-id="${
       submission.id
     }">
-            <td>${submission.numCarte || "N/A"}</td>
-            <td>${submission.firstName || "N/A"}</td>
-            <td>${submission.lastName || "N/A"}</td>
-            <td>${submission.examTitle || "N/A"}</td>
-            <td>${dateString}</td>
-            <td contenteditable="true" class="editable-note">${
-              submission.score !== null ? submission.score : "Non noté"
-            }</td>
-            <td>
-                <button type="button" class="btn btn-default icon-round shadow view-submission-btn" data-id="${
-                  submission.id
-                }" data-path="${submission.file_path}">
-                    <i class="fa fa-book"></i> 
-                </button>
-                <button type="button" class="btn btn-success icon-round shadow auto-grade-btn" data-id="${
-                  submission.id
-                }">
-                    <i class="fa fa-magic"></i> 
-                </button>
-            </td>
-        </tr>
-        `;
+              <td>${submission.numCarte || "N/A"}</td>
+              <td>${submission.firstName || "N/A"}</td>
+              <td>${submission.lastName || "N/A"}</td>
+              <td>${submission.examTitle || "N/A"}</td>
+              <td>${dateString}</td>
+              <td contenteditable="true" class="editable-note">${
+                submission.score !== null ? submission.score : "Non noté"
+              }</td>
+              <td>
+                  <button type="button" class="btn btn-primary btn-sm mr-1 view-submission-btn" data-id="${
+                    submission.id
+                  }" data-path="${submission.file_path}">
+                      <i class="fa fa-book"></i> Voir
+                  </button>
+                  <button type="button" class="btn btn-success btn-sm auto-grade-btn" data-id="${
+                    submission.id
+                  }">
+                      <i class="fa fa-magic"></i> Auto
+                  </button>
+              </td>
+          </tr>
+          `;
   });
 
   $("#example tbody").html(html);
@@ -201,14 +258,36 @@ function populateSubmissionsTable(submissions) {
   if (!$.fn.DataTable.isDataTable("#example")) {
     $("#example").DataTable({
       language: {
-        url: "//cdn.datatables.net/plug-ins/1.11.5/i18n/French.json",
+        emptyTable: "Aucune donnée disponible dans le tableau",
+        info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+        infoEmpty: "Affichage de 0 à 0 sur 0 entrée",
+        infoFiltered: "(filtré à partir de _MAX_ entrées au total)",
+        lengthMenu: "Afficher _MENU_ entrées",
+        loadingRecords: "Chargement...",
+        processing: "Traitement...",
+        search: "Rechercher :",
+        zeroRecords: "Aucun élément correspondant trouvé",
+        paginate: {
+          first: "Premier",
+          last: "Dernier",
+          next: "Suivant",
+          previous: "Précédent",
+        },
+        aria: {
+          sortAscending: ": activer pour trier la colonne par ordre croissant",
+          sortDescending:
+            ": activer pour trier la colonne par ordre décroissant",
+        },
       },
       order: [[4, "desc"]], // Trier par date de soumission, plus récent en premier
     });
   } else {
     // Actualiser le DataTable existant
-    $("#example").DataTable().draw();
+    $("#example").DataTable().clear().rows.add($(html)).draw();
   }
+
+  // Notification de succès
+  toastr.success("Données chargées avec succès", "Succès");
 }
 
 // Fonction pour configurer les événements de notation
@@ -261,14 +340,22 @@ function setupGradingEvents() {
       return;
     }
 
-    // Ouvrir le fichier dans un nouvel onglet ou télécharger
-    const token = localStorage.getItem("token");
-    window.open(
-      `http://localhost:5000/api/data/view-submission/${submissionId}?token=${token}`,
-      "_blank"
-    );
-  });
+    console.log("Tentative d'ouverture du fichier:", filePath);
 
+    // Obtenir le token
+    const token = localStorage.getItem("token");
+
+    // URL correcte basée sur votre configuration de serveur
+    // Notez que studentRoutes est monté sous /api/data/ dans votre server.js
+    const url = `http://localhost:5000/api/data/view-submission/${submissionId}?token=${token}`;
+
+    console.log("URL de téléchargement:", url);
+
+    // Ouvrir dans un nouvel onglet
+    window.open(url, "_blank");
+
+    toastr.info("Tentative d'accès au fichier de soumission...", "Information");
+  });
   // Événement pour la notation automatique
   $(document).on("click", ".auto-grade-btn", function () {
     const submissionId = $(this).data("id");
@@ -327,12 +414,7 @@ function saveGrade(submissionId, score) {
         errorMessage = xhr.responseJSON.error;
       }
 
-      swal({
-        title: "Erreur !",
-        text: errorMessage,
-        icon: "error",
-        button: "OK",
-      });
+      toastr.error(errorMessage, "Erreur");
     },
   });
 }
@@ -388,18 +470,15 @@ function autoGradeSubmission(submissionId) {
         errorMessage = xhr.responseJSON.error;
       }
 
-      swal({
-        title: "Erreur !",
-        text: errorMessage,
-        icon: "error",
-        button: "OK",
-      });
+      toastr.error(errorMessage, "Erreur");
     },
   });
 }
 
 // Fonction pour utiliser des données fictives pour les soumissions
 function useDemoSubmissions(singleSubmission = false) {
+  console.log("Utilisation de données de démonstration...");
+
   const demoSubmissions = [
     {
       id: 1,

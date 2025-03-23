@@ -41,6 +41,10 @@ app.use("/api/ai", aiRoutes);
 app.use("/api/plagiarism", plagiarismRoutes);
 app.use("/api/data", studentRoutes); // Routes pour les étudiants
 app.use("/api/data", gradeRoutes); // Routes pour la gestion des notes
+app.use(
+  "/submissions",
+  express.static(path.join(__dirname, "../frontend/submissions"))
+);
 
 // Vérification des variables d'environnement essentielles
 if (
@@ -82,4 +86,43 @@ app.get("/", (req, res) => {
 // Démarrage du serveur
 app.listen(port, () => {
   console.log(`🚀 Serveur backend démarré sur le port ${port}`);
+});
+// Créer un fichier de démonstration si le dossier submissions est vide
+const fs = require("fs");
+const submissionsDir = path.join(__dirname, "../frontend/submissions");
+
+// Créer le dossier s'il n'existe pas
+if (!fs.existsSync(submissionsDir)) {
+  fs.mkdirSync(submissionsDir, { recursive: true });
+  console.log("✅ Dossier submissions créé");
+}
+
+// Créer un fichier de démonstration si le dossier est vide
+fs.readdir(submissionsDir, (err, files) => {
+  if (err) {
+    console.error("❌ Erreur lors de la lecture du dossier submissions:", err);
+    return;
+  }
+
+  if (files.length === 0) {
+    console.log(
+      "⚠️ Dossier submissions vide, création d'un fichier de démonstration..."
+    );
+
+    // Créer un fichier texte simple pour tester
+    fs.writeFile(
+      path.join(submissionsDir, "demo-submission.txt"),
+      "Ceci est un fichier de soumission de démonstration.\n\nIl est utilisé pour tester la fonctionnalité de visualisation des soumissions.",
+      (err) => {
+        if (err) {
+          console.error(
+            "❌ Erreur lors de la création du fichier de démonstration:",
+            err
+          );
+        } else {
+          console.log("✅ Fichier de démonstration créé avec succès");
+        }
+      }
+    );
+  }
 });

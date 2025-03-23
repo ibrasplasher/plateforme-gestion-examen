@@ -315,43 +315,36 @@
                 // Afficher les examens avec le nombre de soumissions
                 response.forEach((exam) => {
                   let row = `
-                    <tr data-id="${exam.id}">
-                      <td>${exam.id}</td>
-                      <td>${exam.title}</td>
-                      <td>${exam.subjectName || "-"}</td>
-                      <td>${exam.className || "-"}</td>
-                      <td>${formatDate(exam.deadline)}</td>
-                      <td>
-                        <a href="GestionNotes.html?id=${
-                          exam.id
-                        }" class="badge badge-primary">
-                          ${exam.submissionsCount} copies
-                        </a>
-                      </td>
-                      <td>
-                        <button type="button" class="btn btn-info btn-sm action-btn view-correction-btn" data-id="${
-                          exam.id
-                        }">
-                          <i class="fa fa-file-text-o"></i> Corrigé
-                        </button>
-                        <button type="button" class="btn btn-warning btn-sm action-btn edit-exam-btn" data-id="${
-                          exam.id
-                        }">
-                          <i class="fa fa-pencil"></i> Éditer
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm action-btn plagiarism-btn" data-id="${
-                          exam.id
-                        }">
-                          <i class="fa fa-search"></i> Plagiat
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm action-btn delete-exam-btn" data-id="${
-                          exam.id
-                        }">
-                          <i class="fa fa-trash"></i> Supprimer
-                        </button>
-                      </td>
-                    </tr>
-                  `;
+  <tr data-id="${exam.id}">
+    <td>${exam.id}</td>
+    <td>${exam.title}</td>
+    <td>${exam.subjectName || "-"}</td>
+    <td>${exam.className || "-"}</td>
+    <td>${formatDate(exam.deadline)}</td>
+    <td>
+      <a href="Grade.html?id=${exam.id}" class="badge badge-primary text-white">
+        ${exam.submissionsCount} copies
+      </a>
+    </td>
+    <td>
+      <button type="button" class="btn btn-info btn-sm action-btn view-correction-btn" data-id="${
+        exam.id
+      }">
+        <i class="fa fa-file-text-o"></i> Corrigé
+      </button>
+      <button type="button" class="btn btn-danger btn-sm action-btn plagiarism-btn" data-id="${
+        exam.id
+      }">
+        <i class="fa fa-search"></i> Plagiat
+      </button>
+      <button type="button" class="btn btn-danger btn-sm action-btn delete-exam-btn" data-id="${
+        exam.id
+      }">
+        <i class="fa fa-trash"></i> Supprimer
+      </button>
+    </td>
+  </tr>
+`;
                   tableBody.append(row);
                 });
 
@@ -386,12 +379,6 @@
         $(document).on("click", ".view-correction-btn", function () {
           const examId = $(this).data("id");
           window.location.href = `CorrigeType.html?id=${examId}`;
-        });
-
-        // Éditer un examen
-        $(document).on("click", ".edit-exam-btn", function () {
-          const examId = $(this).data("id");
-          window.location.href = `ModifierEvaluation.html?id=${examId}`;
         });
 
         // Analyser le plagiat pour un examen

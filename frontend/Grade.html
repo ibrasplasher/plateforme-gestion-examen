@@ -2,263 +2,220 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="" >
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!--Meta Responsive tag-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <!--Custom style.css-->
-    <link rel="stylesheet" href="assets/css/quicksand.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/quicksand.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <!--Font Awesome-->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
     <!--Chartist CSS-->
-    <link rel="stylesheet" href="assets/css/chartist.min.css">
+    <link rel="stylesheet" href="assets/css/chartist.min.css" />
     <!--Bootstrap Calendar-->
-    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css">
+    <link rel="stylesheet" href="assets/js/calendar/bootstrap_calendar.css" />
     <!--Datatable-->
-    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="assets/css/dataTables.bootstrap4.min.css" />
+    <!-- Toastr CSS pour les notifications -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
 
-    <title>ExamXpress</title>
+    <title>ExamXpress - Gestion des Notes</title>
   </head>
   <body>
     <!--Page loader-->
     <div class="loader-wrapper">
-        <div class="loader-circle">
-            <div class="loader-wave"></div>
-        </div>
+      <div class="loader-circle">
+        <div class="loader-wave"></div>
+      </div>
     </div>
     <!--Page loader-->
-    
+
     <!--Page Wrapper-->
 
     <div class="container-fluid">
-
-        <!--Header-->
-        <div class="row header shadow-sm">
-            
-            <!--Logo-->
-            <div class="col-sm-3 pl-0 text-center header-logo">
-               <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-                    <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> ExamX<span class="small">pert</span></a></h3>
-               </div>
-
-            </div>
-            <!--Logo-->
-            <!--Header Menu-->
-            <div class="col-sm-9 header-menu pt-2 pb-0">
-                <div class="row">
-                    
-                    <!--Menu Icons-->
-                    <div class="col-sm-4 col-8 pl-0">
-                        <!--Toggle sidebar-->
-                        <span class="menu-icon" onclick="toggle_sidebar()">
-                            <span id="sidebar-toggle-btn"></span>
-                        </span>
-                    </div>
-
-                    <!--Search box and avatar-->
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                        
-                        <h6 class="mb-2">Dashboard <i class="fa fa-angle-right"></i> Visualiser les corrections</h6>
-                    </div>
-                
-                </div>
-            </div> 
-
+      <!--Header-->
+      <div class="row header shadow-sm">
+        <!--Logo-->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+          <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo">
+              <a href="#" class="text-secondary logo"
+                ><i class="fa fa-rocket"></i> ExamX<span class="small"
+                  >pert</span
+                ></a
+              >
+            </h3>
+          </div>
         </div>
-        <!--Header-->
-
-        <!--Main Content-->
-
-        <div class="row main-content">
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                  <!--Image Avatar-->
-                  <br /><br />
-                  <div class="avatar text-center">
-                    <img
-                      src="assets/img/client-img4.png"
-                      alt=""
-                      class="rounded-circle"
-                    />
-                    <p><strong> NOM UTILISATEUR </strong></p>
-                    <span class="text-primary small"
-                      ><strong>PROFFESSION UTILISATEUR</strong></span
-                    >
-                  </div>
-                  <!--Image Avatar-->
-      
-                  <!--Sidebar Navigation Menu-->
-                  <div class="sidebar-menu-container">
-                    <ul class="sidebar-menu mt-4 mb-4">
-                      <li class="parent">
-                        <a href="#"
-                          ><i class="fa fa-dashboard mr-3"> </i>
-                          <span class="none">Dashboard </span>
-                        </a>
-                      </li>
-                      <li class="parent">
-                        <a
-                          href="#"
-                          onclick="toggle_menu('dashboard'); return false"
-                          class=""
-                          ><i class="fa fa-book mr-3"> </i>
-                          <span class="none"
-                            >Evaluation
-                            <i class="fa fa-angle-down pull-right align-bottom"></i
-                          ></span>
-                        </a>
-                        <ul class="children" id="dashboard">
-                          <li class="child">
-                            <a href="#" class="ml-4"
-                              ><i class="fa fa-angle-right mr-2"></i> Creer
-                              Evaluation</a
-                            >
-                          </li>
-                          <li class="child">
-                            <a href="#" class="ml-4"
-                              ><i class="fa fa-angle-right mr-2"></i> Deposer
-                              Evaluation</a
-                            >
-                          </li>
-                        </ul>
-                      </li>
-                      <li class="parent">
-                        <a href="#" class=""
-                          ><i class="fa fa-pencil mr-3"></i>
-                          <span class="none">Gestion Notes </span>
-                        </a>
-                      </li>
-                      <li class="parent">
-                        <a href="#" class=""
-                          ><i class="fa fa-rocket mr-3"></i>
-                          <span class="none">ExamXpert</span>
-                        </a>
-                      </li>
-                      <br /><br />
-      
-                      <li class="parent">
-                        <a href="#" class=""
-                          ><i class="fa fa-sign-out mr-3"></i>
-                          <span class="none">Log Out </span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                    <!--Sidebar Naigation Menu-->
-                </div>
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+          <div class="row">
+            <!--Menu Icons-->
+            <div class="col-sm-4 col-8 pl-0">
+              <!--Toggle sidebar-->
+              <span class="menu-icon" onclick="toggle_sidebar()">
+                <span id="sidebar-toggle-btn"></span>
+              </span>
             </div>
-            <!--Sidebar left-->
 
-            <!--Content right-->
-            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-                <h5 class="mb-0" ><strong>Visualiser les notes</strong></h5>
-                
-                        <!--Default bootstrap 4 validation-->
-                        <div class="row mt-3">
-                            <div class="col-sm-12">
-                                <!--Datatable-->
-                                <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-                                    <h6 class="mb-2">Datatable</h6>
-                                    
-                                    <div class="table-responsive">
-                                        <table id="example" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Numero</th>
-                                                    <th>Prenom</th>
-                                                    <th>Nom</th>
-                                                    <th>Exam</th>
-                                                    <th>Date Soumission</th>
-                                                    <th>Note</th>
-                                                    <th>Copie</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>VARIABLE NumeroCarte</td>
-                                                    <td>VARIABLE NOM</td>
-                                                    <td>VARIABLE PRENOM</td>
-                                                    <td>VARIABLE TITLE EXAM</td>
-                                                    <td>VARIABLE DATE</td>
-                                                    <!-- Ajout de contenteditable pour rendre la note modifiable -->
-                                                    <td contenteditable="true" class="editable-note">VARIABLE NOTE</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-default icon-round shadow">
-                                                            <i class="fa fa-book"></i> 
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                              
-
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!--/Datatable-->
-
-
-
-                        <!--/Default bootstrap validation-->
-
-
-                        
-                   
-                </div>
-
-
+            <!--Search box and avatar-->
+            <div
+              class="col-sm-8 col-4 text-right flex-header-menu justify-content-end"
+            >
+              <h6 class="mb-2">
+                Dashboard <i class="fa fa-angle-right"></i> Gestion des Notes
+              </h6>
             </div>
+          </div>
         </div>
+      </div>
+      <!--Header-->
 
-        <!--Main Content-->
+      <!--Main Content-->
 
+      <div class="row main-content">
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+          <div class="inner-sidebar mr-3">
+            <!--Image Avatar-->
+            <br /><br />
+            <div class="avatar text-center">
+              <img
+                id="profile-image"
+                src="assets/img/default-avatar.jpg"
+                alt=""
+                class="rounded-circle"
+              />
+              <p><strong id="user-name">NOM UTILISATEUR</strong></p>
+              <span class="text-primary small"
+                ><strong id="user-role">PROFESSION UTILISATEUR</strong></span
+              >
+            </div>
+            <!--Image Avatar-->
+
+            <!--Sidebar Navigation Menu-->
+            <div class="sidebar-menu-container">
+              <ul class="sidebar-menu mt-4 mb-4">
+                <li class="parent">
+                  <a href="dashboardEnseignant.html"
+                    ><i class="fa fa-dashboard mr-3"> </i>
+                    <span class="none">Dashboard </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a
+                    href="#"
+                    onclick="toggle_menu('dashboard'); return false"
+                    class="active"
+                    ><i class="fa fa-book mr-3"> </i>
+                    <span class="none"
+                      >Evaluation
+                      <i class="fa fa-angle-down pull-right align-bottom"></i
+                    ></span>
+                  </a>
+                  <ul class="children" id="dashboard">
+                    <li class="child">
+                      <a href="CreateExam.html" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Créer
+                        Evaluation</a
+                      >
+                    </li>
+                    <li class="child">
+                      <a href="DeposerEtManagerExam.html" class="ml-4"
+                        ><i class="fa fa-angle-right mr-2"></i> Gérer
+                        Evaluations</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="parent">
+                  <a href="Grade.html" class=""
+                    ><i class="fa fa-pencil mr-3"></i>
+                    <span class="none">Gestion Notes </span>
+                  </a>
+                </li>
+                <li class="parent">
+                  <a href="Exam.html" class=""
+                    ><i class="fa fa-rocket mr-3"></i>
+                    <span class="none">ExamXpert</span>
+                  </a>
+                </li>
+                <br /><br />
+
+                <li class="parent">
+                  <a href="#" onclick="logout()" class=""
+                    ><i class="fa fa-sign-out mr-3"></i>
+                    <span class="none">Déconnexion</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!--Sidebar Naigation Menu-->
+          </div>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+          <h5 class="mb-0"><strong>Visualiser les notes</strong></h5>
+
+          <!--Default bootstrap 4 validation-->
+          <div class="row mt-3">
+            <div class="col-sm-12">
+              <!--Datatable-->
+              <div
+                class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm"
+              >
+                <h6 class="mb-2">Soumissions d'examen</h6>
+
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    class="table table-striped table-bordered"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Numéro</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Examen</th>
+                        <th>Date Soumission</th>
+                        <th>Note</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Les données seront chargées dynamiquement ici -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--/Datatable-->
+            </div>
+          </div>
+          <!--/Default bootstrap validation-->
+        </div>
+        <!--Content right-->
+      </div>
+      <!--Main Content-->
     </div>
+    <!--Page Wrapper-->
 
-    
-<script>
-    // Sélectionner toutes les cellules modifiables
-    const editableCells = document.querySelectorAll('.editable-note');
-
-    // Ajouter un événement 'input' pour chaque cellule modifiable
-    editableCells.forEach(cell => {
-        cell.addEventListener('input', function () {
-            const newValue = cell.innerText; // La nouvelle note
-            const studentId = cell.closest('tr').dataset.studentId; // ID de l'étudiant
-
-            // Si vous avez un ID d'étudiant, vous pouvez envoyer la mise à jour au serveur
-            if (studentId) {
-                updateGrade(studentId, newValue);
-            }
-        });
-    });
-
-    // Fonction pour envoyer la modification de la note au serveur via AJAX (fetch)
-    function updateGrade(studentId, newGrade) {
-        fetch('/update-grade', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: studentId, grade: newGrade }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Note mise à jour avec succès', data);
-        })
-        .catch(error => {
-            console.error('Erreur lors de la mise à jour de la note:', error);
-        });
-    }
-</script>
     <!-- Page JavaScript Files-->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/jquery-1.12.4.min.js"></script>
@@ -280,16 +237,22 @@
     <!--Datatable-->
     <script src="assets/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Toastr JS pour les notifications -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>
-    <!--Custom Js Script-->
-
-    <script>
-        $('#example').DataTable();
-    </script>
     <script src="assets/js/dashboard-profile.js"></script>
-<script src="assets/js/sidebar-navigation.js"></script>
-<script src="assets/js/grade.js"></script>
+    <script src="assets/js/sidebar-navigation.js"></script>
+    <script src="assets/js/grade.js"></script>
+
+    <!-- Script pour la fonction de déconnexion -->
+    <script>
+      function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "Connexion.html";
+      }
+    </script>
   </body>
 </html>
