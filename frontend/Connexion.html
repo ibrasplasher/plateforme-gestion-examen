@@ -172,15 +172,96 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         margin-right: 10px;
       }
+
+      /* Styles pour l'animation de texte défilant */
+      .intro-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+        z-index: 9999;
+        overflow: hidden;
+      }
+
+      .intro-text {
+        font-family: "Quicksand", sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: white;
+        text-align: center;
+        opacity: 0;
+      }
+
+      .intro-text span {
+        display: inline-block;
+        position: relative;
+        margin: 0 5px;
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      .intro-heart {
+        color: #ff6b6b;
+        font-size: 3.5rem;
+        animation: heartbeat 1.5s infinite;
+      }
+
+      @keyframes heartbeat {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.1);
+        }
+        50% {
+          transform: scale(1);
+        }
+        75% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .coffee-icon {
+        font-size: 2.5rem;
+        margin-left: 10px;
+        transform: rotate(15deg);
+      }
+
+      .hidden-content {
+        opacity: 0;
+        visibility: hidden;
+      }
     </style>
 
     <title>ExamXpert - Connexion</title>
   </head>
 
   <body>
-    <!--Login Wrapper-->
+    <!-- Animation d'introduction -->
+    <div class="intro-animation">
+      <div class="intro-text">
+        <span>Made</span>
+        <span>With</span>
+        <span class="intro-heart">❤️</span>
+        <span>and</span>
+        <span>a</span>
+        <span>lot</span>
+        <span>of</span>
+        <span>coffee</span>
+        <span class="coffee-icon">☕</span>
+      </div>
+    </div>
 
-    <div class="container-fluid login-wrapper">
+    <!--Login Wrapper-->
+    <div class="container-fluid login-wrapper hidden-content">
       <video autoplay muted loop id="bg-video">
         <source
           src="assets/img/themebackground/videoplayback.webm"
@@ -294,6 +375,56 @@
     <script src="assets/js/sweetalert.js"></script>
     <!-- GSAP pour animations avancées -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <!-- Animation d'introduction Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Sélectionner les éléments
+        const introAnimation = document.querySelector(".intro-animation");
+        const introText = document.querySelector(".intro-text");
+        const textSpans = document.querySelectorAll(".intro-text span");
+        const hiddenContent = document.querySelector(".hidden-content");
+
+        // Timeline GSAP pour l'animation du texte
+        const tl = gsap.timeline({
+          onComplete: () => {
+            // Animation de sortie après que tout le texte soit affiché
+            setTimeout(() => {
+              gsap.to(introAnimation, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                  // Cacher l'animation et afficher le contenu
+                  introAnimation.style.display = "none";
+                  gsap.to(hiddenContent, {
+                    opacity: 1,
+                    visibility: "visible",
+                    duration: 0.5,
+                  });
+                },
+              });
+            }, 1500);
+          },
+        });
+
+        // Animation pour faire apparaître le texte
+        gsap.to(introText, { opacity: 1, duration: 0.5 });
+
+        // Animation pour chaque mot
+        tl.staggerTo(
+          textSpans,
+          0.5,
+          {
+            y: 0,
+            opacity: 1,
+            ease: "back.out(1.7)",
+            delay: 0.5,
+          },
+          0.2
+        );
+      });
+    </script>
 
     <!--Custom Js Script-->
     <script src="assets/js/custom.js"></script>

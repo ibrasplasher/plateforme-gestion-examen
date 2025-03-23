@@ -82,7 +82,9 @@ db.connect((err) => {
 app.get("/", (req, res) => {
   res.send("Backend en cours de développement...");
 });
-
+app.get("/", (req, res) => {
+  res.redirect("/Connexion.html");
+});
 // Démarrage du serveur
 app.listen(port, () => {
   console.log(`🚀 Serveur backend démarré sur le port ${port}`);

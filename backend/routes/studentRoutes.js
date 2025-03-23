@@ -29,6 +29,10 @@ const upload = multer({
 });
 
 // Route pour obtenir les statistiques de l'étudiant
+// Ces routes devraient être implémentées dans votre fichier de routes backend
+// Par exemple, dans studentRoutes.js
+
+// Route pour obtenir les statistiques de l'étudiant
 router.get("/student-statistics", authMiddleware, (req, res) => {
   // Vérifier que l'utilisateur est un étudiant
   if (req.user.role !== "student") {
@@ -41,37 +45,37 @@ router.get("/student-statistics", authMiddleware, (req, res) => {
 
   // Requête pour récupérer les statistiques de l'étudiant
   const statsQuery = `
-        SELECT 
-            MAX(s.score) as bestGrade,
-            MIN(s.score) as worstGrade,
-            (SELECT subj.name 
-             FROM submission s2
-             JOIN exam e2 ON s2.exam_id = e2.id
-             JOIN subject subj ON e2.subject_id = subj.id
-             WHERE s2.student_id = ? AND s2.score = MAX(s.score)
-             LIMIT 1) as bestCourse,
-            (SELECT subj.name 
-             FROM submission s2
-             JOIN exam e2 ON s2.exam_id = e2.id
-             JOIN subject subj ON e2.subject_id = subj.id
-             WHERE s2.student_id = ? AND s2.score = MIN(s.score)
-             LIMIT 1) as worstCourse,
-            ROUND((SUM(CASE WHEN s.score >= 10 THEN 1 ELSE 0 END) / COUNT(*)) * 100) as successRate
-        FROM submission s
-        WHERE s.student_id = ? AND s.score IS NOT NULL
-    `;
+          SELECT 
+              MAX(s.score) as bestGrade,
+              MIN(s.score) as worstGrade,
+              (SELECT subj.name 
+               FROM submission s2
+               JOIN exam e2 ON s2.exam_id = e2.id
+               JOIN subject subj ON e2.subject_id = subj.id
+               WHERE s2.student_id = ? AND s2.score = MAX(s.score)
+               LIMIT 1) as bestCourse,
+              (SELECT subj.name 
+               FROM submission s2
+               JOIN exam e2 ON s2.exam_id = e2.id
+               JOIN subject subj ON e2.subject_id = subj.id
+               WHERE s2.student_id = ? AND s2.score = MIN(s.score)
+               LIMIT 1) as worstCourse,
+              ROUND((SUM(CASE WHEN s.score >= 10 THEN 1 ELSE 0 END) / COUNT(*)) * 100) as successRate
+          FROM submission s
+          WHERE s.student_id = ? AND s.score IS NOT NULL
+      `;
 
   // Requête pour récupérer les données de progression au fil du temps
   const progressQuery = `
-        SELECT 
-            DATE_FORMAT(s.submitted_at, '%Y-%m') as month,
-            ROUND(AVG(s.score), 2) as avgScore
-        FROM submission s
-        WHERE s.student_id = ? AND s.score IS NOT NULL
-        GROUP BY DATE_FORMAT(s.submitted_at, '%Y-%m')
-        ORDER BY month DESC
-        LIMIT 7
-    `;
+          SELECT 
+              DATE_FORMAT(s.submitted_at, '%Y-%m') as month,
+              ROUND(AVG(s.score), 2) as avgScore
+          FROM submission s
+          WHERE s.student_id = ? AND s.score IS NOT NULL
+          GROUP BY DATE_FORMAT(s.submitted_at, '%Y-%m')
+          ORDER BY month DESC
+          LIMIT 7
+      `;
 
   // Exécuter les requêtes en parallèle
   Promise.all([
@@ -129,8 +133,8 @@ router.get("/student-statistics", authMiddleware, (req, res) => {
     });
 });
 
-// Route pour récupérer les examens disponibles pour l'étudiant
-router.get("/student-available-exams", authMiddleware, (req, res) => {
+// Route pour récupérer les examens à venir de l'étudiant (pour le tableau de bord)
+router.get("/student-exams", authMiddleware, (req, res) => {
   // Vérifier que l'utilisateur est un étudiant
   if (req.user.role !== "student") {
     return res
@@ -140,7 +144,7 @@ router.get("/student-available-exams", authMiddleware, (req, res) => {
 
   const studentId = req.user.id;
 
-  // Récupérer la classe de l'étudiant - MODIFIÉ POUR UTILISER LA COLONNE class_id
+  // Récupérer la classe de l'étudiant
   db.query(
     "SELECT class_id FROM student WHERE id = ?",
     [studentId],
@@ -158,35 +162,25 @@ router.get("/student-available-exams", authMiddleware, (req, res) => {
 
       const classId = results[0].class_id;
 
-      // Récupérer les examens pour cette classe qui ne sont pas expirés
+      // Récupérer les examens à venir pour cette classe
       const query = `
-            SELECT 
-                e.id, e.title, e.description, e.deadline, 
-                s.name as subjectName,
-                (SELECT COUNT(*) FROM submission sub WHERE sub.exam_id = e.id AND sub.student_id = ?) as isSubmitted
-            FROM exam e
-            JOIN subject s ON e.subject_id = s.id
-            WHERE e.class_id = ? AND e.deadline > NOW()
-            ORDER BY e.deadline ASC
-        `;
+              SELECT 
+                  e.id, e.title, e.deadline, 
+                  s.name as subjectName
+              FROM exam e
+              JOIN subject s ON e.subject_id = s.id
+              WHERE e.class_id = ? AND e.deadline > NOW()
+              ORDER BY e.deadline ASC
+              LIMIT 5
+          `;
 
-      db.query(query, [studentId, classId], (err, exams) => {
+      db.query(query, [classId], (err, exams) => {
         if (err) {
           console.error("Erreur lors de la récupération des examens:", err);
           return res.status(500).json({ error: "Erreur serveur" });
         }
 
-        // Formater les résultats
-        const formattedExams = exams.map((exam) => ({
-          id: exam.id,
-          title: exam.title,
-          description: exam.description,
-          deadline: exam.deadline,
-          subjectName: exam.subjectName,
-          isSubmitted: exam.isSubmitted > 0,
-        }));
-
-        res.json(formattedExams);
+        res.json(exams);
       });
     }
   );

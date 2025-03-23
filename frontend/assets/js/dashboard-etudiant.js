@@ -1,4 +1,3 @@
-// Script pour dashboardEtudiant.html
 $(document).ready(function () {
   // Vérifier si l'utilisateur est connecté
   const token = localStorage.getItem("token");
@@ -20,16 +19,13 @@ $(document).ready(function () {
   }
 
   // Mettre à jour les informations de l'utilisateur dans l'interface
-  $("p:contains('NOM UTILISATEUR')").text(
-    userData.firstName + " " + userData.lastName
-  );
-  // Si le nom est dans un autre élément, adaptez la ligne suivante
-  // $("#user-name").text(userData.firstName + " " + userData.lastName);
+  $(".avatar p strong").text(userData.firstName + " " + userData.lastName);
+  $(".avatar span strong").text("ÉTUDIANT");
 
-  // Charger les statistiques
-  loadStudentStats();
+  // Charger les statistiques de l'étudiant
+  loadStudentStatistics();
 
-  // Charger les évaluations à venir
+  // Charger les examens à venir
   loadUpcomingExams();
 
   // Ajouter l'événement de déconnexion
@@ -42,10 +38,9 @@ $(document).ready(function () {
 });
 
 // Fonction pour charger les statistiques de l'étudiant
-function loadStudentStats() {
+function loadStudentStatistics() {
   const token = localStorage.getItem("token");
 
-  // Requête pour obtenir les statistiques
   $.ajax({
     url: "http://localhost:5000/api/data/student-statistics",
     method: "GET",
@@ -53,61 +48,46 @@ function loadStudentStats() {
       Authorization: `Bearer ${token}`,
     },
     success: function (data) {
-      // Mise à jour des métriques
-      updateMetrics(data);
+      console.log("Statistiques reçues:", data);
 
-      // Mise à jour des graphiques
-      updateCharts(data);
+      // Mettre à jour les cartes de statistiques
+      if (data.bestGrade) {
+        $(".bg-theme .media-body h3 strong").text(data.bestGrade);
+        $(".bg-theme .media-body p small").text(
+          data.bestCourse || "Best Grade Course"
+        );
+      }
+
+      if (data.worstGrade) {
+        $(".bg-danger .media-body h3 strong").text(data.worstGrade);
+        $(".bg-danger .media-body p small").text(
+          data.worstCourse || "Worst Grade Course"
+        );
+      }
+
+      if (data.successRate) {
+        $(".bg-theme.border .media-body h3 strong").text(
+          data.successRate + "%"
+        );
+      }
+
+      // Mise à jour du graphique d'avancement si les données sont disponibles
+      if (
+        data.progressData &&
+        data.progressData.labels &&
+        data.progressData.values
+      ) {
+        updateProgressChart(data.progressData.labels, data.progressData.values);
+      }
     },
     error: function (xhr) {
       console.error("Erreur lors du chargement des statistiques:", xhr);
-      // Utiliser des données fictives pour les tests
-      useDemoData();
+      // Garder les données de démonstration en cas d'erreur
     },
   });
 }
 
-// Fonction pour mettre à jour les métriques
-function updateMetrics(data) {
-  // Exemple de mise à jour des métriques (adaptez selon vos données réelles)
-  if (!data) return;
-
-  // Meilleure note
-  $(".col-lg-4:nth-child(1) .mt-0.mb-0 strong").text(data.bestGrade || "N/A");
-  $(".col-lg-4:nth-child(1) .text-muted.bc-description").text(
-    data.bestCourse || "Aucun cours"
-  );
-
-  // Pire note
-  $(".col-lg-4:nth-child(2) .mt-0.mb-0 strong").text(data.worstGrade || "N/A");
-  $(".col-lg-4:nth-child(2) .text-muted.bc-description").text(
-    data.worstCourse || "Aucun cours"
-  );
-
-  // Taux de réussite
-  $(".col-lg-4:nth-child(3) .mt-0.mb-0 strong").text(
-    data.successRate ? data.successRate + "%" : "N/A"
-  );
-}
-
-// Fonction pour mettre à jour les graphiques
-function updateCharts(data) {
-  // Mise à jour du graphique d'évolution (si disponible)
-  if (data && data.progressData) {
-    if (typeof areaChart !== "undefined" && areaChart) {
-      // Si le graphique existe déjà, mettez à jour ses données
-      updateAreaChart(data.progressData);
-    }
-  }
-
-  // Mise à jour du graphique en donut (si disponible)
-  if (data && data.distributionData) {
-    // Adaptez selon votre implémentation spécifique
-    updateDonutChart(data.distributionData);
-  }
-}
-
-// Fonction pour charger les évaluations à venir
+// Fonction pour charger les examens à venir
 function loadUpcomingExams() {
   const token = localStorage.getItem("token");
 
@@ -117,90 +97,115 @@ function loadUpcomingExams() {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    success: function (data) {
-      if (!data || data.length === 0) {
-        $("#project_table tbody").html(
-          '<tr><td colspan="3" class="text-center">Aucune évaluation à venir</td></tr>'
+    success: function (exams) {
+      console.log("Examens reçus:", exams);
+
+      // Vider le tableau existant
+      $("#project_table tbody").empty();
+
+      if (!exams || exams.length === 0) {
+        $("#project_table tbody").append(
+          '<tr><td colspan="3" class="text-center">Aucun examen à venir</td></tr>'
         );
         return;
       }
 
-      let html = "";
-      data.forEach((exam) => {
+      // Remplir le tableau avec les données des examens
+      exams.forEach((exam) => {
         const date = new Date(exam.deadline);
-        const formattedDate = date.toLocaleDateString("fr-FR");
+        const formattedDate = date.toLocaleDateString();
 
-        html += `
-                <tr>
-                    <td>${exam.subjectName || "N/A"}</td>
-                    <td>${exam.title || "N/A"}</td>
-                    <td>${formattedDate}</td>
-                </tr>
-                `;
+        const row = `
+            <tr>
+              <td>${exam.subjectName || "Non spécifié"}</td>
+              <td>${exam.title}</td>
+              <td>${formattedDate}</td>
+            </tr>
+          `;
+
+        $("#project_table tbody").append(row);
       });
-
-      $("#project_table tbody").html(html);
     },
     error: function (xhr) {
-      console.error("Erreur lors du chargement des évaluations:", xhr);
-      // Utiliser des données fictives pour les tests
-      useDemoExams();
+      console.error("Erreur lors du chargement des examens:", xhr);
+      // En cas d'erreur, conserver les données de démonstration
     },
   });
 }
 
-// Fonction pour utiliser des données fictives pour les statistiques
-function useDemoData() {
-  const demoData = {
-    bestGrade: "18",
-    bestCourse: "Algorithmes",
-    worstGrade: "12",
-    worstCourse: "Base de données",
-    successRate: "85",
-    progressData: [65, 59, 80, 81, 56, 55, 40],
-    distributionData: {
-      completed: 70,
-      pending: 20,
-      upcoming: 10,
-    },
-  };
+// Fonction pour mettre à jour le graphique d'avancement
+function updateProgressChart(labels, values) {
+  // Cette fonction dépend de la bibliothèque de graphiques que vous utilisez
+  // Ajustez en fonction d'echarts, chartist, etc.
 
-  updateMetrics(demoData);
-  updateCharts(demoData);
-}
+  // Si vous utilisez echarts pour le donut chart
+  if (window.echarts && document.getElementById("donutChartEcharts")) {
+    var donutChart = echarts.init(document.getElementById("donutChartEcharts"));
 
-// Fonction pour utiliser des données fictives pour les évaluations
-function useDemoExams() {
-  const demoExams = [
-    {
-      subjectName: "Algorithmes",
-      title: "Contrôle Continu",
-      deadline: new Date(),
-    },
-    {
-      subjectName: "Base de données",
-      title: "Examen Final",
-      deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    },
-    {
-      subjectName: "Programmation Web",
-      title: "TP Noté",
-      deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
-    },
-  ];
+    var option = {
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b}: {c} ({d}%)",
+      },
+      legend: {
+        orient: "vertical",
+        x: "left",
+        data: labels,
+      },
+      series: [
+        {
+          name: "Notes",
+          type: "pie",
+          radius: ["50%", "70%"],
+          avoidLabelOverlap: false,
+          label: {
+            normal: {
+              show: false,
+              position: "center",
+            },
+            emphasis: {
+              show: true,
+              textStyle: {
+                fontSize: "30",
+                fontWeight: "bold",
+              },
+            },
+          },
+          labelLine: {
+            normal: {
+              show: false,
+            },
+          },
+          data: labels.map((label, index) => {
+            return {
+              value: values[index],
+              name: label,
+            };
+          }),
+        },
+      ],
+    };
 
-  let html = "";
-  demoExams.forEach((exam) => {
-    const formattedDate = exam.deadline.toLocaleDateString("fr-FR");
+    donutChart.setOption(option);
+  }
 
-    html += `
-        <tr>
-            <td>${exam.subjectName}</td>
-            <td>${exam.title}</td>
-            <td>${formattedDate}</td>
-        </tr>
-        `;
-  });
-
-  $("#project_table tbody").html(html);
+  // Si vous utilisez chartist pour le line chart
+  if (window.Chartist && document.getElementById("areaChartChartist")) {
+    new Chartist.Line(
+      "#areaChartChartist",
+      {
+        labels: labels,
+        series: [values],
+      },
+      {
+        low: 0,
+        showArea: true,
+        fullWidth: true,
+        axisY: {
+          onlyInteger: true,
+          offset: 20,
+        },
+      }
+    );
+  }
 }

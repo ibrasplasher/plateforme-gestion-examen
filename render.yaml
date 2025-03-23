@@ -1,0 +1,62 @@
+services:
+  # Service pour le backend
+  - type: web
+    name: exam-platform-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: DB_HOST
+        fromService:
+          name: exam-platform-db
+          type: pserv
+          property: host
+      - key: DB_USER
+        value: admin
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: exam_platform
+      - key: DB_PORT
+        value: 3306
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 5000
+    disk:
+      name: uploads
+      mountPath: /app/frontend
+      sizeGB: 10
+
+  # Service pour le frontend
+  - type: web
+    name: exam-platform-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: BACKEND_URL
+        fromService:
+          name: exam-platform-backend
+          type: web
+          property: url
+
+  # Service pour la base de données
+  - type: pserv
+    name: exam-platform-db
+    env: docker
+    dockerfilePath: ./database/Dockerfile
+    dockerContext: ./database
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        sync: false
+      - key: MYSQL_DATABASE
+        value: exam_platform
+      - key: MYSQL_USER
+        value: admin
+      - key: MYSQL_PASSWORD
+        sync: false
+    disk:
+      name: data
+      mountPath: /var/lib/mysql
+      sizeGB: 10

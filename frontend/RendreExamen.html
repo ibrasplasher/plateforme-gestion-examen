@@ -190,12 +190,7 @@
                     <span class="none">Notes</span>
                   </a>
                 </li>
-                <li class="parent">
-                  <a href="chatbot.html">
-                    <i class="fa fa-weixin mr-3"></i>
-                    <span class="none">ChatBot</span>
-                  </a>
-                </li>
+
                 <li class="parent">
                   <a href="#" id="sidebar-logout">
                     <i class="fa fa-sign-out mr-3"></i>
@@ -335,6 +330,62 @@
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="thechatbot"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">
+              Bidule le chatBot
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="chat-container">
+              <div class="chat-header">Chatbot Intelligent</div>
+              <div class="chat-body" id="chatBody">
+                <div class="message bot-message">Bonjour je suis BIDULE</div>
+                <div class="message bot-message">
+                  Comment puis-je vous aider ?
+                </div>
+              </div>
+              <div class="chat-footer">
+                <input
+                  type="text"
+                  id="userInput"
+                  placeholder="Écrivez un message..."
+                />
+                <button onclick="sendMessage()">Envoyer</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- Bouton de fermeture du chatbot -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Chatbot -->
     <div class="robot" id="robot">
       <div class="head">
@@ -346,6 +397,7 @@
     </div>
 
     <!-- Scripts -->
+
     <!-- Core Libraries -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -383,6 +435,26 @@
             });
           }
         });
+      });
+    </script>
+    <script>
+      // Ajouter la fonction showLaugh manquante
+      function showLaugh() {
+        console.log("Chatbot cliqué!");
+        // Afficher le modal du chatbot
+        $("#thechatbot").modal("show");
+      }
+
+      // S'assurer que le chatbot est initialisé correctement
+      $(document).ready(function () {
+        // Ajouter un événement de clic au robot
+        $("#robot").click(function () {
+          console.log("Robot cliqué");
+          showLaugh();
+        });
+
+        // Régler le problème de z-index pour le chatbot
+        $(".robot").css("z-index", "9999");
       });
     </script>
   </body>
