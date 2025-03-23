@@ -25,6 +25,8 @@ services:
       - docker_exam-network
     volumes:
       - profile_images:/app/frontend/assets/img
+      - ../frontend/exams:/app/frontend/exams
+      - ../frontend/submissions:/app/frontend/submissions
     command: >
       sh -c "npm install && npm start"
   db:

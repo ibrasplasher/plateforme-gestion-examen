@@ -80,53 +80,84 @@ router.get("/student-exams", authMiddleware, (req, res) => {
 
 // Route pour télécharger un examen
 router.get("/download-exam/:examId", authMiddleware, (req, res) => {
+  console.log("==== TÉLÉCHARGEMENT D'EXAMEN ====");
+  console.log("User:", req.user);
+  console.log("ExamId:", req.params.examId);
+
   // Vérifier que l'utilisateur est un étudiant
   if (req.user.role !== "student") {
+    console.log("❌ L'utilisateur n'est pas un étudiant");
     return res
       .status(403)
       .json({ error: "Accès refusé. Vous devez être un étudiant." });
   }
 
   const examId = req.params.examId;
-  const studentClassId = req.user.classId;
+  const studentId = req.user.id;
+  console.log("StudentId:", studentId);
 
-  // Vérifier que l'examen appartient à la classe de l'étudiant
-  const query = `
-        SELECT file_path FROM exam 
-        WHERE id = ? AND class_id = ?
-    `;
+  // D'abord, récupérer la classe de l'étudiant
+  db.query(
+    "SELECT class_id FROM student WHERE id = ?",
+    [studentId],
+    (err, studentResults) => {
+      if (err) {
+        console.error("❌ Erreur SQL (récupération classe):", err);
+        return res.status(500).json({ error: "Erreur serveur" });
+      }
 
-  db.query(query, [examId, studentClassId], (err, results) => {
-    if (err) {
-      console.error("Erreur lors de la récupération du fichier d'examen:", err);
-      return res.status(500).json({ error: "Erreur serveur" });
-    }
+      console.log("Student query results:", studentResults);
 
-    if (results.length === 0) {
-      return res.status(404).json({ error: "Examen non trouvé" });
-    }
+      if (studentResults.length === 0 || !studentResults[0].class_id) {
+        console.log("❌ Étudiant sans classe assignée");
+        return res
+          .status(404)
+          .json({ error: "Étudiant non assigné à une classe" });
+      }
 
-    const filePath = path.join(
-      __dirname,
-      "../../frontend",
-      results[0].file_path
-    );
+      const studentClassId = studentResults[0].class_id;
+      console.log("ClassId de l'étudiant:", studentClassId);
 
-    // Vérifier si le fichier existe
-    fs.access(filePath)
-      .then(() => {
-        // Envoyer le fichier
-        res.download(filePath, (err) => {
-          if (err) {
-            console.error("Erreur lors du téléchargement:", err);
-            res.status(500).json({ error: "Erreur lors du téléchargement" });
-          }
+      // Ensuite, vérifier que l'examen appartient à la classe de l'étudiant
+      const query = `
+          SELECT file_path FROM exam 
+          WHERE id = ? AND class_id = ?
+        `;
+
+      db.query(query, [examId, studentClassId], (err, results) => {
+        if (err) {
+          console.error("❌ Erreur SQL (vérification examen):", err);
+          return res.status(500).json({ error: "Erreur serveur" });
+        }
+
+        console.log("Exam query results:", results);
+
+        if (results.length === 0) {
+          console.log("❌ Examen non trouvé ou non autorisé pour cette classe");
+          return res
+            .status(403)
+            .json({ error: "Examen non trouvé ou non autorisé" });
+        }
+
+        const filePath = path.join(
+          __dirname,
+          "../../frontend",
+          results[0].file_path
+        );
+        console.log("Chemin du fichier complet:", filePath);
+
+        // Au lieu d'essayer de télécharger le fichier, retourner des informations de débogage
+        return res.json({
+          message: "Informations de débogage pour le téléchargement d'examen",
+          user_id: studentId,
+          class_id: studentClassId,
+          exam_id: examId,
+          file_path: results[0].file_path,
+          full_path: filePath,
         });
-      })
-      .catch(() => {
-        res.status(404).json({ error: "Fichier d'examen non trouvé" });
       });
-  });
+    }
+  );
 });
 
 // Route pour soumettre un examen
@@ -151,105 +182,129 @@ router.post(
     const studentId = req.user.id;
     const examId = req.body.examId;
 
-    // Vérifier si l'examen existe et est dans la bonne classe
-    const verifyExamQuery = `
-            SELECT id, deadline, class_id 
-            FROM exam 
-            WHERE id = ? AND class_id = ? AND deadline > NOW()
-        `;
-
+    // D'abord, récupérer la classe de l'étudiant
     db.query(
-      verifyExamQuery,
-      [examId, req.user.classId],
-      (err, examResults) => {
+      "SELECT class_id FROM student WHERE id = ?",
+      [studentId],
+      (err, studentResults) => {
         if (err) {
-          console.error("Erreur lors de la vérification de l'examen:", err);
+          console.error("Erreur lors de la récupération de la classe:", err);
           return res.status(500).json({ error: "Erreur serveur" });
         }
 
-        if (examResults.length === 0) {
-          // Supprimer le fichier uploadé
-          fs.unlink(req.file.path).catch(console.error);
-
-          return res.status(400).json({
-            error: "Examen invalide ou délai de soumission dépassé",
-          });
+        if (studentResults.length === 0 || !studentResults[0].class_id) {
+          return res
+            .status(404)
+            .json({ error: "Étudiant non assigné à une classe" });
         }
 
-        // Obtenir le chemin relatif pour le frontend
-        const relativePath = `submissions/${path.basename(req.file.path)}`;
+        const studentClassId = studentResults[0].class_id;
 
-        // Vérifier si une soumission existe déjà
-        const checkSubmissionQuery = `
-                SELECT id FROM submission 
-                WHERE exam_id = ? AND student_id = ?
-            `;
+        // Vérifier si l'examen existe et est dans la bonne classe
+        const verifyExamQuery = `
+            SELECT id, deadline, class_id 
+            FROM exam 
+            WHERE id = ? AND class_id = ? AND deadline > NOW()
+          `;
 
         db.query(
-          checkSubmissionQuery,
-          [examId, studentId],
-          (err, submissionResults) => {
+          verifyExamQuery,
+          [examId, studentClassId],
+          (err, examResults) => {
             if (err) {
-              console.error(
-                "Erreur lors de la vérification de la soumission:",
-                err
-              );
+              console.error("Erreur lors de la vérification de l'examen:", err);
               return res.status(500).json({ error: "Erreur serveur" });
             }
 
-            if (submissionResults.length > 0) {
-              // Mettre à jour la soumission existante
-              const updateQuery = `
-                        UPDATE submission
-                        SET file_path = ?, submitted_at = NOW()
-                        WHERE exam_id = ? AND student_id = ?
-                    `;
+            if (examResults.length === 0) {
+              // Supprimer le fichier uploadé
+              fs.unlink(req.file.path).catch(console.error);
 
-              db.query(
-                updateQuery,
-                [relativePath, examId, studentId],
-                (err) => {
-                  if (err) {
-                    console.error(
-                      "Erreur lors de la mise à jour de la soumission:",
-                      err
-                    );
-                    return res.status(500).json({ error: "Erreur serveur" });
-                  }
-
-                  res.status(200).json({
-                    message: "Soumission mise à jour avec succès",
-                    filePath: relativePath,
-                  });
-                }
-              );
-            } else {
-              // Créer une nouvelle soumission
-              const insertQuery = `
-                        INSERT INTO submission (exam_id, student_id, file_path, submitted_at)
-                        VALUES (?, ?, ?, NOW())
-                    `;
-
-              db.query(
-                insertQuery,
-                [examId, studentId, relativePath],
-                (err, result) => {
-                  if (err) {
-                    console.error(
-                      "Erreur lors de l'insertion de la soumission:",
-                      err
-                    );
-                    return res.status(500).json({ error: "Erreur serveur" });
-                  }
-
-                  res.status(201).json({
-                    message: "Soumission réussie",
-                    submissionId: result.insertId,
-                    filePath: relativePath,
-                  });
-                }
-              );
+              return res.status(400).json({
+                error: "Examen invalide ou délai de soumission dépassé",
+              });
             }
+
+            // Obtenir le chemin relatif pour le frontend
+            const relativePath = `submissions/${path.basename(req.file.path)}`;
+
+            // Vérifier si une soumission existe déjà
+            const checkSubmissionQuery = `
+                SELECT id FROM submission 
+                WHERE exam_id = ? AND student_id = ?
+              `;
+
+            db.query(
+              checkSubmissionQuery,
+              [examId, studentId],
+              (err, submissionResults) => {
+                if (err) {
+                  console.error(
+                    "Erreur lors de la vérification de la soumission:",
+                    err
+                  );
+                  return res.status(500).json({ error: "Erreur serveur" });
+                }
+
+                if (submissionResults.length > 0) {
+                  // Mettre à jour la soumission existante
+                  const updateQuery = `
+                      UPDATE submission
+                      SET file_path = ?, submitted_at = NOW()
+                      WHERE exam_id = ? AND student_id = ?
+                    `;
+
+                  db.query(
+                    updateQuery,
+                    [relativePath, examId, studentId],
+                    (err) => {
+                      if (err) {
+                        console.error(
+                          "Erreur lors de la mise à jour de la soumission:",
+                          err
+                        );
+                        return res
+                          .status(500)
+                          .json({ error: "Erreur serveur" });
+                      }
+
+                      res.status(200).json({
+                        message: "Soumission mise à jour avec succès",
+                        filePath: relativePath,
+                      });
+                    }
+                  );
+                } else {
+                  // Créer une nouvelle soumission
+                  const insertQuery = `
+                      INSERT INTO submission (exam_id, student_id, file_path, submitted_at)
+                      VALUES (?, ?, ?, NOW())
+                    `;
+
+                  db.query(
+                    insertQuery,
+                    [examId, studentId, relativePath],
+                    (err, result) => {
+                      if (err) {
+                        console.error(
+                          "Erreur lors de l'insertion de la soumission:",
+                          err
+                        );
+                        return res
+                          .status(500)
+                          .json({ error: "Erreur serveur" });
+                      }
+
+                      res.status(201).json({
+                        message: "Soumission réussie",
+                        submissionId: result.insertId,
+                        filePath: relativePath,
+                      });
+                    }
+                  );
+                }
+              }
+            );
           }
         );
       }

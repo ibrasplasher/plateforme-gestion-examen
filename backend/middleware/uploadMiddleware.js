@@ -7,9 +7,11 @@ const fs = require("fs");
 const profilesDir = path.join(__dirname, "../../frontend/assets/img");
 // Dossier pour les examens
 const examsDir = path.join(__dirname, "../../frontend/exams");
+// Dossier pour les soumissions d'étudiants
+const submissionsDir = path.join(__dirname, "../../frontend/submissions");
 
 // Créer les dossiers s'ils n'existent pas
-[profilesDir, examsDir].forEach((dir) => {
+[profilesDir, examsDir, submissionsDir].forEach((dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -19,12 +21,19 @@ const examsDir = path.join(__dirname, "../../frontend/exams");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // Déterminer le dossier de destination selon le type de fichier
-    const isExam =
+    if (req.originalUrl.includes("/submit-exam")) {
+      // Pour les soumissions d'étudiants
+      cb(null, submissionsDir);
+    } else if (
       req.originalUrl.includes("/exams") ||
-      req.originalUrl.includes("/upload-exam");
-
-    const destination = isExam ? examsDir : profilesDir;
-    cb(null, destination);
+      req.originalUrl.includes("/upload-exam")
+    ) {
+      // Pour les examens créés par les enseignants
+      cb(null, examsDir);
+    } else {
+      // Pour les photos de profil
+      cb(null, profilesDir);
+    }
   },
   filename: function (req, file, cb) {
     // Générer un nom de fichier unique avec timestamp
@@ -32,11 +41,16 @@ const storage = multer.diskStorage({
     const ext = path.extname(file.originalname);
 
     // Préfixer le nom du fichier selon le type
-    const prefix =
+    let prefix = "profile-";
+
+    if (req.originalUrl.includes("/submit-exam")) {
+      prefix = "submission-";
+    } else if (
       req.originalUrl.includes("/exams") ||
       req.originalUrl.includes("/upload-exam")
-        ? "exam-"
-        : "profile-";
+    ) {
+      prefix = "exam-";
+    }
 
     cb(null, prefix + uniqueSuffix + ext);
   },
@@ -47,7 +61,7 @@ const fileFilter = (req, file, cb) => {
   // Types de fichiers acceptés pour les photos de profil
   const imageTypes = ["image/jpeg", "image/png", "image/gif"];
 
-  // Types de fichiers acceptés pour les examens
+  // Types de fichiers acceptés pour les examens et soumissions
   const documentTypes = [
     "application/pdf",
     "application/msword",
@@ -56,16 +70,19 @@ const fileFilter = (req, file, cb) => {
   ];
 
   // Déterminer quel ensemble de types utiliser
-  const isExam =
+  const isDocumentUpload =
     req.originalUrl.includes("/exams") ||
-    req.originalUrl.includes("/upload-exam");
+    req.originalUrl.includes("/upload-exam") ||
+    req.originalUrl.includes("/submit-exam");
 
-  const allowedTypes = isExam ? [...imageTypes, ...documentTypes] : imageTypes;
+  const allowedTypes = isDocumentUpload
+    ? [...documentTypes, ...imageTypes]
+    : imageTypes;
 
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    const errorMessage = isExam
+    const errorMessage = isDocumentUpload
       ? "Type de fichier non supporté! Seuls PDF, DOC, DOCX, TXT et images sont acceptés."
       : "Type de fichier non supporté! Seuls JPEG, PNG et GIF sont acceptés.";
 
@@ -77,7 +94,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 10, // Limite à 10MB
+    fileSize: 1024 * 1024 * 50, // Limite augmentée à 50MB pour les documents
   },
   fileFilter: fileFilter,
 });

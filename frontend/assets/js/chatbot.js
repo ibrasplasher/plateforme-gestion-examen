@@ -2,54 +2,69 @@ const robot = document.getElementById("robot");
 const chatContainer = document.getElementById("chatContainer");
 const chatBody = document.getElementById("chatBody");
 const userInput = document.getElementById("userInput");
-const eyeLeft = document.getElementById("eyeLeft");
-const eyeRight = document.getElementById("eyeRight");
+const eyeLeft = robot ? document.getElementById("eyeLeft") : null;
+const eyeRight = robot ? document.getElementById("eyeRight") : null;
 const chatbotModal = document.getElementById("thechatbot");
-const chatbotCloseBtn = chatbotModal.querySelector(".close");
+// Correction de la ligne qui posait problème
+const chatbotCloseBtn = chatbotModal && chatbotModal.querySelector(".close");
 
 // Suivi des yeux du robot
-document.addEventListener("mousemove", function (event) {
-  let robotRect = robot.getBoundingClientRect();
-  let centerX = robotRect.left + robotRect.width / 2;
-  let centerY = robotRect.top + robotRect.height / 4;
+if (robot && eyeLeft && eyeRight) {
+  document.addEventListener("mousemove", function (event) {
+    let robotRect = robot.getBoundingClientRect();
+    let centerX = robotRect.left + robotRect.width / 2;
+    let centerY = robotRect.top + robotRect.height / 4;
 
-  let deltaX = event.pageX - centerX;
-  let deltaY = event.pageY - centerY;
+    let deltaX = event.pageX - centerX;
+    let deltaY = event.pageY - centerY;
 
-  let angle = Math.atan2(deltaY, deltaX);
-  let distance = Math.min(10, Math.sqrt(deltaX ** 2 + deltaY ** 2) / 5);
+    let angle = Math.atan2(deltaY, deltaX);
+    let distance = Math.min(10, Math.sqrt(deltaX ** 2 + deltaY ** 2) / 5);
 
-  eyeLeft.style.transform = `translate(${Math.cos(angle - 0.3) * distance}px, ${
-    Math.sin(angle - 0.3) * distance
-  }px)`;
-  eyeRight.style.transform = `translate(${
-    Math.cos(angle + 0.3) * distance
-  }px, ${Math.sin(angle + 0.3) * distance}px)`;
-});
+    eyeLeft.style.transform = `translate(${
+      Math.cos(angle - 0.3) * distance
+    }px, ${Math.sin(angle - 0.3) * distance}px)`;
+    eyeRight.style.transform = `translate(${
+      Math.cos(angle + 0.3) * distance
+    }px, ${Math.sin(angle + 0.3) * distance}px)`;
+  });
+}
 
 // Affichage de la modal au clic sur le robot
-robot.addEventListener("click", function () {
-  chatbotModal.classList.add("show");
-  chatbotModal.style.display = "block";
-  document.body.classList.add("modal-open");
-});
+if (robot && chatbotModal) {
+  robot.addEventListener("click", function () {
+    chatbotModal.classList.add("show");
+    chatbotModal.style.display = "block";
+    document.body.classList.add("modal-open");
+  });
+}
 
 // Fonction pour fermer la modal
 function closeChatbot() {
-  chatbotModal.classList.remove("show");
-  chatbotModal.style.display = "none";
-  document.body.classList.remove("modal-open");
+  if (chatbotModal) {
+    chatbotModal.classList.remove("show");
+    chatbotModal.style.display = "none";
+    document.body.classList.remove("modal-open");
+  }
 }
 
 // Ajout de l'écouteur d'événement pour fermer la modal
-chatbotCloseBtn.addEventListener("click", closeChatbot);
+if (chatbotCloseBtn) {
+  chatbotCloseBtn.addEventListener("click", closeChatbot);
+}
 
 // Ajout de l'écouteur d'événement pour le bouton de fermeture dans le footer
-const modalFooterCloseBtn = chatbotModal.querySelector(".btn-secondary");
-modalFooterCloseBtn.addEventListener("click", closeChatbot);
+if (chatbotModal) {
+  const modalFooterCloseBtn = chatbotModal.querySelector(".btn-secondary");
+  if (modalFooterCloseBtn) {
+    modalFooterCloseBtn.addEventListener("click", closeChatbot);
+  }
+}
 
 // Fonction pour afficher une bulle de rire du robot
 function showLaugh() {
+  if (!robot) return;
+
   const laughBubble = document.createElement("div");
   laughBubble.classList.add("laugh-bubble");
   laughBubble.textContent = "Hahaha";
@@ -59,6 +74,7 @@ function showLaugh() {
 
 // Envoi du message et affichage de la réponse
 async function sendMessage() {
+  if (!userInput || !chatBody) return;
   if (userInput.value.trim() === "") return;
 
   let userMessage = document.createElement("div");

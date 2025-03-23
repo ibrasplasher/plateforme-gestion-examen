@@ -223,7 +223,7 @@ router.post(
           }
 
           const token = jwt.sign(
-            { id: user.id, role: "student" },
+            { id: user.id, role: "student", classId: user.class_id },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
           );
@@ -235,6 +235,7 @@ router.post(
               firstName: user.firstName,
               lastName: user.lastName,
               role: "student",
+              classId: user.class_id,
             },
           });
         });

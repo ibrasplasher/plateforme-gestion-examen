@@ -27,12 +27,6 @@
     <!-- Chatbot CSS -->
     <link rel="stylesheet" href="assets/css/chatbot.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
-
     <style>
       :root {
         --blue: #0071ff;
@@ -91,7 +85,7 @@
         background: #4285f4;
         transition: opacity 0.15s ease;
       }
-      .containerUpload form input:valid ~ button {
+      .containerUpload form button.btn-enabled {
         opacity: 1;
         pointer-events: auto;
       }
@@ -130,48 +124,6 @@
               <span class="menu-icon" onclick="toggle_sidebar()">
                 <span id="sidebar-toggle-btn"></span>
               </span>
-
-              <!-- Messages Dropdown -->
-              <span class="menu-icon inbox">
-                <a
-                  href="#"
-                  role="button"
-                  id="dropdownMenuLink3"
-                  data-toggle="dropdown"
-                >
-                  <i class="fa fa-envelope"></i>
-                  <span class="badge badge-danger">4</span>
-                </a>
-                <div
-                  class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown"
-                >
-                  <a class="dropdown-item" href="#"
-                    ><strong>Messages non lus</strong></a
-                  >
-                  <div class="dropdown-divider"></div>
-                  <!-- Sample message -->
-                  <a href="#" class="dropdown-item">
-                    <div class="media">
-                      <img
-                        class="align-self-center mr-3 rounded-circle"
-                        src="assets/img/profile.jpg"
-                        width="50px"
-                        height="50px"
-                        alt="Profile"
-                      />
-                      <div class="media-body">
-                        <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
-                        <p>Comment allez-vous ?</p>
-                        <small class="text-success">09:23</small>
-                      </div>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-center link-all" href="#"
-                    >Voir tous les messages</a
-                  >
-                </div>
-              </span>
             </div>
 
             <!-- Profile Dropdown -->
@@ -207,7 +159,7 @@
           <div class="inner-sidebar mr-3">
             <!-- User Avatar -->
             <div class="avatar text-center mt-4">
-              <p><strong id="user-name">Jonathan Clarke</strong></p>
+              <p><strong id="user-name">Chargement...</strong></p>
               <span class="text-primary small" id="user-role">Étudiant</span>
             </div>
 
@@ -288,6 +240,11 @@
                     </thead>
                     <tbody id="examTableBody">
                       <!-- Exams will be dynamically loaded here -->
+                      <tr>
+                        <td colspan="6" class="text-center">
+                          Chargement des examens...
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -373,7 +330,7 @@
     </div>
 
     <!-- Chatbot -->
-    <div class="robot" id="robot" onclick="showLaugh()">
+    <div class="robot" id="robot">
       <div class="head">
         <div class="eyes">
           <div class="eye" id="eyeLeft"></div>
@@ -395,31 +352,9 @@
     <!-- Utility Libraries -->
     <script src="assets/js/sweetalert.js"></script>
     <script src="assets/js/custom.js"></script>
+
+    <!-- Page-specific Scripts -->
     <script src="assets/js/chatbot.js"></script>
-
-    <!-- Page-specific Script -->
-    <script src="assets/js/exam-submission.js"></script>
-
-    <!-- Inline Scripts -->
-    <script>
-      // DataTable initialization
-      $(document).ready(function () {
-        $("#examTable").DataTable({
-          language: {
-            url: "assets/js/datatables-french.json",
-          },
-        });
-      });
-
-      // Logout functionality
-      document
-        .getElementById("logout-btn")
-        ?.addEventListener("click", function (e) {
-          e.preventDefault();
-          // Add logout logic here
-          window.location.href = "login.html";
-        });
-    </script>
     <script src="assets/js/rendre-examen.js"></script>
   </body>
 </html>

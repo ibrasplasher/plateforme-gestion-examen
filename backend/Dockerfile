@@ -1,8 +1,11 @@
-FROM node:18
-WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-EXPOSE 5000
-RUN apt-get update && apt-get install -y default-mysql-client
-CMD ["npm", "start"]
+# Utiliser une image de base avec un serveur Nginx pour servir des fichiers statiques
+FROM nginx:alpine
+
+# Copier les fichiers HTML et CSS dans le dossier de Nginx
+COPY . /usr/share/nginx/html
+
+# Exposer le port sur lequel Nginx fonctionne
+EXPOSE 80
+
+# Lancer Nginx au démarrage
+CMD ["nginx", "-g", "daemon off;"]
