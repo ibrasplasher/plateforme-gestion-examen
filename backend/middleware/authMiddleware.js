@@ -1,13 +1,23 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
-  const authHeader = req.header("Authorization");
+  // Vérifier d'abord le token dans l'URL
+  const tokenFromQuery = req.query.token;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  // Ensuite vérifier dans les en-têtes
+  const authHeader = req.header("Authorization");
+  const tokenFromHeader =
+    authHeader && authHeader.startsWith("Bearer ")
+      ? authHeader.split(" ")[1]
+      : null;
+
+  // Utiliser le token trouvé soit dans l'URL, soit dans l'en-tête
+  const token = tokenFromQuery || tokenFromHeader;
+
+  // Si aucun token n'est trouvé, renvoyer une erreur
+  if (!token) {
     return res.status(401).json({ error: "Accès refusé. Token manquant." });
   }
-
-  const token = authHeader.split(" ")[1];
 
   // Vérifier si JWT_SECRET est bien défini
   if (!process.env.JWT_SECRET) {
@@ -35,6 +45,7 @@ const authMiddleware = (req, res, next) => {
     res.status(401).json({ error: message });
   }
 };
+
 // Middleware spécifique pour restreindre aux enseignants
 const TeacherOnlyMiddleware = (req, res, next) => {
   if (req.user.role !== "teacher") {
@@ -44,4 +55,5 @@ const TeacherOnlyMiddleware = (req, res, next) => {
   }
   next();
 };
+
 module.exports = { authMiddleware, TeacherOnlyMiddleware };

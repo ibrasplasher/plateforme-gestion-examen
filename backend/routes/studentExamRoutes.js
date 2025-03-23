@@ -166,6 +166,22 @@ router.post(
   authMiddleware,
   upload.single("examFile"),
   (req, res) => {
+    // AJOUTEZ CES LOGS AU DÉBUT
+    console.log("=== SOUMISSION D'EXAMEN (studentExamRoutes) ===");
+    console.log(
+      "Fichier reçu:",
+      req.file
+        ? {
+            originalname: req.file.originalname,
+            mimetype: req.file.mimetype,
+            size: req.file.size,
+            destination: req.file.destination,
+            filename: req.file.filename,
+            path: req.file.path,
+          }
+        : "Aucun fichier"
+    );
+
     // Vérifier que l'utilisateur est un étudiant
     if (req.user.role !== "student") {
       return res
